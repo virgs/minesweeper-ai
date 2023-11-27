@@ -21,23 +21,36 @@ export enum Cell {
 export class Board {
     readonly properties: BoardProperties
     private readonly cells: Cell[]
-    private readonly mines: number[]
+    private mines?: number[]
 
-    public constructor(emptyCell: number, properties: BoardProperties) {
+    public constructor(properties: BoardProperties) {
         this.properties = properties
         const totalCells = this.properties.height * this.properties.width
 
         this.cells = Array
             .from(Array(totalCells).keys())
             .fill(Cell.UNREVEILED)
+    }
+
+    public initialize(emptyCell: number) {
         this.mines = this.initializeMines(emptyCell)
-        console.log('mines', this.mines)
-        this.openCell(emptyCell)
+        console.log('mines', this.mines.sort((a, b) => a - b))
+        return this.openCell(emptyCell)
+    }
+
+    public getCells(): Cell[] {
+        return this.cells
     }
 
     public isGameLost(): boolean {
         return this.cells
-            .some(cell => cell === Cell.MINE)
+            .some((cell, index) => {
+                if (cell === Cell.MINE) {
+                    console.log('lost because of ' + index)
+                    return true
+                }
+                return false
+            })
     }
 
     public isGameWon(): boolean {
@@ -46,14 +59,16 @@ export class Board {
             .length === this.properties.mines
     }
 
-    public openCell(cellIndex: number) {
+    public openCell(cellIndex: number): number[] {
         if (this.cells[cellIndex] === Cell.UNREVEILED) {
+            // console.log('openning cell ' + cellIndex)
+            const reveiledCells = [cellIndex]
             if (this.mines.includes(cellIndex)) {
                 this.cells[cellIndex] = Cell.MINE
 
                 this.mines
                     .forEach(cell => this.cells[cell] - Cell.MINE)
-                return;
+                return reveiledCells;
             }
             const adjacentCells = this.getAdjacentCells(cellIndex)
             const minesSurrounding = adjacentCells
@@ -61,10 +76,14 @@ export class Board {
                 .length
             this.cells[cellIndex] = minesSurrounding
             if (minesSurrounding === 0) {
-                adjacentCells
-                    .forEach(cell => this.openCell(cell))
+                const moreReveiledCells = adjacentCells
+                    .map(cell => this.openCell(cell))
+                    .flat()
+                reveiledCells.push(...moreReveiledCells);
             }
+            return reveiledCells
         }
+        return []
     }
 
     public print(showIndex: boolean = false) {
@@ -84,7 +103,7 @@ export class Board {
 
     public printMines(showIndex: boolean = false) {
         const text = this.cells.reduce((acc, cell, index) => {
-            acc += `${this.mines.includes(index) ? 'X' : ' '.padStart(3)}`
+            acc += `${this.mines?.includes(index) ? 'X' : ' '.padStart(3)}`
             if (showIndex) {
                 acc += ` (${index.toString().padStart(3)})`;
             }
@@ -94,6 +113,10 @@ export class Board {
             return acc;
         }, '')
         console.log(text)
+    }
+
+    public getCell(index: number): Cell {
+        return this.cells[index]
     }
 
     public getAdjacentCells(index: number): number[] {
