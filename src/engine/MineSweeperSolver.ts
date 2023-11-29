@@ -1,4 +1,4 @@
-import { Board, Cell } from "./Board";
+import { Board } from "./Board";
 import { Proposition } from "./Proposition";
 
 export class MineSweeperSolver {
@@ -12,140 +12,228 @@ export class MineSweeperSolver {
         this.board = board;
         this.safeCells = []
         this.mineCells = []
+        this.totalCells = this.board.properties.height * this.board.properties.width;
+        const initialPropositionCells = Array
+            .from(Array(this.totalCells).keys())
 
-        const cells = board.getCells()
-        const initialPropositionCells = cells
-            .map((_, index) => index)
-        this.totalCells = cells.length
-        const initialProposition = new Proposition(initialPropositionCells, board.properties.mines)
-        this.propositions = [initialProposition]
+        this.propositions = [new Proposition(initialPropositionCells, this.board.properties.mines)]
     }
 
-    public selectNextIndex() {
+    public selectUnreveilledSafeCell(): number | undefined {
         const cells = this.board.getCells()
-        let nextIndex = this.safeCells
-            .find(safe => cells[safe] === Cell.UNREVEILED);
-        if (nextIndex !== undefined) {
-            return nextIndex;
-        }
-
-        // luck guess
-        this.propositions
-            .reduce((acc, proposition, index) => {
-                const chance = proposition.getCellChance();
-                if (chance < acc) {
-                    nextIndex = index
-                    acc = chance;
-                }
-                return acc
-            }, Infinity)
-        const selectedProposition = this.propositions[nextIndex];
-        console.log('Going luck based: ' + Math.trunc(selectedProposition.getCellChance() * 10000) / 100 + '%')
-        return selectedProposition.getRandomCell();
+        return this.safeCells
+            .find(safe => cells[safe].isUnreveilled());
     }
 
-    public updatePropositions(openCells: number[]) {
-        // console.log('open cells ' + [...openCells.sort((a, b) => a - b)])
-        openCells
-            .map(cell => {
-                const cellType: Cell = this.board.getCell(cell)
-                if (cellType !== Cell.UNREVEILED) {
-                    this.safeCells.push(cell)
-                    const adjacents = this.board.getAdjacentCells(cell)
-                    const newProposition = new Proposition(adjacents, cellType);
-                    this.propositions.push(newProposition)
+    public selectLowerChanceCell(): number {
+        let lowetRationPropositionIndex = -1;
+        this.propositions
+            .reduce((lowestMineRatio, proposition, index) => {
+                const mineRation = proposition.getMineRatio();
+                if (mineRation < lowestMineRatio) {
+                    lowetRationPropositionIndex = index
+                    lowestMineRatio = mineRation;
                 }
-            })
+                return lowestMineRatio
+            }, Infinity)
+        if (lowetRationPropositionIndex >= 0) {
+            const selectedProposition = this.propositions[lowetRationPropositionIndex];
+            console.log('Going luck based: ' + selectedProposition.toString() + ' ' + Math.trunc(selectedProposition.getMineRatio() * 10000) / 100 + '%')
+            return selectedProposition.getRandomCell();
+        }
+        console.log('Going blind')
+        const unsafeCells: number[] = Array
+            .from(Array(this.totalCells).keys())
+            .filter(index => !this.safeCells.includes(index))
+            .filter(index => !this.mineCells.includes(index))
+        return unsafeCells[Math.floor(Math.random() * unsafeCells.length)]
+    }
 
+    public async updatePropositions(openCells: number[]) {
+        this.createNewPropositions(openCells);
 
-        let changed = true;
-        while (changed) {
-            console.log('iteration')
-            // console.log('iterations propositions', this.propositions.length)
-            // console.log('firstProp', this.propositions[0]?.toString())
-            changed = false
-            changed = this.removeKnownCells() || changed;
-            changed = this.updatePropositionConclusions() || changed;
+        while (!this.boardIsSolved()) {
+            let changed = false;
+            changed = this.derivePropositions() || changed
+            changed = this.updatePropositionConclusions() || changed
+            changed = this.checkFinalProposition() || changed
+
             this.propositions = this.propositions
-                .filter(proposition => !proposition.isSatisfied())
-            changed = this.derivePropositions() || changed;
-            this.safeCells = Array.from(new Set(this.safeCells).values()).sort((a, b) => a - b)
-            this.mineCells = Array.from(new Set(this.mineCells).values()).sort((a, b) => a - b)
-            if (this.safeCells.length === this.totalCells - this.board.properties.mines || this.mineCells.length === this.board.properties.mines) {
-                // console.log('break')
+                .filter(proposition => !proposition.isSatisfied() && proposition.getCells().length >= 0)
+
+            console.log(changed, this.propositions.map(p => p.toString()))
+            if (!changed) {
                 break
             }
         }
 
-
-
-        console.log('mines', this.mineCells)
-        console.log('safes', this.safeCells)
+        console.log('ai mines', this.mineCells)
+        console.log('ai safes', this.safeCells)
+        console.log('ai unreveilled', Array
+            .from(Array(this.totalCells).keys())
+            .filter(cellIndex => !this.safeCells.includes(cellIndex))
+            .filter(cellIndex => !this.mineCells.includes(cellIndex))
+        )
     }
 
-    private removeKnownCells(): boolean {
-        let result = false;
-        this.propositions
-            .forEach(proposition => {
-                result = result || proposition.removeSafeCells(this.safeCells);
-                result = result || proposition.removeMineCells(this.mineCells);
-            });
-        if (result) {
-            // console.log('cells removed')
+    private boardIsSolved() {
+        if (this.safeCells.length >= this.totalCells - this.board.properties.mines) {
+            console.log('done by safe cells', this.safeCells.length, this.totalCells - this.board.properties.mines)
+            Array
+                .from(Array(this.totalCells).keys())
+                .filter(cellIndex => !this.safeCells.includes(cellIndex))
+                .forEach(cellIndex => this.addMineCells(cellIndex))
+            return true
         }
-        return result;
+        if (this.mineCells.length >= this.board.properties.mines) {
+            console.log('done by mines', this.mineCells.length, this.board.properties.mines)
+            Array
+                .from(Array(this.totalCells).keys())
+                .filter(cellIndex => !this.mineCells.includes(cellIndex))
+                .forEach(cellIndex => this.addSafeCells(cellIndex))
+            return true
+        }
+        return false;
     }
+
+    private checkFinalProposition(): boolean {
+        const reveilledCellsAmount = this.safeCells.length + this.mineCells.length
+        const finalPropositions = this.propositions
+            .filter(proposition => proposition.getMines() + reveilledCellsAmount >= this.totalCells);
+        if (finalPropositions.length > 0) {
+            console.log('final proposition', finalPropositions[0])
+        }
+        return false
+    }
+
+    private createNewPropositions(openCells: number[]) {
+        const boardCells = this.board.getCells()
+
+        openCells
+            // .filter(cellIndex => !this.mineCells.includes(cellIndex) && !this.safeCells.includes(cellIndex))
+            .map((cellIndex) => {
+                this.addSafeCells(cellIndex);
+                const adjCells = this.board.getAdjacentCellsIndex(cellIndex);
+                const adjacentsNotReveilledIndex = adjCells
+                    .filter(adjIndex => boardCells[adjIndex].isUnreveilled());
+
+                const newProposition = new Proposition(adjacentsNotReveilledIndex, boardCells[cellIndex].minesAround);
+                if (newProposition.isSatisfied()) {
+                    if (newProposition.hasNoMine()) {
+                        this.addSafeCells(...adjacentsNotReveilledIndex);
+                    } else {
+                        this.addMineCells(...adjacentsNotReveilledIndex);
+                    }
+                } else {
+                    console.log('checking ' + cellIndex)
+                    this.addProposition(newProposition);
+                }
+            });
+    }
+
 
     private updatePropositionConclusions(): boolean {
         let result = false;
         this.propositions
             .filter(proposition => proposition.isSatisfied())
             .forEach(satisfied => {
-                // console.log('satisfied', satisfied.toString())
                 result = true
                 const satisfiedCells = satisfied.getCells();
                 if (satisfied.hasNoMine()) {
-                    this.safeCells.push(...satisfiedCells);
+                    this.addSafeCells(...satisfiedCells);
                 } else {
-                    // console.log('known mines', satisfiedCells)
-                    this.mineCells.push(...satisfiedCells);
+                    this.addMineCells(...satisfiedCells);
                 }
             });
 
-        // if (result) {
-        //     console.log('updatePropositionConclusions removed')
-        // }
+        let propositionMap: { [propname: string]: Proposition } = {};
+        this.propositions
+            .forEach(proposition => {
+                propositionMap[proposition.toString()] = proposition
+            });
 
-        // console.log('mines', this.mineCells.sort())
-        // console.log('safes', this.safeCells.sort())
+        this.propositions = Object.values(propositionMap)
 
+        // redundantRemovedPropositions.push(...this.propositions
+        //     .filter((external, externalIndex) => {
+        //         return !this.propositions
+        //             .filter((_, intIndex) => intIndex > externalIndex)
+        //             .some(internal => internal.isEqual(external))
+        //     }))
         return result;
     }
 
+    private addProposition(newProposition: Proposition) {
+        if (this.propositions
+            .some(proposition => proposition.isEqual(newProposition))) {
+            return;
+        }
+        newProposition.removeMineCells(this.mineCells)
+        newProposition.removeSafeCells(this.safeCells)
+        if (newProposition.isSatisfied()) {
+            if (newProposition.hasNoMine()) {
+                this.addSafeCells(...newProposition.getCells())
+            } else {
+                this.addMineCells(...newProposition.getCells())
+            }
+            return;
+        }
+
+        console.log('new proposition discovered' + newProposition.toString())
+        this.propositions.push(newProposition)
+    }
+
+
+    private addSafeCells(...cellIndexes: number[]) {
+        this.propositions
+            .forEach(proposition => { proposition.removeSafeCells(cellIndexes) });
+
+        this.safeCells.push(...cellIndexes
+            .filter(index => !this.safeCells.includes(index))
+            .map(index => {
+                console.log('new safe cell discovered: ' + index)
+                return index
+            }))
+
+        this.safeCells.sort((a, b) => a - b)
+    }
+
+    private addMineCells(...cellIndexes: number[]) {
+        this.propositions
+            .forEach(proposition => { proposition.removeMineCells(cellIndexes) });
+        this.mineCells.push(...cellIndexes
+            .filter(index => !this.mineCells.includes(index))
+            .map(index => {
+                console.log('new mine discovered: ' + index)
+                return index
+            }))
+        this.mineCells.sort((a, b) => a - b)
+    }
+
     private derivePropositions(): boolean {
-        const newPropositions = []
+        let newPropositions: Proposition[] = []
         for (let a of this.propositions) {
             for (let b of this.propositions) {
+                if (a.getCells().length === 0 || b.getCells().length === 0) {
+                    continue
+                }
                 if (b.isSubSetOf(a)) {
                     const differenceProposition = a.subtract(b);
                     if (!this.propositions
                         .find(original => original.isEqual(differenceProposition))) {
                         if (!newPropositions
                             .find(newList => newList.isEqual(differenceProposition))) {
-
                             if (differenceProposition.isSatisfied()) {
                                 const satisfiedCells = differenceProposition.getCells();
                                 if (differenceProposition.hasNoMine()) {
-                                    this.safeCells.push(...satisfiedCells);
+                                    this.addSafeCells(...satisfiedCells)
                                 } else {
-                                    // console.log('known mines', satisfiedCells)
-                                    this.mineCells.push(...satisfiedCells);
+                                    this.addMineCells(...satisfiedCells)
                                 }
-                                break;
                             } else {
-
-                                // console.log(b.toString(), 'is subset', a.toString(), 'diff', differenceProposition.toString())
-                                // newPropositions.push(differenceProposition)
+                                console.log(b.toString(), 'is subset of', a.toString(), 'diff', differenceProposition.toString())
+                                newPropositions.push(differenceProposition)
+                                break
                             }
 
                         }
@@ -153,39 +241,14 @@ export class MineSweeperSolver {
                 }
             }
         }
-        // this.propositions
-        //     .forEach(a => {
-        //         this.propositions
-        //             .forEach(b => {
-        //                 if (b.isSubSetOf(a)) {
-        //                     const differenceProposition = a.subtract(b);
-        //                     if (!this.propositions
-        //                         .find(original => original.isEqual(differenceProposition))) {
-        //                         if (!newPropositions
-        //                             .find(newList => newList.isEqual(differenceProposition))) {
 
-        //                             if (differenceProposition.isSatisfied()) {
-        //                                 const satisfiedCells = differenceProposition.getCells();
-        //                                 if (differenceProposition.hasNoMine()) {
-        //                                     this.safeCells.push(...satisfiedCells);
-        //                                 } else {
-        //                                     // console.log('known mines', satisfiedCells)
-        //                                     this.mineCells.push(...satisfiedCells);
-        //                                 }
-
-        //                             } else {
-
-        //                                 // console.log(b.toString(), 'is subset', a.toString(), 'diff', differenceProposition.toString())
-        //                                 newPropositions.push(differenceProposition)
-        //                             }
-
-        //                         }
-        //                     }
-        //                 }
-        //             });
-        //     });
-        // console.log(`current props length: ${this.propositions.length} new: ${newPropositions.length}`)
-        this.propositions.push(...newPropositions)
+        newPropositions = newPropositions
+            .map(proposition => {
+                proposition.removeMineCells(this.mineCells)
+                proposition.removeSafeCells(this.safeCells)
+                return proposition
+            });
+        newPropositions.forEach(newProposition => this.addProposition(newProposition))
         return newPropositions.length > 0;
     }
 }

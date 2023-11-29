@@ -15,6 +15,14 @@ import { Board } from './engine/Board'
 import { MineSweeperSolver } from './engine/MineSweeperSolver'
 import { Proposition } from './engine/Proposition'
 
+// <font-awesome - icon icon = "fa-solid fa-sun" />
+// <font-awesome - icon icon = "fa-regular fa-sun" />
+// <font-awesome - icon icon = "fa-solid fa-bomb" />
+// <font-awesome-icon icon="fa-solid fa-bomb" shake />
+// <font-awesome-icon :icon="['fat', 'burst']" beat-fade style="color: #22511f;" />
+// <font-awesome-icon icon="fa-solid fa-flag" />
+
+
 /* add icons to the library */
 library.add(faBrain, faRobot, faBolt, faPlay, faStop, faHourglass)
 
@@ -26,25 +34,31 @@ const beginner = { height: 9, width: 9, mines: 10 }
 const intermediate = { height: 16, width: 16, mines: 40 }
 const expert = { height: 16, width: 30, mines: 99 }
 
-const custom = { height: 5, width: 5, mines: 5 }
-const board = new Board(expert)
+const custom = { height: 10, width: 10, mines: 12 }
+const board = new Board(beginner)
 
 const ai = new MineSweeperSolver(board)
-let click = ai.selectNextIndex()
+let click: number | undefined = ai.selectLowerChanceCell()
 let openCells = board.initialize(click)
+console.log('initialized ', click, openCells.sort((a, b) => a - b))
 ai.updatePropositions(openCells)
 
-// board.print(true)
-// board.printMines()
-
-while (!board.isGameLost() && !board.isGameWon()) {
-    click = ai.selectNextIndex()
-    openCells = board.openCell(click)
+while (!board.isGameWon() && !board.isGameLost()) {
+    click = ai.selectUnreveilledSafeCell()
+    if (!click) {
+        console.log('no safe cell to open')
+        click = ai.selectLowerChanceCell()
+    }
     console.log('selected ' + click)
+    openCells = board.reveillCell(click)
+    if (board.isGameLost()) {
+        break;
+    }
     ai.updatePropositions(openCells)
 
 }
 
+console.log('reveilled ' + board.getCells().filter(c => c.isReveilled()).length)
+board.print(true)
 console.log('game lost ' + board.isGameLost())
 console.log('isGameWon ' + board.isGameWon())
-console.log('equal ' + new Proposition([0, 1, 2], 3).isEqual(new Proposition([1, 0, 2], 3)))

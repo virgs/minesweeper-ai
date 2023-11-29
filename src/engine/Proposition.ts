@@ -1,47 +1,50 @@
 export class Proposition {
-    private cells: number[]
+    private cellsIndex: number[]
     private mines: number
 
     public constructor(cells: number[], mines: number) {
         const set = new Set<number>(cells);
-        this.cells = Array.from(set)
+        this.cellsIndex = Array.from(set)
         this.mines = mines
-        // console.log('new proposition ' + this.toString())
     }
 
     public toString(): string {
-        return `{${this.cells.length}} ${this.cells}: mines -> ${this.mines}`
+        return `({${this.cellsIndex.length}} ${this.cellsIndex.sort((a, b) => a - b)}: mines -> ${this.mines})`
     }
 
-    public getCellChance(): number {
-        return this.mines / this.cells.length
+    public getMineRatio(): number {
+        return this.mines / this.cellsIndex.length
     }
 
-    public getCells(): any {
-        return this.cells
+    public getCells(): number[] {
+        return this.cellsIndex
+    }
+
+    public getMines(): number {
+        return this.mines
     }
 
     public isSubSetOf(otherProposition: Proposition): boolean {
-        return this.cells.length < otherProposition.cells.length &&
-            this.cells
-                .every(otherCell => otherProposition.cells.includes(otherCell))
+        return this.cellsIndex.length < otherProposition.cellsIndex.length &&
+            this.cellsIndex
+                .every(otherCell => otherProposition.cellsIndex.includes(otherCell))
     }
 
     public subtract(otherProposition: Proposition): Proposition {
         const minesDiff = this.mines - otherProposition.mines
-        const cellsDiff = this.cells
-            .filter(cell => !otherProposition.cells.includes(cell))
+        const cellsDiff = this.cellsIndex
+            .filter(cell => !otherProposition.cellsIndex.includes(cell))
         return new Proposition(cellsDiff, minesDiff)
     }
 
     public getRandomCell(): number {
-        return this.cells[Math.floor(Math.random() * this.cells.length)]
+        return this.cellsIndex[Math.floor(Math.random() * this.cellsIndex.length)]
     }
 
     // returns true if this method changed the proposition
     public removeMineCells(mines: number[]): boolean {
-        let previousCellsLength = this.cells.length;
-        this.cells = this.cells
+        let previousCellsLength = this.cellsIndex.length;
+        this.cellsIndex = this.cellsIndex
             .reduce((acc, cell) => {
                 if (mines.includes(cell)) {
                     --this.mines
@@ -49,20 +52,20 @@ export class Proposition {
                     acc.push(cell)
                 }
                 return acc
-            }, [])
-        return previousCellsLength !== this.cells.length
+            }, [] as number[])
+        return previousCellsLength !== this.cellsIndex.length
     }
 
     // returns true if this method changed the proposition
     public removeSafeCells(safes: number[]): boolean {
-        let previousCellsLength = this.cells.length;
-        this.cells = this.cells
+        let previousCellsLength = this.cellsIndex.length;
+        this.cellsIndex = this.cellsIndex
             .filter(cell => !safes.includes(cell))
-        return previousCellsLength !== this.cells.length
+        return previousCellsLength !== this.cellsIndex.length
     }
 
     public isSatisfied(): boolean {
-        return this.mines === 0 || this.mines === this.cells.length
+        return this.mines === 0 || this.mines >= this.cellsIndex.length
     }
 
     public hasNoMine(): boolean {
@@ -73,11 +76,11 @@ export class Proposition {
         if (this.mines != other.mines) {
             return false
         }
-        if (this.cells.length != other.cells.length) {
+        if (this.cellsIndex.length != other.cellsIndex.length) {
             return false
         }
-        return this.cells
-            .every(cell => other.cells.includes(cell))
+        return this.cellsIndex
+            .every(cell => other.cellsIndex.includes(cell))
     }
 
 }
