@@ -114,20 +114,9 @@ export class MineSweeperSolver {
             .map((cellIndex) => {
                 this.addSafeCells(cellIndex);
                 const adjCells = this.board.getAdjacentCellsIndex(cellIndex);
-                const adjacentsNotReveilledIndex = adjCells
-                    .filter(adjIndex => boardCells[adjIndex].isUnreveilled());
-
-                const newProposition = new Proposition(adjacentsNotReveilledIndex, boardCells[cellIndex].minesAround);
-                if (newProposition.isSatisfied()) {
-                    if (newProposition.hasNoMine()) {
-                        this.addSafeCells(...adjacentsNotReveilledIndex);
-                    } else {
-                        this.addMineCells(...adjacentsNotReveilledIndex);
-                    }
-                } else {
-                    console.log('checking ' + cellIndex)
-                    this.addProposition(newProposition);
-                }
+                const newProposition = new Proposition(adjCells, boardCells[cellIndex].minesAround);
+                console.log('checking ' + cellIndex)
+                this.addProposition(newProposition);
             });
     }
 

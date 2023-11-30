@@ -35,7 +35,7 @@ const intermediate = { height: 16, width: 16, mines: 40 }
 const expert = { height: 16, width: 30, mines: 99 }
 
 const custom = { height: 10, width: 10, mines: 12 }
-const board = new Board(beginner)
+const board = new Board(intermediate)
 
 const ai = new MineSweeperSolver(board)
 let click: number | undefined = ai.selectLowerChanceCell()
