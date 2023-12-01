@@ -64,8 +64,12 @@ export class Proposition {
         return previousCellsLength !== this.cellsIndex.length
     }
 
+    public isContradictory(): boolean {
+        return this.mines < this.cellsIndex.length
+    }
+
     public isSatisfied(): boolean {
-        return this.mines === 0 || this.mines >= this.cellsIndex.length
+        return this.hasNoMine() || (this.mines >= this.cellsIndex.length && this.cellsIndex.length > 0)
     }
 
     public hasNoMine(): boolean {

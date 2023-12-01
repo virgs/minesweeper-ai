@@ -35,10 +35,14 @@ const intermediate = { height: 16, width: 16, mines: 40 }
 const expert = { height: 16, width: 30, mines: 99 }
 
 const custom = { height: 10, width: 10, mines: 12 }
-const board = new Board(intermediate)
+
+const board = new Board(beginner)
+
+
+console.log('board created')
 
 const ai = new MineSweeperSolver(board)
-let click: number | undefined = ai.selectLowerChanceCell()
+let click: number | undefined = ai.selectLowestChanceCell()
 let openCells = board.initialize(click)
 console.log('initialized ', click, openCells.sort((a, b) => a - b))
 ai.updatePropositions(openCells)
@@ -47,18 +51,21 @@ while (!board.isGameWon() && !board.isGameLost()) {
     click = ai.selectUnreveilledSafeCell()
     if (!click) {
         console.log('no safe cell to open')
-        click = ai.selectLowerChanceCell()
+        click = ai.selectLowestChanceCell()
     }
-    console.log('selected ' + click)
+    // console.log('selected ' + click)
     openCells = board.reveillCell(click)
     if (board.isGameLost()) {
         break;
     }
     ai.updatePropositions(openCells)
-
+    if (ai.boardIsSolved()) {
+        console.log('won')
+        break
+    }
 }
 
-console.log('reveilled ' + board.getCells().filter(c => c.isReveilled()).length)
 board.print(true)
+console.log('reveilled ' + board.getCells().length + ' / ' + board.getCells().filter(c => c.isReveilled()).length)
 console.log('game lost ' + board.isGameLost())
 console.log('isGameWon ' + board.isGameWon())

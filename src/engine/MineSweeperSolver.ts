@@ -7,16 +7,16 @@ export class MineSweeperSolver {
     private mineCells: number[]
     private safeCells: number[]
     private propositions: Proposition[]
+    private addedMainProposition: boolean
 
     public constructor(board: Board) {
         this.board = board;
         this.safeCells = []
         this.mineCells = []
+        this.addedMainProposition = false
         this.totalCells = this.board.properties.height * this.board.properties.width;
-        const initialPropositionCells = Array
-            .from(Array(this.totalCells).keys())
 
-        this.propositions = [new Proposition(initialPropositionCells, this.board.properties.mines)]
+        this.propositions = []
     }
 
     public selectUnreveilledSafeCell(): number | undefined {
@@ -25,7 +25,7 @@ export class MineSweeperSolver {
             .find(safe => cells[safe].isUnreveilled());
     }
 
-    public selectLowerChanceCell(): number {
+    public selectLowestChanceCell(): number {
         let lowetRationPropositionIndex = -1;
         this.propositions
             .reduce((lowestMineRatio, proposition, index) => {
@@ -51,22 +51,27 @@ export class MineSweeperSolver {
 
     public async updatePropositions(openCells: number[]) {
         this.createNewPropositions(openCells);
+        if (this.totalCells - this.mineCells.length - this.safeCells.length < 50) {
+            const initialPropositionCells = Array
+                .from(Array(this.totalCells).keys())
+            this.addedMainProposition = true;
+            console.log('adding initial proposition')
+            this.addProposition(new Proposition(initialPropositionCells, this.board.properties.mines))
+            this.derivePropositions()
+        }
+
+
 
         while (!this.boardIsSolved()) {
-            let changed = false;
-            changed = this.derivePropositions() || changed
-            changed = this.updatePropositionConclusions() || changed
-            changed = this.checkFinalProposition() || changed
-
-            this.propositions = this.propositions
-                .filter(proposition => !proposition.isSatisfied() && proposition.getCells().length >= 0)
-
-            console.log(changed, this.propositions.map(p => p.toString()))
-            if (!changed) {
+            if (this.removeKnownCellsFromPropositions()) {
+                this.derivePropositions()
+            } else {
                 break
             }
         }
 
+
+        console.log(this.propositions.map(p => p.toString()))
         console.log('ai mines', this.mineCells)
         console.log('ai safes', this.safeCells)
         console.log('ai unreveilled', Array
@@ -76,7 +81,21 @@ export class MineSweeperSolver {
         )
     }
 
-    private boardIsSolved() {
+    private reducePropositions() {
+        const previousLength = this.propositions.length
+        this.propositions = this.propositions
+            .filter(proposition => !proposition.isSatisfied() && proposition.getCells().length >= 0)
+        let propositionMap: { [propname: string]: Proposition } = {};
+        this.propositions
+            .forEach(proposition => {
+                propositionMap[proposition.toString()] = proposition
+            });
+
+        this.propositions = Object.values(propositionMap)
+        return this.propositions.length !== previousLength;
+    }
+
+    public boardIsSolved() {
         if (this.safeCells.length >= this.totalCells - this.board.properties.mines) {
             console.log('done by safe cells', this.safeCells.length, this.totalCells - this.board.properties.mines)
             Array
@@ -108,20 +127,17 @@ export class MineSweeperSolver {
 
     private createNewPropositions(openCells: number[]) {
         const boardCells = this.board.getCells()
-
         openCells
-            // .filter(cellIndex => !this.mineCells.includes(cellIndex) && !this.safeCells.includes(cellIndex))
-            .map((cellIndex) => {
+            .forEach(cellIndex => {
                 this.addSafeCells(cellIndex);
                 const adjCells = this.board.getAdjacentCellsIndex(cellIndex);
                 const newProposition = new Proposition(adjCells, boardCells[cellIndex].minesAround);
-                console.log('checking ' + cellIndex)
                 this.addProposition(newProposition);
             });
     }
 
 
-    private updatePropositionConclusions(): boolean {
+    private removeKnownCellsFromPropositions(): boolean {
         let result = false;
         this.propositions
             .filter(proposition => proposition.isSatisfied())
@@ -134,49 +150,36 @@ export class MineSweeperSolver {
                     this.addMineCells(...satisfiedCells);
                 }
             });
-
-        let propositionMap: { [propname: string]: Proposition } = {};
-        this.propositions
-            .forEach(proposition => {
-                propositionMap[proposition.toString()] = proposition
-            });
-
-        this.propositions = Object.values(propositionMap)
-
-        // redundantRemovedPropositions.push(...this.propositions
-        //     .filter((external, externalIndex) => {
-        //         return !this.propositions
-        //             .filter((_, intIndex) => intIndex > externalIndex)
-        //             .some(internal => internal.isEqual(external))
-        //     }))
+        this.reducePropositions()
         return result;
     }
 
-    private addProposition(newProposition: Proposition) {
-        if (this.propositions
-            .some(proposition => proposition.isEqual(newProposition))) {
-            return;
-        }
+    private addProposition(newProposition: Proposition): boolean {
         newProposition.removeMineCells(this.mineCells)
         newProposition.removeSafeCells(this.safeCells)
+        if (this.propositions
+            .some(proposition => proposition.isEqual(newProposition))) {
+            return false;
+        }
         if (newProposition.isSatisfied()) {
             if (newProposition.hasNoMine()) {
-                this.addSafeCells(...newProposition.getCells())
+                return this.addSafeCells(...newProposition.getCells())
             } else {
-                this.addMineCells(...newProposition.getCells())
+                return this.addMineCells(...newProposition.getCells())
             }
-            return;
         }
 
         console.log('new proposition discovered' + newProposition.toString())
         this.propositions.push(newProposition)
+        return true
     }
 
+    private addSafeCells(...cellIndexes: number[]): boolean {
+        const changed = this.propositions
+            .filter(proposition => proposition.removeSafeCells(cellIndexes))
+            .length > 0;
 
-    private addSafeCells(...cellIndexes: number[]) {
-        this.propositions
-            .forEach(proposition => { proposition.removeSafeCells(cellIndexes) });
-
+        let previousLength = this.safeCells.length
         this.safeCells.push(...cellIndexes
             .filter(index => !this.safeCells.includes(index))
             .map(index => {
@@ -185,11 +188,15 @@ export class MineSweeperSolver {
             }))
 
         this.safeCells.sort((a, b) => a - b)
+        return changed || previousLength !== this.safeCells.length
     }
 
-    private addMineCells(...cellIndexes: number[]) {
-        this.propositions
-            .forEach(proposition => { proposition.removeMineCells(cellIndexes) });
+    private addMineCells(...cellIndexes: number[]): boolean {
+        const changed = this.propositions
+            .filter(proposition => proposition.removeMineCells(cellIndexes))
+            .length > 0
+
+        let previousLength = this.mineCells.length
         this.mineCells.push(...cellIndexes
             .filter(index => !this.mineCells.includes(index))
             .map(index => {
@@ -197,47 +204,23 @@ export class MineSweeperSolver {
                 return index
             }))
         this.mineCells.sort((a, b) => a - b)
+        return changed || previousLength !== this.safeCells.length
     }
 
     private derivePropositions(): boolean {
         let newPropositions: Proposition[] = []
         for (let a of this.propositions) {
             for (let b of this.propositions) {
-                if (a.getCells().length === 0 || b.getCells().length === 0) {
-                    continue
-                }
                 if (b.isSubSetOf(a)) {
                     const differenceProposition = a.subtract(b);
-                    if (!this.propositions
-                        .find(original => original.isEqual(differenceProposition))) {
-                        if (!newPropositions
-                            .find(newList => newList.isEqual(differenceProposition))) {
-                            if (differenceProposition.isSatisfied()) {
-                                const satisfiedCells = differenceProposition.getCells();
-                                if (differenceProposition.hasNoMine()) {
-                                    this.addSafeCells(...satisfiedCells)
-                                } else {
-                                    this.addMineCells(...satisfiedCells)
-                                }
-                            } else {
-                                console.log(b.toString(), 'is subset of', a.toString(), 'diff', differenceProposition.toString())
-                                newPropositions.push(differenceProposition)
-                                break
-                            }
-
-                        }
-                    }
+                    console.log(b.toString(), 'is subset of', a.toString(), 'diff', differenceProposition.toString())
+                    newPropositions.push(differenceProposition)
                 }
             }
         }
 
-        newPropositions = newPropositions
-            .map(proposition => {
-                proposition.removeMineCells(this.mineCells)
-                proposition.removeSafeCells(this.safeCells)
-                return proposition
-            });
-        newPropositions.forEach(newProposition => this.addProposition(newProposition))
-        return newPropositions.length > 0;
+        return newPropositions
+            .filter(newProposition => this.addProposition(newProposition))
+            .length > 0
     }
 }
