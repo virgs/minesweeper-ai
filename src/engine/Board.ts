@@ -75,9 +75,9 @@ export class Board {
             clickedCell.reveal()
             if (clickedCell.hasMine) {
                 const mines = this.cells.filter((cell) => cell.hasMine)
-                console.log('died', clickedCell, mines)
+                // console.log('died', clickedCell, mines)
                 mines.forEach((cell) => cell.reveal())
-                return mines.map((cell) => cell.id)
+                return mines
             } else {
                 if (clickedCell.minesAround === 0) {
                     const moreReveiledCells = this.getAdjacentCells(clickedCell)

@@ -1,14 +1,13 @@
 <template>
     <main>
-        <Grid style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-            :properties="boardProperties" @click="gridClicked" @gameIsOver="gameIsOver"></Grid>
+        <Grid :board="(board as Board)" :ai-hint="aiHint" @cell-click="cellClick"></Grid>
     </main>
 </template>
 
 <script lang="ts">
 
 import Grid from './components/Grid.vue'
-import type { Board } from './engine/Board'
+import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
 import { MineSweeperSolver } from './engine/MineSweeperSolver'
 
@@ -25,18 +24,32 @@ export default {
         Grid
     },
     data() {
+        const board = new Board(intermediate)
         return {
-            boardProperties: custom
+            board: board,
+            aiHint: [] as Number[]
         }
     },
     methods: {
-        gridClicked(data: { board: Board, revealedCells: Cell[] }) {
-            if (!ai) {
-                ai = new MineSweeperSolver(data.board)
+        cellClick(data: { cell: Cell }) {
+            let revealedCells = []
+            if (this.board.isInitialized()) {
+                revealedCells = this.board.revealCell(data.cell)
+            } else {
+                revealedCells = this.board.initializeMinesAroundCell(data.cell)
             }
-            ai.updatePropositions(data.revealedCells)
-            console.log('safe cells to click on', ai.selectUnreveilledSafeCell().map(cell => cell.id))
-            // console.log(data.board.getNotRevealedCells())
+            if (this.board.isGameLost() || this.board.isGameWon()) {
+                this.gameIsOver({ victory: this.board.isGameWon() })
+            } else {
+                if (!ai) {
+                    ai = new MineSweeperSolver(this.board as Board)
+                }
+                ai.updatePropositions(revealedCells)
+                const safeCells = ai.selectUnreveilledSafeCell().map(cell => cell.id)
+                this.aiHint = safeCells
+                console.log('safe cells to click on', safeCells)
+            }
+
         },
         gameIsOver(data: { victory: boolean }) {
             console.log('game finished', data.victory ? 'you won' : 'you lost')
@@ -44,3 +57,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

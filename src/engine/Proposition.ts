@@ -1,15 +1,17 @@
 export class Proposition {
     private cellsIndex: number[]
     private mines: number
+    readonly origin: string
 
-    public constructor(cells: number[], mines: number) {
+    public constructor(origin: string, cells: number[], mines: number) {
+        this.origin = origin
         const set = new Set<number>(cells)
         this.cellsIndex = Array.from(set)
         this.mines = mines
     }
 
     public toString(): string {
-        return `({${this.cellsIndex.length}} ${this.cellsIndex.sort((a, b) => a - b)}: mines -> ${this.mines})`
+        return `/${this.origin}/: (${this.cellsIndex.length}) ${this.cellsIndex.sort((a, b) => a - b)}: mines -> {${this.mines}}`
     }
 
     public getMineRatio(): number {
@@ -34,7 +36,7 @@ export class Proposition {
     public subtract(otherProposition: Proposition): Proposition {
         const minesDiff = this.mines - otherProposition.mines
         const cellsDiff = this.cellsIndex.filter((cell) => !otherProposition.cellsIndex.includes(cell))
-        return new Proposition(cellsDiff, minesDiff)
+        return new Proposition(`${this.origin}-${otherProposition.origin}`, cellsDiff, minesDiff)
     }
 
     public getRandomCell(): number {

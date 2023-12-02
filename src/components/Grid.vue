@@ -1,8 +1,8 @@
 <template>
     <div id="grid">
-        <div v-for="line in properties?.height" style="display: inline-flex">
-            <div v-for="column in properties?.width">
-                <CellVue @clicked="cellClick" :cell="board.getCellByLocation(column - 1, line - 1)!" />
+        <div v-for="line in board.properties.height" style="display: inline-flex">
+            <div v-for="column in board.properties.width">
+                <CellVue @clicked="cellClick" :cell="board.getCellByLocation(column - 1, line - 1)!" :ai-hint="aiHint" />
             </div>
         </div>
     </div>
@@ -17,31 +17,25 @@ import type { PropType } from 'vue'
 export default {
     name: 'Board',
     components: { CellVue },
-    emits: ['click', 'gameIsOver'],
+    emits: ['cellClick', 'gameIsOver'],
     props: {
-        properties: {
-            type: Object as PropType<BoardProperties>,
+        board: {
+            type: Object as PropType<Board>,
+            required: true,
+        },
+        aiHint: {
+            type: Object as PropType<Number[]>,
             required: true,
         },
     },
     data() {
         return {
-            board: new Board(this.properties),
+
         }
     },
     methods: {
         cellClick(data: { cell: Cell }) {
-            let revealedCells = []
-            if (this.board.isInitialized()) {
-                revealedCells = this.board.revealCell(data.cell)
-            } else {
-                revealedCells = this.board.initializeMinesAroundCell(data.cell)
-            }
-            if (this.board.isGameLost() || this.board.isGameWon()) {
-                this.$emit('gameIsOver', { victory: this.board.isGameWon() })
-            } else {
-                this.$emit('click', { board: this.board, revealedCells: revealedCells })
-            }
+            this.$emit('cellClick', { cell: data.cell })
         },
     },
 }
