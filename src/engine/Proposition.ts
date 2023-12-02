@@ -3,7 +3,7 @@ export class Proposition {
     private mines: number
 
     public constructor(cells: number[], mines: number) {
-        const set = new Set<number>(cells);
+        const set = new Set<number>(cells)
         this.cellsIndex = Array.from(set)
         this.mines = mines
     }
@@ -25,15 +25,15 @@ export class Proposition {
     }
 
     public isSubSetOf(otherProposition: Proposition): boolean {
-        return this.cellsIndex.length < otherProposition.cellsIndex.length &&
-            this.cellsIndex
-                .every(otherCell => otherProposition.cellsIndex.includes(otherCell))
+        return (
+            this.cellsIndex.length < otherProposition.cellsIndex.length &&
+            this.cellsIndex.every((otherCell) => otherProposition.cellsIndex.includes(otherCell))
+        )
     }
 
     public subtract(otherProposition: Proposition): Proposition {
         const minesDiff = this.mines - otherProposition.mines
-        const cellsDiff = this.cellsIndex
-            .filter(cell => !otherProposition.cellsIndex.includes(cell))
+        const cellsDiff = this.cellsIndex.filter((cell) => !otherProposition.cellsIndex.includes(cell))
         return new Proposition(cellsDiff, minesDiff)
     }
 
@@ -43,24 +43,22 @@ export class Proposition {
 
     // returns true if this method changed the proposition
     public removeMineCells(mines: number[]): boolean {
-        let previousCellsLength = this.cellsIndex.length;
-        this.cellsIndex = this.cellsIndex
-            .reduce((acc, cell) => {
-                if (mines.includes(cell)) {
-                    --this.mines
-                } else {
-                    acc.push(cell)
-                }
-                return acc
-            }, [] as number[])
+        let previousCellsLength = this.cellsIndex.length
+        this.cellsIndex = this.cellsIndex.reduce((acc, cell) => {
+            if (mines.includes(cell)) {
+                --this.mines
+            } else {
+                acc.push(cell)
+            }
+            return acc
+        }, [] as number[])
         return previousCellsLength !== this.cellsIndex.length
     }
 
     // returns true if this method changed the proposition
     public removeSafeCells(safes: number[]): boolean {
-        let previousCellsLength = this.cellsIndex.length;
-        this.cellsIndex = this.cellsIndex
-            .filter(cell => !safes.includes(cell))
+        let previousCellsLength = this.cellsIndex.length
+        this.cellsIndex = this.cellsIndex.filter((cell) => !safes.includes(cell))
         return previousCellsLength !== this.cellsIndex.length
     }
 
@@ -83,8 +81,6 @@ export class Proposition {
         if (this.cellsIndex.length != other.cellsIndex.length) {
             return false
         }
-        return this.cellsIndex
-            .every(cell => other.cellsIndex.includes(cell))
+        return this.cellsIndex.every((cell) => other.cellsIndex.includes(cell))
     }
-
 }

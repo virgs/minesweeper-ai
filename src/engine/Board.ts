@@ -1,4 +1,4 @@
-import { Cell } from "./Cell";
+import { Cell } from './Cell'
 
 export type BoardProperties = {
     width: number
@@ -9,57 +9,80 @@ export type BoardProperties = {
 export class Board {
     readonly properties: BoardProperties
     private readonly cells: Cell[]
-    private readonly mines: number[]
-    private readonly totalCells: number;
+    private readonly totalCells: number
+    private initialized: boolean
 
     public constructor(properties: BoardProperties) {
+        this.initialized = false
         this.properties = properties
         this.totalCells = this.properties.height * this.properties.width
-        this.cells = []
-        this.mines = []
+        this.cells = Array.from(Array(this.totalCells)).map((_, index) => new Cell(index))
     }
 
-    public initialize(emptyCell: number) {
-        this.mines.push(...this.initializeMines(emptyCell))
-
-        this.cells.push(...Array
-            .from(Array(this.totalCells))
-            .map((_, index) => new Cell(this.getMinesSurrounding(index))))
-
-        console.log('mines position', this.mines)
-
-        return this.reveillCell(emptyCell)
+    public isInitialized(): boolean {
+        return this.initialized
     }
 
-    public getCells(): Cell[] {
-        return this.cells
+    public getCellById(id: number): Cell | undefined {
+        return this.cells.find((cell) => cell.id === id)
+    }
+
+    public getCellByLocation(x: number, y: number): Cell | undefined {
+        return this.cells[this.properties.width * y + x]
+    }
+
+    public initializeMinesAroundCell(emptyCell: Cell) {
+        const clearArea = this.getAdjacentCells(emptyCell).concat(emptyCell)
+        const totalCells = this.properties.height * this.properties.width
+        const cellsWithMines: Cell[] = Array.from(Array(totalCells).keys())
+            .filter((cell) => !clearArea.find((clear) => clear.id === cell))
+            .sort(() => Math.random() - 0.5)
+            .filter((_, index) => index < this.properties.mines)
+            .sort((a, b) => a - b)
+            .map((index) => this.cells[index])
+        cellsWithMines.forEach((cell, _index) => (cell.hasMine = true))
+
+        console.log(
+            'mines position',
+            cellsWithMines.map((cell) => cell.id)
+        )
+
+        this.cells.forEach((cell) => (cell.minesAround = this.getMinesSurrounding(cell)))
+        this.initialized = true
+
+        return this.revealCell(emptyCell)
+    }
+
+    public getNotRevealedCells(): Cell[] {
+        return this.cells.filter((cell) => cell.isNotRevealed())
+    }
+
+    public getRevealedCells(): Cell[] {
+        return this.cells.filter((cell) => cell.isRevealed())
     }
 
     public isGameLost(): boolean {
-        return this.mines
-            .some(mineIndex => this.cells[mineIndex].isReveilled())
+        return this.cells.some((cell) => cell.hasMine && cell.isRevealed())
     }
 
     public isGameWon(): boolean {
-        return this.cells
-            .filter(cell => cell.isReveilled())
-            .length === (this.totalCells - this.properties.mines)
+        return this.cells.filter((cell) => cell.isRevealed()).length === this.totalCells - this.properties.mines
     }
 
-    public reveillCell(cellIndex: number): number[] {
-        if (this.cells[cellIndex].isUnreveilled()) {
-            const result = [cellIndex]
-            this.cells[cellIndex].reveil()
-            if (this.mines.includes(cellIndex)) {
-                console.log('died', cellIndex, this.mines)
-                this.mines
-                    .forEach(cell => this.cells[cell].reveil())
-                return this.mines;
+    public revealCell(clickedCell: Cell): Cell[] {
+        if (clickedCell.isNotRevealed()) {
+            const result = [clickedCell]
+            clickedCell.reveal()
+            if (clickedCell.hasMine) {
+                const mines = this.cells.filter((cell) => cell.hasMine)
+                console.log('died', clickedCell, mines)
+                mines.forEach((cell) => cell.reveal())
+                return mines.map((cell) => cell.id)
             } else {
-                if (this.cells[cellIndex].minesAround === 0) {
-                    const moreReveiledCells = this.getAdjacentCellsIndex(cellIndex)
-                        .filter(cell => this.cells[cell].isUnreveilled())
-                        .map(cell => this.reveillCell(cell))
+                if (clickedCell.minesAround === 0) {
+                    const moreReveiledCells = this.getAdjacentCells(clickedCell)
+                        .filter((cell) => cell.isNotRevealed)
+                        .map((cell) => this.revealCell(cell))
                         .flat()
                     result.push(...moreReveiledCells)
                 }
@@ -69,46 +92,24 @@ export class Board {
         return []
     }
 
-    private getMinesSurrounding(cellIndex: number): number {
-        const adjacentCells = this.getAdjacentCellsIndex(cellIndex)
-        return adjacentCells
-            .filter(cell => this.mines.includes(cell))
-            .length
-    }
-
     public print(showIndex: boolean = false) {
-        const text = this.cells
-            .reduce((acc, cell, index) => {
-                acc += `${cell.minesAround.toString().padStart(3)}`
-                if (showIndex) {
-                    acc += ` (${index.toString().padStart(3)})`;
-                }
-                if ((index + 1) % this.properties.width === 0) {
-                    acc += '\n'
-                }
-                return acc;
-            }, '')
-        console.log(text)
-    }
-
-    public printMines(showIndex: boolean = false) {
-        const text = this.cells.reduce((acc, _cell, index) => {
-            acc += `${this.mines?.includes(index) ? 'X' : ' '.padStart(3)}`
+        const text = this.cells.reduce((acc, cell, index) => {
+            acc += `${cell.minesAround.toString().padStart(3)}`
             if (showIndex) {
-                acc += ` (${index.toString().padStart(3)})`;
+                acc += ` (${index.toString().padStart(3)})`
             }
             if ((index + 1) % this.properties.width === 0) {
                 acc += '\n'
             }
-            return acc;
+            return acc
         }, '')
         console.log(text)
     }
 
-    public getAdjacentCellsIndex(index: number): number[] {
+    public getAdjacentCells(cell: Cell): Cell[] {
         const cellPosition = {
-            x: index % this.properties.width,
-            y: Math.floor(index / this.properties.width)
+            x: cell.id % this.properties.width,
+            y: Math.floor(cell.id / this.properties.width),
         }
         const adjacentCells = []
         for (let y of [-1, 0, 1]) {
@@ -116,33 +117,22 @@ export class Board {
                 const newX = cellPosition.x + x
                 const newY = cellPosition.y + y
                 if (newX < 0 || newX > this.properties.width - 1) {
-                    continue;
+                    continue
                 }
                 if (newY < 0 || newY > this.properties.height - 1) {
-                    continue;
+                    continue
                 }
                 if (x === 0 && y === 0) {
                     continue
                 }
-                adjacentCells.push(this.getCellIndex(newX, newY))
+                adjacentCells.push(this.getCellByLocation(newX, newY)!)
             }
         }
         return adjacentCells
     }
 
-    private initializeMines(emptyCell: number): number[] {
-        const clearArea = this.getAdjacentCellsIndex(emptyCell).concat(emptyCell);
-        const totalCells = this.properties.height * this.properties.width
-        return Array
-            .from(Array(totalCells).keys())
-            .filter(cell => !clearArea.includes(cell))
-            .sort(() => Math.random() - 0.5)
-            .filter((_, index) => index < this.properties.mines)
-            .sort((a, b) => a - b)
+    private getMinesSurrounding(cell: Cell): number {
+        const adjacentCells = this.getAdjacentCells(cell)
+        return adjacentCells.filter((cell) => cell.hasMine).length
     }
-
-    private getCellIndex(x: number, y: number): number {
-        return this.properties.width * y + x;
-    }
-
 }
