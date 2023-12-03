@@ -31,7 +31,7 @@ export default {
         }
     },
     methods: {
-        cellClick(data: { cell: Cell }) {
+        async cellClick(data: { cell: Cell }) {
             let revealedCells = []
             if (this.board.isInitialized()) {
                 revealedCells = this.board.revealCell(data.cell)
@@ -45,7 +45,11 @@ export default {
                     ai = new MineSweeperSolver(this.board as Board)
                 }
                 ai.updatePropositions(revealedCells)
-                const safeCells = ai.selectUnreveilledSafeCell().map(cell => cell.id)
+                const safeCells = ai.selectUnrevealedSafeCell().map(cell => cell.id)
+                if (safeCells.length > 0) {
+                    this.cellClick({ cell: this.board.getCellById(safeCells[0])! })
+                    return
+                }
                 this.aiHint = safeCells
                 console.log('safe cells to click on', safeCells)
             }

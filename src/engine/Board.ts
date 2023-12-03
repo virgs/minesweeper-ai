@@ -81,7 +81,7 @@ export class Board {
             } else {
                 if (clickedCell.minesAround === 0) {
                     const moreReveiledCells = this.getAdjacentCells(clickedCell)
-                        .filter((cell) => cell.isNotRevealed)
+                        .filter((cell) => cell.isNotRevealed())
                         .map((cell) => this.revealCell(cell))
                         .flat()
                     result.push(...moreReveiledCells)

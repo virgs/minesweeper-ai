@@ -1,11 +1,12 @@
 <template>
-    <div @click="click" :class="{ cell: true, revealed: cell.isRevealed(), hint: hint }">
-        <small style="color: maroon; font-size: 10px;"> {{ cell.id }}</small>
+    <div @click="click" @mouseenter="mouseOver = true" @mousedown="mouseDown = true" @mouseup="mouseDown = false"
+        @mouseleave="mouseOver = false" :class="classStyle">
+        <!-- <small style="color: maroon; font-size: 8px;"> {{ cell.id }}</small> -->
         <div v-if="cell.isRevealed()">
             <i v-if="cell.hasMine" style="color: black">
                 <font-awesome-icon icon="fa-solid fa-bomb" />
             </i>
-            <i v-else :style="style">
+            <i v-else :style="numberStyle">
                 {{ cell.minesAround }}
             </i>
         </div>
@@ -29,34 +30,49 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            flagged: false,
+            mouseOver: false,
+            mouseDown: false
+        }
+    },
     computed: {
-        style() {
+        classStyle() {
+            const revealed = this.cell.isRevealed()
+            return {
+                cell: true,
+                revealed: revealed,
+                pressed: !revealed && this.mouseDown && this.mouseOver,
+                hover: !revealed && !this.mouseDown && this.mouseOver,
+                hint: !revealed && toRaw(this.aiHint).includes(this.cell.id)
+            }
+
+        },
+        numberStyle() {
             const style: any = {
                 color: this.numberColor,
             }
             return style
         },
-        hint() {
-            return this.cell.isNotRevealed() && toRaw(this.aiHint).includes(this.cell.id)
-        },
         numberColor(): string {
             switch (this.cell.minesAround) {
                 case 1:
-                    return 'blue'
+                    return '#0703f4'
                 case 2:
-                    return 'green'
+                    return '#2a7a00'
                 case 3:
-                    return 'red'
+                    return '#eb0206'
                 case 4:
-                    return 'darkblue'
+                    return '#02027c'
                 case 5:
-                    return 'maroon'
+                    return '#7b0403'
                 case 6:
-                    return 'turquoise'
+                    return '#2b7c7b'
                 case 7:
-                    return 'purple'
+                    return '#000000'
                 case 8:
-                    return 'gray-dark'
+                    return '#7c7c7c'
             }
 
             return 'transparent'
@@ -64,17 +80,15 @@ export default {
     },
     methods: {
         click() {
-            this.$emit('clicked', { cell: this.cell })
+            if (this.cell.isNotRevealed()) {
+                this.$emit('clicked', { cell: this.cell })
+            }
         },
     },
 }
 </script>
 
 <style scoped>
-#grid.disabled .cell {
-    pointer-events: none;
-}
-
 .cell {
     text-align: center;
     cursor: pointer;
@@ -103,26 +117,9 @@ export default {
     line-height: 24px;
 }
 
-.cell::before {
-    /* top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    content: '';
-    position: absolute;
-    background-color: #d1d1d1; */
-}
 
-.cell::after {
-    /* top: 50%;
-    left: 50%;
-    content: '';
-    position: absolute;
-    transform: translate(-50%, -50%); */
-}
 
-.cell:hover {
+.cell.hover {
     background-color: #ebebeb;
 }
 
@@ -131,43 +128,12 @@ export default {
     cursor: default;
 }
 
-.cell.revealed {
-    /* display: none; */
+.cell.pressed {
+    border: 1px solid #b8b8b8;
+    cursor: default;
 }
 
-#grid .cell.mine {
+.cell.mine {
     background-color: #ec433c;
-}
-
-#grid .cell.mine::after {
-    /* border-radius: 50%;
-    width: 12px;
-    height: 12px;
-    background-color: #333; */
-}
-
-/* 
-#grid .cell.incorrect .flag::before,
-#grid .cell.incorrect .flag::after {
-    top: 50%;
-    z-index: 1;
-    left: -13px;
-    height: 2px;
-    width: 16px;
-    content: '';
-    position: absolute;
-    background-color: black;
-} */
-/* 
-#grid .cell.incorrect .flag::before {
-    transform: rotate(-45deg);
-}
-
-#grid .cell.incorrect .flag::after {
-    transform: rotate(45deg);
-} */
-
-#grid .cell.mousedown {
-    border: none;
 }
 </style>

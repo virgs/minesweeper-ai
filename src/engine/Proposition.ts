@@ -14,6 +14,10 @@ export class Proposition {
         return `/${this.origin}/: (${this.cellsIndex.length}) ${this.cellsIndex.sort((a, b) => a - b)}: mines -> {${this.mines}}`
     }
 
+    public hash(): string {
+        return `${this.cellsIndex.sort((a, b) => a - b)}:${this.mines}`
+    }
+
     public getMineRatio(): number {
         return this.mines / this.cellsIndex.length
     }
