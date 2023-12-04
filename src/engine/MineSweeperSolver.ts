@@ -74,7 +74,7 @@ export class MineSweeperSolver {
 
         // this.reducePropositions()
         console.log(this.propositions.map((p) => p.toString()))
-        // console.log('ai mines', this.mineCellsIds)
+        console.log('ai mines', this.mineCellsIds)
         // console.log('ai safes', this.safeCellsIds)
         // console.log(
         //     'ai unreveilled',
@@ -110,9 +110,6 @@ export class MineSweeperSolver {
                 } else {
                     this.addMineCells(...proposition.getCells())
                 }
-                // if (proposition.isSatisfied() && proposition.hasNoMine()) {
-                //     proposition.getCells().forEach(cell => this.addSafeCells(cell))
-                // }
                 return false
             })
         let propositionMap: { [propname: string]: Proposition } = {}

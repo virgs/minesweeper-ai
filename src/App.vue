@@ -24,7 +24,7 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(intermediate)
+        const board = new Board(expert)
         return {
             board: board,
             aiHint: [] as Number[]
