@@ -22,6 +22,10 @@ export class MineSweeperSolver {
         this.propositions = []
     }
 
+    public getKnownMineCellsIds(): number[] {
+        return this.mineCellsIds;
+    }
+
     public selectUnrevealedSafeCell(): Cell[] {
         return this.board.getNotRevealedCells().filter((cell) => this.safeCellsIds.includes(cell.id))
     }

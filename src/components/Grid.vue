@@ -2,7 +2,8 @@
     <div id="grid">
         <div v-for="line in board.properties.height" style="display: inline-flex">
             <div v-for="column in board.properties.width">
-                <CellVue @clicked="cellClick" :cell="board.getCellByLocation(column - 1, line - 1)!" :ai-hint="aiHint" />
+                <CellVue @clicked="cellClick" :cell="board.getCellByLocation(column - 1, line - 1)!"
+                    :knownMineCellsIds="knownMineCellsIds" :knownSafeCellsIds="knownSafeCellsIds" />
             </div>
         </div>
     </div>
@@ -23,7 +24,11 @@ export default {
             type: Object as PropType<Board>,
             required: true,
         },
-        aiHint: {
+        knownSafeCellsIds: {
+            type: Object as PropType<Number[]>,
+            required: true,
+        },
+        knownMineCellsIds: {
             type: Object as PropType<Number[]>,
             required: true,
         },

@@ -1,6 +1,7 @@
 <template>
     <main>
-        <Grid :board="(board as Board)" :ai-hint="aiHint" @cell-click="cellClick"></Grid>
+        <Grid :board="(board as Board)" :knownMineCellsIds="knownMineCellsIds" :knownSafeCellsIds="knownSafeCellsIds"
+            @cell-click="cellClick"></Grid>
     </main>
 </template>
 
@@ -10,6 +11,11 @@ import Grid from './components/Grid.vue'
 import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
 import { MineSweeperSolver } from './engine/MineSweeperSolver'
+
+
+import { add } from './as/build/assembly'
+
+console.log(add(3, 4)) // prints: '7'
 
 const beginner = { height: 9, width: 9, mines: 10 }
 const intermediate = { height: 16, width: 16, mines: 40 }
@@ -24,10 +30,11 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(expert)
+        const board = new Board(intermediate)
         return {
             board: board,
-            aiHint: [] as Number[]
+            knownSafeCellsIds: [] as Number[],
+            knownMineCellsIds: [] as Number[]
         }
     },
     methods: {
@@ -46,16 +53,20 @@ export default {
                 }
                 ai.updatePropositions(revealedCells)
                 const safeCells = ai.selectUnrevealedSafeCell().map(cell => cell.id)
+                this.knownSafeCellsIds = safeCells
+                this.knownMineCellsIds = ai.getKnownMineCellsIds()
                 if (safeCells.length > 0) {
                     this.cellClick({ cell: this.board.getCellById(safeCells[0])! })
                     return
                 }
-                this.aiHint = safeCells
                 console.log('safe cells to click on', safeCells)
             }
 
         },
         gameIsOver(data: { victory: boolean }) {
+            this.knownSafeCellsIds = ai.selectUnrevealedSafeCell().map(cell => cell.id)
+            this.knownMineCellsIds = ai.getKnownMineCellsIds()
+
             console.log('game finished', data.victory ? 'you won' : 'you lost')
         }
     }
