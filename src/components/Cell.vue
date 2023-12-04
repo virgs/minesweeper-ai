@@ -24,7 +24,7 @@ import { toRaw, type PropType } from 'vue'
 
 export default {
     name: 'Cell',
-    emits: ['clicked', 'doubleClicked'],
+    emits: ['clicked', 'doubleClicked', 'flagged', 'unflagged'],
     props: {
         cell: {
             type: Object as PropType<Cell>,
@@ -49,6 +49,7 @@ export default {
     watch: {
         knownMineCellsIds() {
             this.flagged = toRaw(this.knownMineCellsIds).includes(this.cell.id)
+            this.emitFlagEvent()
         }
     },
     computed: {
@@ -95,6 +96,7 @@ export default {
                 }
             } else if (this.mouseButtonDown === MouseButtons.RIGHT) {
                 this.flagged = !this.flagged
+                this.emitFlagEvent()
             }
 
             this.mouseButtonDown = event.buttons
@@ -103,6 +105,13 @@ export default {
             if (this.cell.isRevealed()) {
                 console.log('double')
                 this.$emit('doubleClicked', { cell: this.cell })
+            }
+        },
+        emitFlagEvent() {
+            if (this.flagged) {
+                this.$emit('flagged', { cell: this.cell })
+            } else {
+                this.$emit('unflagged', { cell: this.cell })
             }
         }
     },
