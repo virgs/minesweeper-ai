@@ -1,10 +1,5 @@
+import type { BoardProperties } from './BoardProperties'
 import { Cell } from './Cell'
-
-export type BoardProperties = {
-    width: number
-    height: number
-    mines: number
-}
 
 export class Board {
     readonly properties: BoardProperties

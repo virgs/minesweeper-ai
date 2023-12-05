@@ -10,15 +10,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faBomb, faFlag } from '@fortawesome/free-solid-svg-icons'
+import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 // <font-awesome - icon icon = "fa-solid fa-sun" />
 // <font-awesome - icon icon = "fa-regular fa-sun" />
 // <font-awesome-icon icon="fa-solid fa-bomb" shake />
+// <font-awesome-icon icon="fa-solid fa-bomb" shake />
 // <font-awesome-icon :icon="['fat', 'burst']" beat-fade style="color: #22511f;" />
 
 /* add icons to the library */
-library.add(faBomb, faFlag)
+library.add(faBomb, faFlag, faXmark)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)

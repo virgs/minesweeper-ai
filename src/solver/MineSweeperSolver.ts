@@ -1,6 +1,6 @@
-import { Board } from './Board'
-import type { Cell } from './Cell'
-import { Proposition } from './Proposition'
+import { Board } from '../engine/Board'
+import type { Cell } from '../engine/Cell'
+import { Proposition } from '../engine/Proposition'
 
 const mainPropositionThreshold = 0.2
 

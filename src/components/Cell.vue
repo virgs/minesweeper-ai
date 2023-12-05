@@ -11,7 +11,8 @@
             </i>
         </div>
         <div v-else-if="flagged" class="flag">
-            <font-awesome-icon icon="fa-solid fa-flag" />
+            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
+            <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
     </div>
 </template>
@@ -38,6 +39,10 @@ export default {
             type: Object as PropType<Number[]>,
             required: true,
         },
+        gameOver: {
+            type: Boolean,
+            required: true,
+        },
     },
     data() {
         return {
@@ -59,7 +64,7 @@ export default {
                 cell: true,
                 revealed: revealed,
                 pressed: !revealed && !this.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
-                hover: !revealed && !this.flagged && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
+                hover: !revealed && !this.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
                 hint: !revealed && toRaw(this.knownSafeCellsIds).includes(this.cell.id)
             }
 
@@ -79,6 +84,9 @@ export default {
             event.preventDefault();
         },
         mouseEnter(event: MouseEvent) {
+            if (this.gameOver) {
+                return
+            }
             this.mouseOver = true
             this.mouseButtonDown = event.buttons
         },
@@ -87,6 +95,9 @@ export default {
             this.mouseButtonDown = MouseButtons.NONE
         },
         mouseDownEvent(event: MouseEvent) {
+            if (this.gameOver) {
+                return
+            }
             this.mouseButtonDown = event.buttons
         },
         mouseUpEvent(event: MouseEvent) {
@@ -103,7 +114,6 @@ export default {
         },
         doubleClick(event: MouseEvent) {
             if (this.cell.isRevealed()) {
-                console.log('double')
                 this.$emit('doubleClicked', { cell: this.cell })
             }
         },
@@ -121,9 +131,8 @@ export default {
 <style scoped>
 .cell {
     text-align: center;
-    cursor: pointer;
-    height: 28px;
-    width: 28px;
+    height: 26px;
+    width: 26px;
     position: relative;
     background-color: #d1d1d1;
     border-width: 3px;
@@ -140,7 +149,7 @@ export default {
     bottom: 0;
     margin: 0;
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     font-style: normal;
     position: absolute;
@@ -148,19 +157,17 @@ export default {
 }
 
 
-
-.cell.hover {
+.hover {
     background-color: #ebebeb;
+    cursor: pointer;
 }
 
 .cell.revealed {
     border: 1px solid #b8b8b8;
-    cursor: default;
 }
 
 .cell.pressed {
     border: 1px solid #b8b8b8;
-    cursor: default;
 }
 
 .cell.mine {

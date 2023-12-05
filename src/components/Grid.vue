@@ -3,8 +3,8 @@
         <div v-for="line in board.properties.height" style="display: inline-flex">
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" :knownMineCellsIds="knownMineCellsIds"
-                    :knownSafeCellsIds="knownSafeCellsIds" @clicked="cellClick" @doubleClicked="cellDoubleClicked"
-                    @flagged="cellFlagged" @unflagged="cellUnflagged" />
+                    :knownSafeCellsIds="knownSafeCellsIds" @clicked="cellClick" :gameOver="gameOver"
+                    @doubleClicked="cellDoubleClicked" @flagged="cellFlagged" @unflagged="cellUnflagged" />
             </div>
         </div>
     </div>
@@ -23,6 +23,10 @@ export default {
     props: {
         board: {
             type: Object as PropType<Board>,
+            required: true,
+        },
+        gameOver: {
+            type: Boolean,
             required: true,
         },
         knownSafeCellsIds: {
@@ -46,7 +50,6 @@ export default {
         cellDoubleClicked(data: { cell: Cell }) {
             const adjacentCells = this.board.getAdjacentCells(data.cell)
             const flagsAround = adjacentCells.filter(cell => this.flaggedCells.includes(cell.id)).length
-            console.log('adj', adjacentCells.length, 'flags', flagsAround)
             if (flagsAround === data.cell.minesAround) {
                 adjacentCells
                     .filter(cell => cell.isNotRevealed() && !this.flaggedCells.includes(cell.id))
@@ -56,11 +59,9 @@ export default {
             }
         },
         cellFlagged(data: { cell: Cell }) {
-            // console.log('cellFlagged')
             this.flaggedCells.push(data.cell.id)
         },
         cellUnflagged(data: { cell: Cell }) {
-            // console.log('cellUnflagged')
             this.flaggedCells = this.flaggedCells
                 .filter(cell => cell !== data.cell.id)
         },

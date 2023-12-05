@@ -14,6 +14,13 @@
         "start": "npx serve ."
     },
     "devDependencies": {
-        "assemblyscript": "^0.23.1"
+        "assemblyscript": "^0.27.14",
+        "visitor-as": "^0.11.4"
+    },
+    "dependencies": {
+        "json-as": "^0.6.4"
+    },
+    "overrides": {
+        "assemblyscript": "$assemblyscript"
     }
 }

@@ -1,9 +1,8 @@
 /** Exported memory */
 export declare const memory: WebAssembly.Memory;
 /**
- * src/as/assembly/index/add
- * @param a `i32`
- * @param b `i32`
- * @returns `i32`
+ * assembly/index/board
+ * @param text `~lib/string/String`
+ * @returns `~lib/string/String`
  */
-export declare function add(a: number, b: number): number;
+export declare function board(text: string): string;

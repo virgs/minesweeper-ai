@@ -1,7 +1,7 @@
 <template>
     <main>
-        <Grid :board="(board as Board)" :knownMineCellsIds="knownMineCellsIds" :knownSafeCellsIds="knownSafeCellsIds"
-            @cell-click="cellClick"></Grid>
+        <Grid :board="(board as Board)" :gameOver="gameOver" :knownMineCellsIds="knownMineCellsIds"
+            :knownSafeCellsIds="knownSafeCellsIds" @cell-click="cellClick"></Grid>
     </main>
 </template>
 
@@ -10,63 +10,54 @@
 import Grid from './components/Grid.vue'
 import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
-import { MineSweeperSolver } from './engine/MineSweeperSolver'
+import { Solver } from './solver/Solver'
 
+import { GameConfigurations } from './engine/BoardProperties'
 
-import { add } from './as/build/assembly'
-
-console.log(add(3, 4)) // prints: '7'
-
-const beginner = { height: 9, width: 9, mines: 10 }
-const intermediate = { height: 16, width: 16, mines: 40 }
-const expert = { height: 16, width: 30, mines: 99 }
-
-const custom = { height: 10, width: 10, mines: 12 }
-
-let ai: MineSweeperSolver
 export default {
     name: 'App',
     components: {
         Grid
     },
     data() {
-        const board = new Board(intermediate)
+        const board = new Board(GameConfigurations.Intermediate)
         return {
             board: board,
-            knownSafeCellsIds: [] as Number[],
-            knownMineCellsIds: [] as Number[]
+            gameOver: false,
+            knownSafeCellsIds: [] as number[],
+            knownMineCellsIds: [] as number[],
+            solver: new Solver(board)
         }
     },
     methods: {
         async cellClick(data: { cell: Cell }) {
-            let revealedCells = []
             if (this.board.isInitialized()) {
-                revealedCells = this.board.revealCell(data.cell)
+                this.board.revealCell(data.cell)
             } else {
-                revealedCells = this.board.initializeMinesAroundCell(data.cell)
+                this.board.initializeMinesAroundCell(data.cell)
             }
             if (this.board.isGameLost() || this.board.isGameWon()) {
                 this.gameIsOver({ victory: this.board.isGameWon() })
             } else {
-                if (!ai) {
-                    ai = new MineSweeperSolver(this.board as Board)
+                console.log('updating')
+                await this.solver.update()
+                const previousKnownCellsLength = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
+                this.knownSafeCellsIds = this.solver.knownSafeCellsIds
+                this.knownMineCellsIds = this.solver.knownMineCellsIds
+                const knownCellsLength = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
+                console.log('updated')
+                if (previousKnownCellsLength !== knownCellsLength) {
+                    this.knownSafeCellsIds
+                        .forEach(cellId => this.cellClick({ cell: this.board.getCellById(cellId)! }))
                 }
-                ai.updatePropositions(revealedCells)
-                const safeCells = ai.selectUnrevealedSafeCell().map(cell => cell.id)
-                this.knownSafeCellsIds = safeCells
-                this.knownMineCellsIds = ai.getKnownMineCellsIds()
-                if (safeCells.length > 0) {
-                    this.cellClick({ cell: this.board.getCellById(safeCells[0])! })
-                    return
-                }
-                console.log('safe cells to click on', safeCells)
             }
 
         },
         gameIsOver(data: { victory: boolean }) {
-            this.knownSafeCellsIds = ai.selectUnrevealedSafeCell().map(cell => cell.id)
-            this.knownMineCellsIds = ai.getKnownMineCellsIds()
+            this.knownSafeCellsIds = this.solver.knownSafeCellsIds
+            this.knownMineCellsIds = this.solver.knownMineCellsIds
 
+            this.gameOver = true
             console.log('game finished', data.victory ? 'you won' : 'you lost')
         }
     }
@@ -80,4 +71,4 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-</style>
+</style>./solver/MineSweeperSolver
