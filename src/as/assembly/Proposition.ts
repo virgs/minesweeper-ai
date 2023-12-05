@@ -5,8 +5,9 @@ export class Proposition {
 
     public constructor(origin: string, cells: number[], mines: number) {
         this.origin = origin
-        const set = new Set<number>(cells)
-        this.cellsIndex = Array.from(set)
+        const set = new Set<number>()
+        cells.forEach(cell => set.add(cell))
+        this.cellsIndex = set.values()
         this.mines = mines
     }
 
@@ -30,7 +31,7 @@ export class Proposition {
         return this.mines
     }
 
-    public isSubSetOf(otherProposition: Proposition): boolean {
+    public isSubSetOf(otherProposition: Proposition): bool {
         return (
             this.cellsIndex.length < otherProposition.cellsIndex.length &&
             this.cellsIndex.every((otherCell) => otherProposition.cellsIndex.includes(otherCell))
@@ -61,7 +62,6 @@ export class Proposition {
         return previousCellsLength !== this.cellsIndex.length
     }
 
-    // returns true if this method changed the proposition
     public removeSafeCells(safes: number[]): boolean {
         let previousCellsLength = this.cellsIndex.length
         this.cellsIndex = this.cellsIndex.filter((cell) => !safes.includes(cell))
@@ -80,7 +80,7 @@ export class Proposition {
         return this.mines === 0
     }
 
-    public isEqual(other: Proposition): boolean {
+    public isEqual(other: Proposition): bool {
         if (this.mines != other.mines) {
             return false
         }

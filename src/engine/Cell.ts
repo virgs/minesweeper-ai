@@ -1,13 +1,13 @@
 export class Cell {
     private readonly _id: number
-    private _hasMine: boolean
-    private _minesAround: number
-    private _revealed: boolean
+    private mine: boolean
+    private minesCount: number
+    private revealed: boolean
 
     public constructor(id: number) {
-        this._hasMine = false
-        this._revealed = false
-        this._minesAround = 0
+        this.mine = false
+        this.revealed = false
+        this.minesCount = 0
         this._id = id
     }
 
@@ -16,30 +16,30 @@ export class Cell {
     }
 
     public get hasMine(): boolean {
-        return this._hasMine
+        return this.mine
     }
 
     public set hasMine(value: boolean) {
-        this._hasMine = value
+        this.mine = value
     }
 
     public get minesAround(): number {
-        return this._minesAround
+        return this.minesCount
     }
 
     public set minesAround(value: number) {
-        this._minesAround = value
+        this.minesCount = value
     }
 
     public isRevealed(): boolean {
-        return this._revealed
+        return this.revealed
     }
 
     public isNotRevealed(): boolean {
-        return !this._revealed
+        return !this.revealed
     }
 
     public reveal(): void {
-        this._revealed = true
+        this.revealed = true
     }
 }

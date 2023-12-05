@@ -1,5 +1,5 @@
 import type { Board } from '@/engine/Board';
-import type { Guess } from './Guess';
+import type { Guess } from '@/constants/Guess';
 import type { SolverRequest, SolverResponse } from './WebWorker';
 import Worker from './WebWorker?worker';
 
@@ -26,20 +26,6 @@ export class Solver {
                 this._guesses = event.data.guesses
                 resolve()
             }
-
-
-            // if (!ai) {
-            //     ai = new MineSweeperSolver(this.board as Board)
-            // }
-            // ai.updatePropositions(revealedCells)
-            // const safeCells = ai.selectUnrevealedSafeCell().map(cell => cell.id)
-            // this.knownSafeCellsIds = safeCells
-            // this.knownMineCellsIds = ai.getKnownMineCellsIds()
-            // if (safeCells.length > 0) {
-            //     this.cellClick({ cell: this.board.getCellById(safeCells[0])! })
-            //     return
-            // }
-            // console.log('safe cells to click on', safeCells)
 
             const request: SolverRequest = {
                 board: JSON.stringify(this.board)

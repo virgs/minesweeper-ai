@@ -23,7 +23,7 @@ async function instantiate(module, imports = {}) {
   const memory = exports.memory || imports.env.memory;
   const adaptedExports = Object.setPrototypeOf({
     board(text) {
-      // assembly/index/board(~lib/string/String) => ~lib/string/String
+      // src/as/assembly/index/board(~lib/string/String) => ~lib/string/String
       text = __lowerString(text) || __notnull();
       return __liftString(exports.board(text) >>> 0);
     },

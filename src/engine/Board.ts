@@ -1,4 +1,4 @@
-import type { BoardProperties } from './BoardProperties'
+import type { BoardProperties } from '../constants/BoardProperties'
 import { Cell } from './Cell'
 
 export class Board {

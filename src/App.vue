@@ -8,11 +8,11 @@
 <script lang="ts">
 
 import Grid from './components/Grid.vue'
+import { GameConfigurations } from './constants/GameConfiguration'
 import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
 import { Solver } from './solver/Solver'
 
-import { GameConfigurations } from './engine/BoardProperties'
 
 export default {
     name: 'App',
@@ -71,4 +71,4 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-</style>./solver/MineSweeperSolver
+</style>./solver/MineSweeperSolver./constants/BoardProperties

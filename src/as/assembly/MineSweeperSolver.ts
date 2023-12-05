@@ -1,6 +1,6 @@
-import { Board } from '../engine/Board'
-import type { Cell } from '../engine/Cell'
-import { Proposition } from '../engine/Proposition'
+import { Board } from './Board'
+import type { Cell } from './Cell'
+import { Proposition } from './Proposition'
 
 const mainPropositionThreshold = 0.2
 
@@ -74,11 +74,11 @@ export class MineSweeperSolver {
             }
 
         }
-        console.log('updating is over', this.board.getNotRevealedCells().length / this.totalCells)
+        // console.log('updating is over', this.board.getNotRevealedCells().length / this.totalCells)
 
         // this.reducePropositions()
-        console.log(this.propositions.map((p) => p.toString()))
-        console.log('ai mines', this.mineCellsIds)
+        // console.log(this.propositions.map((p) => p.toString()))
+        // console.log('ai mines', this.mineCellsIds)
         // console.log('ai safes', this.safeCellsIds)
         // console.log(
         //     'ai unreveilled',
@@ -108,7 +108,8 @@ export class MineSweeperSolver {
                 if (!proposition.isSatisfied() && proposition.getCells().length >= 0) {
                     return true
                 }
-                console.log('remove satisfied proposition', proposition.toString())
+                // console.log('remove satisfied proposition', proposition.toString())
+                const cells = proposition.getCells()
                 if (proposition.hasNoMine()) {
                     this.addSafeCells(...proposition.getCells())
                 } else {

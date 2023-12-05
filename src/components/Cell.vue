@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import type { Cell } from '@/engine/Cell'
-import { MouseButtons } from '@/engine/MouseButtons'
-import { NumberColor } from '@/engine/NumberColor'
+import { MouseButtons } from '@/constants/MouseButtons'
+import { NumberColor } from '@/constants/NumberColor'
 import { toRaw, type PropType } from 'vue'
 
 export default {
@@ -178,3 +178,4 @@ export default {
     color: #ec433c;
 }
 </style>
+@/constants/MouseButtons@/constants/NumberColor
