@@ -21,7 +21,7 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(GameConfigurations.Beginner)
+        const board = new Board(GameConfigurations.Expert)
         return {
             board: board,
             gameOver: false,
