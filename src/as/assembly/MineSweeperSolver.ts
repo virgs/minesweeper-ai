@@ -2,7 +2,7 @@ import { Board } from './Board'
 import { Cell } from './models/Cell'
 import { Proposition } from './Proposition'
 
-const mainPropositionThreshold: f32 = 0.2
+const mainPropositionThreshold: f32 = 0.225
 
 export class MineSweeperSolver {
     private readonly board: Board
@@ -34,17 +34,17 @@ export class MineSweeperSolver {
     }
 
     public selectLowestChanceCell(): i32 {
-        let lowetRationPropositionIndex = -1
+        let lowetRatioPropositionIndex = -1
         this.propositions.reduce((lowestMineRatio, proposition, index) => {
             const mineRation = proposition.getMineRatio()
             if (mineRation < lowestMineRatio) {
-                lowetRationPropositionIndex = index
+                lowetRatioPropositionIndex = index
                 lowestMineRatio = mineRation
             }
             return lowestMineRatio
         }, Infinity)
-        if (lowetRationPropositionIndex >= 0) {
-            const selectedProposition = this.propositions[lowetRationPropositionIndex]
+        if (lowetRatioPropositionIndex >= 0) {
+            const selectedProposition = this.propositions[lowetRatioPropositionIndex]
             console.log(
                 'Going luck based: ' +
                 selectedProposition.toString() +
@@ -83,6 +83,8 @@ export class MineSweeperSolver {
             const proposition = this.propositions[i]
             console.log(proposition.toString())
         }
+        const ratio: f32 = f32(this.board.getNotRevealedCells().length) / f32(this.totalCells);
+        console.log('not revealed ratio: ' + ratio.toString())
     }
 
     private checkMainPropositionAddition(): boolean {
@@ -246,8 +248,14 @@ export class MineSweeperSolver {
         let newPropositions: Proposition[] = []
         for (let a = 0; a < this.propositions.length; ++a) {
             for (let b = 0; b < this.propositions.length; ++b) {
+                if (this.propositions[a].getCells().length <= 0 || this.propositions[b].getCells().length <= 0) {
+                    continue
+                }
+                const differenceProposition = this.propositions[a].subtract(this.propositions[b])
                 if (this.propositions[b].isSubSetOf(this.propositions[a])) {
-                    const differenceProposition = this.propositions[a].subtract(this.propositions[b])
+                    newPropositions.push(differenceProposition)
+                }
+                if (differenceProposition.getMines() > 0 && differenceProposition.getMines() === differenceProposition.getCells().length) {
                     newPropositions.push(differenceProposition)
                 }
             }

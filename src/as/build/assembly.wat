@@ -16,12 +16,16 @@
  (type $14 (func (param i32 i64 i32)))
  (type $15 (func (param i64 i32) (result i32)))
  (type $16 (func (param i32 i64 i32 i32)))
+ (type $17 (func (param i32 i64 i32 i64 i32 i64 i32) (result i32)))
+ (type $18 (func (param i32 f64) (result i32)))
+ (type $19 (func (param f32 i32) (result i32)))
+ (type $20 (func (param f64) (result i32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (import "env" "console.log" (func $~lib/bindings/dom/console.log (param i32)))
  (global $~lib/as-string-sink/assembly/index/MIN_BUFFER_LEN i32 (i32.const 32))
  (global $~lib/as-string-sink/assembly/index/MIN_BUFFER_SIZE i32 (i32.const 64))
  (global $~lib/as-string-sink/assembly/index/NEW_LINE_CHAR i32 (i32.const 10))
- (global $src/as/assembly/MineSweeperSolver/mainPropositionThreshold f32 (f32.const 0.20000000298023224))
+ (global $src/as/assembly/MineSweeperSolver/mainPropositionThreshold f32 (f32.const 0.22499999403953552))
  (global $~lib/shared/runtime/Runtime.Stub i32 (i32.const 0))
  (global $~lib/shared/runtime/Runtime.Minimal i32 (i32.const 1))
  (global $~lib/shared/runtime/Runtime.Incremental i32 (i32.const 2))
@@ -40,11 +44,17 @@
  (global $~lib/native/ASC_RUNTIME i32 (i32.const 2))
  (global $~argumentsLength (mut i32) (i32.const 0))
  (global $~lib/builtins/u32.MAX_VALUE i32 (i32.const -1))
+ (global $~lib/util/number/_frc_plus (mut i64) (i64.const 0))
+ (global $~lib/util/number/_frc_minus (mut i64) (i64.const 0))
+ (global $~lib/util/number/_exp (mut i32) (i32.const 0))
+ (global $~lib/util/number/_K (mut i32) (i32.const 0))
+ (global $~lib/util/number/_frc_pow (mut i64) (i64.const 0))
+ (global $~lib/util/number/_exp_pow (mut i32) (i32.const 0))
  (global $~lib/builtins/i32.MAX_VALUE i32 (i32.const 2147483647))
- (global $~lib/rt/__rtti_base i32 (i32.const 5632))
- (global $~lib/memory/__data_end i32 (i32.const 5732))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 38500))
- (global $~lib/memory/__heap_base i32 (i32.const 38500))
+ (global $~lib/rt/__rtti_base i32 (i32.const 6832))
+ (global $~lib/memory/__data_end i32 (i32.const 6932))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 39700))
+ (global $~lib/memory/__heap_base i32 (i32.const 39700))
  (memory $0 1)
  (data $0 (i32.const 12) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\08\00\00\00t\00r\00u\00e\00\00\00\00\00")
  (data $1 (i32.const 44) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\n\00\00\00f\00a\00l\00s\00e\00\00\00")
@@ -125,19 +135,28 @@
  (data $76 (i32.const 4812) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00}\00\00\00\00\00\00\00\00\00\00\00")
  (data $77 (i32.const 4844) "<\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00$\00\00\00P\12\00\00\00\00\00\00p\12\00\00\00\00\00\00\90\12\00\00\00\00\00\00\b0\12\00\00\00\00\00\00\e0\12\00\00\00\00\00\00\00\00\00\00")
  (data $78 (i32.const 4908) "\1c\00\00\00\00\00\00\00\00\00\00\00\0f\00\00\00\08\00\00\00\06\00\00\00\00\00\00\00\00\00\00\00")
- (data $79 (i32.const 4940) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $80 (i32.const 4972) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00{\00\"\00k\00n\00o\00w\00n\00M\00i\00n\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
- (data $81 (i32.const 5036) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00,\00\"\00k\00n\00o\00w\00n\00S\00a\00f\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
- (data $82 (i32.const 5100) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\16\00\00\00,\00\"\00g\00u\00e\00s\00s\00e\00s\00\"\00:\00\00\00\00\00\00\00")
- (data $83 (i32.const 5148) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\1c\00\00\00\80\13\00\00\00\00\00\00\c0\13\00\00\00\00\00\00\00\14\00\00\00\00\00\00\e0\12\00\00")
- (data $84 (i32.const 5196) "l\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00P\00\00\00s\00r\00c\00/\00a\00s\00/\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00o\00d\00e\00l\00s\00/\00S\00o\00l\00v\00e\00r\00R\00e\00s\00p\00o\00n\00s\00e\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $85 (i32.const 5308) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00{\00\"\00m\00i\00n\00e\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
- (data $86 (i32.const 5356) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00,\00\"\00c\00e\00l\00l\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
- (data $87 (i32.const 5404) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\d0\14\00\00\00\00\00\00\00\15\00\00\00\00\00\00\e0\12\00\00\00\00\00\00\00\00\00\00")
- (data $88 (i32.const 5452) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\d0\14\00\00\00\00\00\00\00\15\00\00\00\00\00\00\e0\12\00\00\00\00\00\00\00\00\00\00")
- (data $89 (i32.const 5500) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
- (data $90 (i32.const 5564) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
- (data $91 (i32.const 5632) "\18\00\00\00 \00\00\00 \00\00\00 \00\00\00\00\00\00\00\00\00\00\00 \00\00\00 \00\00\00\02A\00\00 \00\00\00\04A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00 \00\00\00\08\t\00\00\10A\82\00\00\00\00\00 \00\00\00\02A\00\00 \00\00\00\00\00\00\00")
+ (data $79 (i32.const 4940) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00(\00\00\00n\00o\00t\00 \00r\00e\00v\00e\00a\00l\00e\00d\00 \00r\00a\00t\00i\00o\00:\00 \00\00\00\00\00")
+ (data $80 (i32.const 5004) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\000\00.\000\00\00\00\00\00\00\00")
+ (data $81 (i32.const 5036) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00N\00a\00N\00\00\00\00\00\00\00")
+ (data $82 (i32.const 5068) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00-\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00")
+ (data $83 (i32.const 5116) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\10\00\00\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $84 (i32.const 5168) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $85 (i32.const 5224) "\88\02\1c\08\a0\d5\8f\fav\bf>\a2\7f\e1\ae\bav\acU0 \fb\16\8b\ea5\ce]J\89B\cf-;eU\aa\b0k\9a\dfE\1a=\03\cf\1a\e6\ca\c6\9a\c7\17\fep\abO\dc\bc\be\fc\b1w\ff\0c\d6kA\ef\91V\be<\fc\7f\90\ad\1f\d0\8d\83\9aU1(\\Q\d3\b5\c9\a6\ad\8f\acq\9d\cb\8b\ee#w\"\9c\eamSx@\91I\cc\aeW\ce\b6]y\12<\827V\fbM6\94\10\c2O\98H8o\ea\96\90\c7:\82%\cb\85t\d7\f4\97\bf\97\cd\cf\86\a0\e5\ac*\17\98\n4\ef\8e\b25*\fbg8\b2;?\c6\d2\df\d4\c8\84\ba\cd\d3\1a\'D\dd\c5\96\c9%\bb\ce\9fk\93\84\a5b}$l\ac\db\f6\da_\rXf\ab\a3&\f1\c3\de\93\f8\e2\f3\b8\80\ff\aa\a8\ad\b5\b5\8bJ|l\05_b\87S0\c14`\ff\bc\c9U&\ba\91\8c\85N\96\bd~)p$w\f9\df\8f\b8\e5\b8\9f\bd\df\a6\94}t\88\cf_\a9\f8\cf\9b\a8\8f\93pD\b9k\15\0f\bf\f8\f0\08\8a\b611eU%\b0\cd\ac\7f{\d0\c6\e2?\99\06;+*\c4\10\\\e4\d3\92si\99$$\aa\0e\ca\00\83\f2\b5\87\fd\eb\1a\11\92d\08\e5\bc\cc\88Po\t\cc\bc\8c,e\19\e2X\17\b7\d1\00\00\00\00\00\00@\9c\00\00\00\00\10\a5\d4\e8\00\00b\ac\c5\ebx\ad\84\t\94\f8x9?\81\b3\15\07\c9{\ce\97\c0p\\\ea{\ce2~\8fh\80\e9\ab\a48\d2\d5E\"\9a\17&\'O\9f\'\fb\c4\d41\a2c\ed\a8\ad\c8\8c8e\de\b0\dbe\ab\1a\8e\08\c7\83\9a\1dqB\f9\1d]\c4X\e7\1b\a6,iM\92\ea\8dp\1ad\ee\01\daJw\ef\9a\99\a3m\a2\85k}\b4{x\t\f2w\18\ddy\a1\e4T\b4\c2\c5\9b[\92\86[\86=]\96\c8\c5S5\c8\b3\a0\97\fa\\\b4*\95\e3_\a0\99\bd\9fF\de%\8c9\db4\c2\9b\a5\\\9f\98\a3r\9a\c6\f6\ce\be\e9TS\bf\dc\b7\e2A\"\f2\17\f3\fc\88\a5x\\\d3\9b\ce \cc\dfS!{\f3Z\16\98:0\1f\97\dc\b5\a0\e2\96\b3\e3\\S\d1\d9\a8<D\a7\a4\d9|\9b\fb\10D\a4\a7LLv\bb\1a\9c@\b6\ef\8e\ab\8b,\84W\a6\10\ef\1f\d0)1\91\e9\e5\a4\10\9b\9d\0c\9c\a1\fb\9b\10\e7)\f4;b\d9 (\ac\85\cf\a7z^KD\80-\dd\ac\03@\e4!\bf\8f\ffD^/\9cg\8eA\b8\8c\9c\9d\173\d4\a9\1b\e3\b4\92\db\19\9e\d9w\df\ban\bf\96\ebk\ee\f0\9b;\02\87\af")
+ (data $86 (i32.const 5920) "<\fbW\fbr\fb\8c\fb\a7\fb\c1\fb\dc\fb\f6\fb\11\fc,\fcF\fca\fc{\fc\96\fc\b1\fc\cb\fc\e6\fc\00\fd\1b\fd5\fdP\fdk\fd\85\fd\a0\fd\ba\fd\d5\fd\ef\fd\n\fe%\fe?\feZ\fet\fe\8f\fe\a9\fe\c4\fe\df\fe\f9\fe\14\ff.\ffI\ffc\ff~\ff\99\ff\b3\ff\ce\ff\e8\ff\03\00\1e\008\00S\00m\00\88\00\a2\00\bd\00\d8\00\f2\00\r\01\'\01B\01\\\01w\01\92\01\ac\01\c7\01\e1\01\fc\01\16\021\02L\02f\02\81\02\9b\02\b6\02\d0\02\eb\02\06\03 \03;\03U\03p\03\8b\03\a5\03\c0\03\da\03\f5\03\0f\04*\04")
+ (data $87 (i32.const 6096) "\01\00\00\00\n\00\00\00d\00\00\00\e8\03\00\00\10\'\00\00\a0\86\01\00@B\0f\00\80\96\98\00\00\e1\f5\05\00\ca\9a;")
+ (data $88 (i32.const 6140) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $89 (i32.const 6172) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00{\00\"\00k\00n\00o\00w\00n\00M\00i\00n\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
+ (data $90 (i32.const 6236) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00,\00\"\00k\00n\00o\00w\00n\00S\00a\00f\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
+ (data $91 (i32.const 6300) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\16\00\00\00,\00\"\00g\00u\00e\00s\00s\00e\00s\00\"\00:\00\00\00\00\00\00\00")
+ (data $92 (i32.const 6348) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\1c\00\00\000\18\00\00\00\00\00\00p\18\00\00\00\00\00\00\b0\18\00\00\00\00\00\00\e0\12\00\00")
+ (data $93 (i32.const 6396) "l\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00P\00\00\00s\00r\00c\00/\00a\00s\00/\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00o\00d\00e\00l\00s\00/\00S\00o\00l\00v\00e\00r\00R\00e\00s\00p\00o\00n\00s\00e\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $94 (i32.const 6508) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00{\00\"\00m\00i\00n\00e\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
+ (data $95 (i32.const 6556) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00,\00\"\00c\00e\00l\00l\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
+ (data $96 (i32.const 6604) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\80\19\00\00\00\00\00\00\b0\19\00\00\00\00\00\00\e0\12\00\00\00\00\00\00\00\00\00\00")
+ (data $97 (i32.const 6652) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\80\19\00\00\00\00\00\00\b0\19\00\00\00\00\00\00\e0\12\00\00\00\00\00\00\00\00\00\00")
+ (data $98 (i32.const 6700) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
+ (data $99 (i32.const 6764) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
+ (data $100 (i32.const 6832) "\18\00\00\00 \00\00\00 \00\00\00 \00\00\00\00\00\00\00\00\00\00\00 \00\00\00 \00\00\00\02A\00\00 \00\00\00\04A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\02A\00\00\00\00\00\00\00\00\00\00 \00\00\00\08\t\00\00\10A\82\00\00\00\00\00 \00\00\00\02A\00\00 \00\00\00\00\00\00\00")
  (table $0 7 7 funcref)
  (elem $0 (i32.const 1) $src/as/assembly/Board/Board#getRevealedCells~anonymous|0 $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells~anonymous|0 $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells~anonymous|0 $src/as/assembly/Proposition/Proposition#hash~anonymous|0 $src/as/assembly/Board/Board#getNotRevealedCells~anonymous|0 $src/as/assembly/Proposition/Proposition#toString~anonymous|0)
  (export "__new" (func $~lib/rt/itcms/__new))
@@ -4343,6 +4362,1328 @@
   local.get $b
   i32.sub
  )
+ (func $~lib/util/number/genDigits (param $buffer i32) (param $w_frc i64) (param $w_exp i32) (param $mp_frc i64) (param $mp_exp i32) (param $delta i64) (param $sign i32) (result i32)
+  (local $one_exp i32)
+  (local $one_frc i64)
+  (local $mask i64)
+  (local $wp_w_frc i64)
+  (local $p1 i32)
+  (local $p2 i64)
+  (local $kappa i32)
+  (local $len i32)
+  (local $d i32)
+  (local $16 i32)
+  (local $17 i32)
+  (local $tmp i64)
+  (local $buffer|19 i32)
+  (local $len|20 i32)
+  (local $delta|21 i64)
+  (local $rest i64)
+  (local $ten_kappa i64)
+  (local $wp_w i64)
+  (local $lastp i32)
+  (local $digit i32)
+  (local $d|27 i64)
+  (local $28 i32)
+  (local $buffer|29 i32)
+  (local $len|30 i32)
+  (local $delta|31 i64)
+  (local $rest|32 i64)
+  (local $ten_kappa|33 i64)
+  (local $wp_w|34 i64)
+  (local $lastp|35 i32)
+  (local $digit|36 i32)
+  i32.const 0
+  local.get $mp_exp
+  i32.sub
+  local.set $one_exp
+  i64.const 1
+  local.get $one_exp
+  i64.extend_i32_s
+  i64.shl
+  local.set $one_frc
+  local.get $one_frc
+  i64.const 1
+  i64.sub
+  local.set $mask
+  local.get $mp_frc
+  local.get $w_frc
+  i64.sub
+  local.set $wp_w_frc
+  local.get $mp_frc
+  local.get $one_exp
+  i64.extend_i32_s
+  i64.shr_u
+  i32.wrap_i64
+  local.set $p1
+  local.get $mp_frc
+  local.get $mask
+  i64.and
+  local.set $p2
+  local.get $p1
+  call $~lib/util/number/decimalCount32
+  local.set $kappa
+  local.get $sign
+  local.set $len
+  loop $while-continue|0
+   local.get $kappa
+   i32.const 0
+   i32.gt_s
+   if
+    block $break|1
+     block $case10|1
+      block $case9|1
+       block $case8|1
+        block $case7|1
+         block $case6|1
+          block $case5|1
+           block $case4|1
+            block $case3|1
+             block $case2|1
+              block $case1|1
+               block $case0|1
+                local.get $kappa
+                local.set $16
+                local.get $16
+                i32.const 10
+                i32.eq
+                br_if $case0|1
+                local.get $16
+                i32.const 9
+                i32.eq
+                br_if $case1|1
+                local.get $16
+                i32.const 8
+                i32.eq
+                br_if $case2|1
+                local.get $16
+                i32.const 7
+                i32.eq
+                br_if $case3|1
+                local.get $16
+                i32.const 6
+                i32.eq
+                br_if $case4|1
+                local.get $16
+                i32.const 5
+                i32.eq
+                br_if $case5|1
+                local.get $16
+                i32.const 4
+                i32.eq
+                br_if $case6|1
+                local.get $16
+                i32.const 3
+                i32.eq
+                br_if $case7|1
+                local.get $16
+                i32.const 2
+                i32.eq
+                br_if $case8|1
+                local.get $16
+                i32.const 1
+                i32.eq
+                br_if $case9|1
+                br $case10|1
+               end
+               local.get $p1
+               i32.const 1000000000
+               i32.div_u
+               local.set $d
+               local.get $p1
+               i32.const 1000000000
+               i32.rem_u
+               local.set $p1
+               br $break|1
+              end
+              local.get $p1
+              i32.const 100000000
+              i32.div_u
+              local.set $d
+              local.get $p1
+              i32.const 100000000
+              i32.rem_u
+              local.set $p1
+              br $break|1
+             end
+             local.get $p1
+             i32.const 10000000
+             i32.div_u
+             local.set $d
+             local.get $p1
+             i32.const 10000000
+             i32.rem_u
+             local.set $p1
+             br $break|1
+            end
+            local.get $p1
+            i32.const 1000000
+            i32.div_u
+            local.set $d
+            local.get $p1
+            i32.const 1000000
+            i32.rem_u
+            local.set $p1
+            br $break|1
+           end
+           local.get $p1
+           i32.const 100000
+           i32.div_u
+           local.set $d
+           local.get $p1
+           i32.const 100000
+           i32.rem_u
+           local.set $p1
+           br $break|1
+          end
+          local.get $p1
+          i32.const 10000
+          i32.div_u
+          local.set $d
+          local.get $p1
+          i32.const 10000
+          i32.rem_u
+          local.set $p1
+          br $break|1
+         end
+         local.get $p1
+         i32.const 1000
+         i32.div_u
+         local.set $d
+         local.get $p1
+         i32.const 1000
+         i32.rem_u
+         local.set $p1
+         br $break|1
+        end
+        local.get $p1
+        i32.const 100
+        i32.div_u
+        local.set $d
+        local.get $p1
+        i32.const 100
+        i32.rem_u
+        local.set $p1
+        br $break|1
+       end
+       local.get $p1
+       i32.const 10
+       i32.div_u
+       local.set $d
+       local.get $p1
+       i32.const 10
+       i32.rem_u
+       local.set $p1
+       br $break|1
+      end
+      local.get $p1
+      local.set $d
+      i32.const 0
+      local.set $p1
+      br $break|1
+     end
+     i32.const 0
+     local.set $d
+     br $break|1
+    end
+    local.get $d
+    local.get $len
+    i32.or
+    if
+     local.get $buffer
+     local.get $len
+     local.tee $17
+     i32.const 1
+     i32.add
+     local.set $len
+     local.get $17
+     i32.const 1
+     i32.shl
+     i32.add
+     i32.const 48
+     local.get $d
+     i32.const 65535
+     i32.and
+     i32.add
+     i32.store16
+    end
+    local.get $kappa
+    i32.const 1
+    i32.sub
+    local.set $kappa
+    local.get $p1
+    i64.extend_i32_u
+    local.get $one_exp
+    i64.extend_i32_s
+    i64.shl
+    local.get $p2
+    i64.add
+    local.set $tmp
+    local.get $tmp
+    local.get $delta
+    i64.le_u
+    if
+     global.get $~lib/util/number/_K
+     local.get $kappa
+     i32.add
+     global.set $~lib/util/number/_K
+     local.get $buffer
+     local.set $buffer|19
+     local.get $len
+     local.set $len|20
+     local.get $delta
+     local.set $delta|21
+     local.get $tmp
+     local.set $rest
+     i32.const 6096
+     local.get $kappa
+     i32.const 2
+     i32.shl
+     i32.add
+     i64.load32_u
+     local.get $one_exp
+     i64.extend_i32_s
+     i64.shl
+     local.set $ten_kappa
+     local.get $wp_w_frc
+     local.set $wp_w
+     local.get $buffer|19
+     local.get $len|20
+     i32.const 1
+     i32.sub
+     i32.const 1
+     i32.shl
+     i32.add
+     local.set $lastp
+     local.get $lastp
+     i32.load16_u
+     local.set $digit
+     loop $while-continue|3
+      local.get $rest
+      local.get $wp_w
+      i64.lt_u
+      if (result i32)
+       local.get $delta|21
+       local.get $rest
+       i64.sub
+       local.get $ten_kappa
+       i64.ge_u
+      else
+       i32.const 0
+      end
+      if (result i32)
+       local.get $rest
+       local.get $ten_kappa
+       i64.add
+       local.get $wp_w
+       i64.lt_u
+       if (result i32)
+        i32.const 1
+       else
+        local.get $wp_w
+        local.get $rest
+        i64.sub
+        local.get $rest
+        local.get $ten_kappa
+        i64.add
+        local.get $wp_w
+        i64.sub
+        i64.gt_u
+       end
+      else
+       i32.const 0
+      end
+      if
+       local.get $digit
+       i32.const 1
+       i32.sub
+       local.set $digit
+       local.get $rest
+       local.get $ten_kappa
+       i64.add
+       local.set $rest
+       br $while-continue|3
+      end
+     end
+     local.get $lastp
+     local.get $digit
+     i32.store16
+     local.get $len
+     return
+    end
+    br $while-continue|0
+   end
+  end
+  loop $while-continue|4
+   i32.const 1
+   if
+    local.get $p2
+    i64.const 10
+    i64.mul
+    local.set $p2
+    local.get $delta
+    i64.const 10
+    i64.mul
+    local.set $delta
+    local.get $p2
+    local.get $one_exp
+    i64.extend_i32_s
+    i64.shr_u
+    local.set $d|27
+    local.get $d|27
+    local.get $len
+    i64.extend_i32_s
+    i64.or
+    i64.const 0
+    i64.ne
+    if
+     local.get $buffer
+     local.get $len
+     local.tee $28
+     i32.const 1
+     i32.add
+     local.set $len
+     local.get $28
+     i32.const 1
+     i32.shl
+     i32.add
+     i32.const 48
+     local.get $d|27
+     i32.wrap_i64
+     i32.const 65535
+     i32.and
+     i32.add
+     i32.store16
+    end
+    local.get $p2
+    local.get $mask
+    i64.and
+    local.set $p2
+    local.get $kappa
+    i32.const 1
+    i32.sub
+    local.set $kappa
+    local.get $p2
+    local.get $delta
+    i64.lt_u
+    if
+     global.get $~lib/util/number/_K
+     local.get $kappa
+     i32.add
+     global.set $~lib/util/number/_K
+     local.get $wp_w_frc
+     i32.const 6096
+     i32.const 0
+     local.get $kappa
+     i32.sub
+     i32.const 2
+     i32.shl
+     i32.add
+     i64.load32_u
+     i64.mul
+     local.set $wp_w_frc
+     local.get $buffer
+     local.set $buffer|29
+     local.get $len
+     local.set $len|30
+     local.get $delta
+     local.set $delta|31
+     local.get $p2
+     local.set $rest|32
+     local.get $one_frc
+     local.set $ten_kappa|33
+     local.get $wp_w_frc
+     local.set $wp_w|34
+     local.get $buffer|29
+     local.get $len|30
+     i32.const 1
+     i32.sub
+     i32.const 1
+     i32.shl
+     i32.add
+     local.set $lastp|35
+     local.get $lastp|35
+     i32.load16_u
+     local.set $digit|36
+     loop $while-continue|6
+      local.get $rest|32
+      local.get $wp_w|34
+      i64.lt_u
+      if (result i32)
+       local.get $delta|31
+       local.get $rest|32
+       i64.sub
+       local.get $ten_kappa|33
+       i64.ge_u
+      else
+       i32.const 0
+      end
+      if (result i32)
+       local.get $rest|32
+       local.get $ten_kappa|33
+       i64.add
+       local.get $wp_w|34
+       i64.lt_u
+       if (result i32)
+        i32.const 1
+       else
+        local.get $wp_w|34
+        local.get $rest|32
+        i64.sub
+        local.get $rest|32
+        local.get $ten_kappa|33
+        i64.add
+        local.get $wp_w|34
+        i64.sub
+        i64.gt_u
+       end
+      else
+       i32.const 0
+      end
+      if
+       local.get $digit|36
+       i32.const 1
+       i32.sub
+       local.set $digit|36
+       local.get $rest|32
+       local.get $ten_kappa|33
+       i64.add
+       local.set $rest|32
+       br $while-continue|6
+      end
+     end
+     local.get $lastp|35
+     local.get $digit|36
+     i32.store16
+     local.get $len
+     return
+    end
+    br $while-continue|4
+   end
+  end
+  unreachable
+ )
+ (func $~lib/util/number/prettify (param $buffer i32) (param $length i32) (param $k i32) (result i32)
+  (local $kk i32)
+  (local $i i32)
+  (local $ptr i32)
+  (local $offset i32)
+  (local $i|7 i32)
+  (local $buffer|8 i32)
+  (local $k|9 i32)
+  (local $sign i32)
+  (local $decimals i32)
+  (local $buffer|12 i32)
+  (local $num i32)
+  (local $offset|14 i32)
+  (local $len i32)
+  (local $buffer|16 i32)
+  (local $k|17 i32)
+  (local $sign|18 i32)
+  (local $decimals|19 i32)
+  (local $buffer|20 i32)
+  (local $num|21 i32)
+  (local $offset|22 i32)
+  local.get $k
+  i32.eqz
+  if
+   local.get $buffer
+   local.get $length
+   i32.const 1
+   i32.shl
+   i32.add
+   i32.const 46
+   i32.const 48
+   i32.const 16
+   i32.shl
+   i32.or
+   i32.store
+   local.get $length
+   i32.const 2
+   i32.add
+   return
+  end
+  local.get $length
+  local.get $k
+  i32.add
+  local.set $kk
+  local.get $length
+  local.get $kk
+  i32.le_s
+  if (result i32)
+   local.get $kk
+   i32.const 21
+   i32.le_s
+  else
+   i32.const 0
+  end
+  if
+   local.get $length
+   local.set $i
+   loop $for-loop|0
+    local.get $i
+    local.get $kk
+    i32.lt_s
+    if
+     local.get $buffer
+     local.get $i
+     i32.const 1
+     i32.shl
+     i32.add
+     i32.const 48
+     i32.store16
+     local.get $i
+     i32.const 1
+     i32.add
+     local.set $i
+     br $for-loop|0
+    end
+   end
+   local.get $buffer
+   local.get $kk
+   i32.const 1
+   i32.shl
+   i32.add
+   i32.const 46
+   i32.const 48
+   i32.const 16
+   i32.shl
+   i32.or
+   i32.store
+   local.get $kk
+   i32.const 2
+   i32.add
+   return
+  else
+   local.get $kk
+   i32.const 0
+   i32.gt_s
+   if (result i32)
+    local.get $kk
+    i32.const 21
+    i32.le_s
+   else
+    i32.const 0
+   end
+   if
+    local.get $buffer
+    local.get $kk
+    i32.const 1
+    i32.shl
+    i32.add
+    local.set $ptr
+    local.get $ptr
+    i32.const 2
+    i32.add
+    local.get $ptr
+    i32.const 0
+    local.get $k
+    i32.sub
+    i32.const 1
+    i32.shl
+    memory.copy
+    local.get $buffer
+    local.get $kk
+    i32.const 1
+    i32.shl
+    i32.add
+    i32.const 46
+    i32.store16
+    local.get $length
+    i32.const 1
+    i32.add
+    return
+   else
+    i32.const -6
+    local.get $kk
+    i32.lt_s
+    if (result i32)
+     local.get $kk
+     i32.const 0
+     i32.le_s
+    else
+     i32.const 0
+    end
+    if
+     i32.const 2
+     local.get $kk
+     i32.sub
+     local.set $offset
+     local.get $buffer
+     local.get $offset
+     i32.const 1
+     i32.shl
+     i32.add
+     local.get $buffer
+     local.get $length
+     i32.const 1
+     i32.shl
+     memory.copy
+     local.get $buffer
+     i32.const 48
+     i32.const 46
+     i32.const 16
+     i32.shl
+     i32.or
+     i32.store
+     i32.const 2
+     local.set $i|7
+     loop $for-loop|1
+      local.get $i|7
+      local.get $offset
+      i32.lt_s
+      if
+       local.get $buffer
+       local.get $i|7
+       i32.const 1
+       i32.shl
+       i32.add
+       i32.const 48
+       i32.store16
+       local.get $i|7
+       i32.const 1
+       i32.add
+       local.set $i|7
+       br $for-loop|1
+      end
+     end
+     local.get $length
+     local.get $offset
+     i32.add
+     return
+    else
+     local.get $length
+     i32.const 1
+     i32.eq
+     if
+      local.get $buffer
+      i32.const 101
+      i32.store16 offset=2
+      block $~lib/util/number/genExponent|inlined.0 (result i32)
+       local.get $buffer
+       i32.const 4
+       i32.add
+       local.set $buffer|8
+       local.get $kk
+       i32.const 1
+       i32.sub
+       local.set $k|9
+       local.get $k|9
+       i32.const 0
+       i32.lt_s
+       local.set $sign
+       local.get $sign
+       if
+        i32.const 0
+        local.get $k|9
+        i32.sub
+        local.set $k|9
+       end
+       local.get $k|9
+       call $~lib/util/number/decimalCount32
+       i32.const 1
+       i32.add
+       local.set $decimals
+       local.get $buffer|8
+       local.set $buffer|12
+       local.get $k|9
+       local.set $num
+       local.get $decimals
+       local.set $offset|14
+       i32.const 0
+       i32.const 1
+       i32.ge_s
+       drop
+       local.get $buffer|12
+       local.get $num
+       local.get $offset|14
+       call $~lib/util/number/utoa32_dec_lut
+       local.get $buffer|8
+       i32.const 45
+       i32.const 43
+       local.get $sign
+       select
+       i32.store16
+       local.get $decimals
+       br $~lib/util/number/genExponent|inlined.0
+      end
+      local.set $length
+      local.get $length
+      i32.const 2
+      i32.add
+      return
+     else
+      local.get $length
+      i32.const 1
+      i32.shl
+      local.set $len
+      local.get $buffer
+      i32.const 4
+      i32.add
+      local.get $buffer
+      i32.const 2
+      i32.add
+      local.get $len
+      i32.const 2
+      i32.sub
+      memory.copy
+      local.get $buffer
+      i32.const 46
+      i32.store16 offset=2
+      local.get $buffer
+      local.get $len
+      i32.add
+      i32.const 101
+      i32.store16 offset=2
+      local.get $length
+      block $~lib/util/number/genExponent|inlined.1 (result i32)
+       local.get $buffer
+       local.get $len
+       i32.add
+       i32.const 4
+       i32.add
+       local.set $buffer|16
+       local.get $kk
+       i32.const 1
+       i32.sub
+       local.set $k|17
+       local.get $k|17
+       i32.const 0
+       i32.lt_s
+       local.set $sign|18
+       local.get $sign|18
+       if
+        i32.const 0
+        local.get $k|17
+        i32.sub
+        local.set $k|17
+       end
+       local.get $k|17
+       call $~lib/util/number/decimalCount32
+       i32.const 1
+       i32.add
+       local.set $decimals|19
+       local.get $buffer|16
+       local.set $buffer|20
+       local.get $k|17
+       local.set $num|21
+       local.get $decimals|19
+       local.set $offset|22
+       i32.const 0
+       i32.const 1
+       i32.ge_s
+       drop
+       local.get $buffer|20
+       local.get $num|21
+       local.get $offset|22
+       call $~lib/util/number/utoa32_dec_lut
+       local.get $buffer|16
+       i32.const 45
+       i32.const 43
+       local.get $sign|18
+       select
+       i32.store16
+       local.get $decimals|19
+       br $~lib/util/number/genExponent|inlined.1
+      end
+      i32.add
+      local.set $length
+      local.get $length
+      i32.const 2
+      i32.add
+      return
+     end
+     unreachable
+    end
+    unreachable
+   end
+   unreachable
+  end
+  unreachable
+ )
+ (func $~lib/util/number/dtoa_core (param $buffer i32) (param $value f64) (result i32)
+  (local $sign i32)
+  (local $value|3 f64)
+  (local $buffer|4 i32)
+  (local $sign|5 i32)
+  (local $uv i64)
+  (local $exp i32)
+  (local $sid i64)
+  (local $frc i64)
+  (local $f i64)
+  (local $e i32)
+  (local $frc|12 i64)
+  (local $exp|13 i32)
+  (local $off i32)
+  (local $m i32)
+  (local $minExp i32)
+  (local $dk f64)
+  (local $k i32)
+  (local $index i32)
+  (local $off|20 i32)
+  (local $frc_pow i64)
+  (local $exp_pow i32)
+  (local $u i64)
+  (local $v i64)
+  (local $u0 i64)
+  (local $v0 i64)
+  (local $u1 i64)
+  (local $v1 i64)
+  (local $l i64)
+  (local $t i64)
+  (local $w i64)
+  (local $w_frc i64)
+  (local $e1 i32)
+  (local $e2 i32)
+  (local $w_exp i32)
+  (local $u|36 i64)
+  (local $v|37 i64)
+  (local $u0|38 i64)
+  (local $v0|39 i64)
+  (local $u1|40 i64)
+  (local $v1|41 i64)
+  (local $l|42 i64)
+  (local $t|43 i64)
+  (local $w|44 i64)
+  (local $wp_frc i64)
+  (local $e1|46 i32)
+  (local $e2|47 i32)
+  (local $wp_exp i32)
+  (local $u|49 i64)
+  (local $v|50 i64)
+  (local $u0|51 i64)
+  (local $v0|52 i64)
+  (local $u1|53 i64)
+  (local $v1|54 i64)
+  (local $l|55 i64)
+  (local $t|56 i64)
+  (local $w|57 i64)
+  (local $wm_frc i64)
+  (local $delta i64)
+  (local $len i32)
+  local.get $value
+  f64.const 0
+  f64.lt
+  local.set $sign
+  local.get $sign
+  if
+   local.get $value
+   f64.neg
+   local.set $value
+   local.get $buffer
+   i32.const 45
+   i32.store16
+  end
+  block $~lib/util/number/grisu2|inlined.0 (result i32)
+   local.get $value
+   local.set $value|3
+   local.get $buffer
+   local.set $buffer|4
+   local.get $sign
+   local.set $sign|5
+   local.get $value|3
+   i64.reinterpret_f64
+   local.set $uv
+   local.get $uv
+   i64.const 9218868437227405312
+   i64.and
+   i64.const 52
+   i64.shr_u
+   i32.wrap_i64
+   local.set $exp
+   local.get $uv
+   i64.const 4503599627370495
+   i64.and
+   local.set $sid
+   local.get $exp
+   i32.const 0
+   i32.ne
+   i64.extend_i32_u
+   i64.const 52
+   i64.shl
+   local.get $sid
+   i64.add
+   local.set $frc
+   local.get $exp
+   i32.const 1
+   local.get $exp
+   select
+   i32.const 1023
+   i32.const 52
+   i32.add
+   i32.sub
+   local.set $exp
+   local.get $frc
+   local.set $f
+   local.get $exp
+   local.set $e
+   local.get $f
+   i64.const 1
+   i64.shl
+   i64.const 1
+   i64.add
+   local.set $frc|12
+   local.get $e
+   i32.const 1
+   i32.sub
+   local.set $exp|13
+   local.get $frc|12
+   i64.clz
+   i32.wrap_i64
+   local.set $off
+   local.get $frc|12
+   local.get $off
+   i64.extend_i32_s
+   i64.shl
+   local.set $frc|12
+   local.get $exp|13
+   local.get $off
+   i32.sub
+   local.set $exp|13
+   i32.const 1
+   local.get $f
+   i64.const 4503599627370496
+   i64.eq
+   i32.add
+   local.set $m
+   local.get $frc|12
+   global.set $~lib/util/number/_frc_plus
+   local.get $f
+   local.get $m
+   i64.extend_i32_s
+   i64.shl
+   i64.const 1
+   i64.sub
+   local.get $e
+   local.get $m
+   i32.sub
+   local.get $exp|13
+   i32.sub
+   i64.extend_i32_s
+   i64.shl
+   global.set $~lib/util/number/_frc_minus
+   local.get $exp|13
+   global.set $~lib/util/number/_exp
+   global.get $~lib/util/number/_exp
+   local.set $minExp
+   i32.const -61
+   local.get $minExp
+   i32.sub
+   f64.convert_i32_s
+   f64.const 0.30102999566398114
+   f64.mul
+   f64.const 347
+   f64.add
+   local.set $dk
+   local.get $dk
+   i32.trunc_sat_f64_s
+   local.set $k
+   local.get $k
+   local.get $k
+   f64.convert_i32_s
+   local.get $dk
+   f64.ne
+   i32.add
+   local.set $k
+   local.get $k
+   i32.const 3
+   i32.shr_s
+   i32.const 1
+   i32.add
+   local.set $index
+   i32.const 348
+   local.get $index
+   i32.const 3
+   i32.shl
+   i32.sub
+   global.set $~lib/util/number/_K
+   i32.const 5224
+   local.get $index
+   i32.const 3
+   i32.shl
+   i32.add
+   i64.load
+   global.set $~lib/util/number/_frc_pow
+   i32.const 5920
+   local.get $index
+   i32.const 1
+   i32.shl
+   i32.add
+   i32.load16_s
+   global.set $~lib/util/number/_exp_pow
+   local.get $frc
+   i64.clz
+   i32.wrap_i64
+   local.set $off|20
+   local.get $frc
+   local.get $off|20
+   i64.extend_i32_s
+   i64.shl
+   local.set $frc
+   local.get $exp
+   local.get $off|20
+   i32.sub
+   local.set $exp
+   global.get $~lib/util/number/_frc_pow
+   local.set $frc_pow
+   global.get $~lib/util/number/_exp_pow
+   local.set $exp_pow
+   block $~lib/util/number/umul64f|inlined.0 (result i64)
+    local.get $frc
+    local.set $u
+    local.get $frc_pow
+    local.set $v
+    local.get $u
+    i64.const 4294967295
+    i64.and
+    local.set $u0
+    local.get $v
+    i64.const 4294967295
+    i64.and
+    local.set $v0
+    local.get $u
+    i64.const 32
+    i64.shr_u
+    local.set $u1
+    local.get $v
+    i64.const 32
+    i64.shr_u
+    local.set $v1
+    local.get $u0
+    local.get $v0
+    i64.mul
+    local.set $l
+    local.get $u1
+    local.get $v0
+    i64.mul
+    local.get $l
+    i64.const 32
+    i64.shr_u
+    i64.add
+    local.set $t
+    local.get $u0
+    local.get $v1
+    i64.mul
+    local.get $t
+    i64.const 4294967295
+    i64.and
+    i64.add
+    local.set $w
+    local.get $w
+    i64.const 2147483647
+    i64.add
+    local.set $w
+    local.get $t
+    i64.const 32
+    i64.shr_u
+    local.set $t
+    local.get $w
+    i64.const 32
+    i64.shr_u
+    local.set $w
+    local.get $u1
+    local.get $v1
+    i64.mul
+    local.get $t
+    i64.add
+    local.get $w
+    i64.add
+    br $~lib/util/number/umul64f|inlined.0
+   end
+   local.set $w_frc
+   block $~lib/util/number/umul64e|inlined.0 (result i32)
+    local.get $exp
+    local.set $e1
+    local.get $exp_pow
+    local.set $e2
+    local.get $e1
+    local.get $e2
+    i32.add
+    i32.const 64
+    i32.add
+    br $~lib/util/number/umul64e|inlined.0
+   end
+   local.set $w_exp
+   block $~lib/util/number/umul64f|inlined.1 (result i64)
+    global.get $~lib/util/number/_frc_plus
+    local.set $u|36
+    local.get $frc_pow
+    local.set $v|37
+    local.get $u|36
+    i64.const 4294967295
+    i64.and
+    local.set $u0|38
+    local.get $v|37
+    i64.const 4294967295
+    i64.and
+    local.set $v0|39
+    local.get $u|36
+    i64.const 32
+    i64.shr_u
+    local.set $u1|40
+    local.get $v|37
+    i64.const 32
+    i64.shr_u
+    local.set $v1|41
+    local.get $u0|38
+    local.get $v0|39
+    i64.mul
+    local.set $l|42
+    local.get $u1|40
+    local.get $v0|39
+    i64.mul
+    local.get $l|42
+    i64.const 32
+    i64.shr_u
+    i64.add
+    local.set $t|43
+    local.get $u0|38
+    local.get $v1|41
+    i64.mul
+    local.get $t|43
+    i64.const 4294967295
+    i64.and
+    i64.add
+    local.set $w|44
+    local.get $w|44
+    i64.const 2147483647
+    i64.add
+    local.set $w|44
+    local.get $t|43
+    i64.const 32
+    i64.shr_u
+    local.set $t|43
+    local.get $w|44
+    i64.const 32
+    i64.shr_u
+    local.set $w|44
+    local.get $u1|40
+    local.get $v1|41
+    i64.mul
+    local.get $t|43
+    i64.add
+    local.get $w|44
+    i64.add
+    br $~lib/util/number/umul64f|inlined.1
+   end
+   i64.const 1
+   i64.sub
+   local.set $wp_frc
+   block $~lib/util/number/umul64e|inlined.1 (result i32)
+    global.get $~lib/util/number/_exp
+    local.set $e1|46
+    local.get $exp_pow
+    local.set $e2|47
+    local.get $e1|46
+    local.get $e2|47
+    i32.add
+    i32.const 64
+    i32.add
+    br $~lib/util/number/umul64e|inlined.1
+   end
+   local.set $wp_exp
+   block $~lib/util/number/umul64f|inlined.2 (result i64)
+    global.get $~lib/util/number/_frc_minus
+    local.set $u|49
+    local.get $frc_pow
+    local.set $v|50
+    local.get $u|49
+    i64.const 4294967295
+    i64.and
+    local.set $u0|51
+    local.get $v|50
+    i64.const 4294967295
+    i64.and
+    local.set $v0|52
+    local.get $u|49
+    i64.const 32
+    i64.shr_u
+    local.set $u1|53
+    local.get $v|50
+    i64.const 32
+    i64.shr_u
+    local.set $v1|54
+    local.get $u0|51
+    local.get $v0|52
+    i64.mul
+    local.set $l|55
+    local.get $u1|53
+    local.get $v0|52
+    i64.mul
+    local.get $l|55
+    i64.const 32
+    i64.shr_u
+    i64.add
+    local.set $t|56
+    local.get $u0|51
+    local.get $v1|54
+    i64.mul
+    local.get $t|56
+    i64.const 4294967295
+    i64.and
+    i64.add
+    local.set $w|57
+    local.get $w|57
+    i64.const 2147483647
+    i64.add
+    local.set $w|57
+    local.get $t|56
+    i64.const 32
+    i64.shr_u
+    local.set $t|56
+    local.get $w|57
+    i64.const 32
+    i64.shr_u
+    local.set $w|57
+    local.get $u1|53
+    local.get $v1|54
+    i64.mul
+    local.get $t|56
+    i64.add
+    local.get $w|57
+    i64.add
+    br $~lib/util/number/umul64f|inlined.2
+   end
+   i64.const 1
+   i64.add
+   local.set $wm_frc
+   local.get $wp_frc
+   local.get $wm_frc
+   i64.sub
+   local.set $delta
+   local.get $buffer|4
+   local.get $w_frc
+   local.get $w_exp
+   local.get $wp_frc
+   local.get $wp_exp
+   local.get $delta
+   local.get $sign|5
+   call $~lib/util/number/genDigits
+   br $~lib/util/number/grisu2|inlined.0
+  end
+  local.set $len
+  local.get $buffer
+  local.get $sign
+  i32.const 1
+  i32.shl
+  i32.add
+  local.get $len
+  local.get $sign
+  i32.sub
+  global.get $~lib/util/number/_K
+  call $~lib/util/number/prettify
+  local.set $len
+  local.get $len
+  local.get $sign
+  i32.add
+  return
+ )
+ (func $~lib/number/F32#toString (param $this f32) (param $radix i32) (result i32)
+  local.get $this
+  f64.promote_f32
+  call $~lib/util/number/dtoa
+  return
+ )
  (func $src/as/assembly/models/SolverResponse/SolverResponse#set:knownMineCellsIds (param $this i32) (param $knownMineCellsIds i32)
   local.get $this
   local.get $knownMineCellsIds
@@ -4428,7 +5769,7 @@
    i32.const 3
    i32.eq
    if
-    i32.const 5520
+    i32.const 6720
     i32.const 352
     i32.const 338
     i32.const 7
@@ -4461,7 +5802,7 @@
   i32.const 3
   i32.ne
   if
-   i32.const 5584
+   i32.const 6784
    i32.const 352
    i32.const 352
    i32.const 5
@@ -4543,10 +5884,10 @@
   i32.const 288
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 5520
+  i32.const 6720
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 5584
+  i32.const 6784
   local.get $0
   call $~lib/rt/itcms/__visit
   i32.const 3072
@@ -5003,8 +6344,8 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 38528
-   i32.const 38576
+   i32.const 39728
+   i32.const 39776
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
@@ -14177,131 +15518,6 @@
   local.get $5
   return
  )
- (func $src/as/assembly/Proposition/Proposition#isSubSetOf (param $this i32) (param $otherProposition i32) (result i32)
-  (local $i i32)
-  (local $3 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store offset=8
-  local.get $this
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  call $~lib/array/Array<i32>#get:length
-  local.get $otherProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  call $~lib/array/Array<i32>#get:length
-  i32.ge_s
-  if
-   i32.const 0
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   i32.const 12
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $3
-   return
-  end
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $this
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store offset=4
-   local.get $3
-   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store
-   local.get $3
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   if
-    local.get $otherProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    local.get $this
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    local.get $i
-    call $~lib/array/Array<i32>#__get
-    i32.const 0
-    call $~lib/array/Array<i32>#includes
-    i32.eqz
-    if
-     i32.const 0
-     local.set $3
-     global.get $~lib/memory/__stack_pointer
-     i32.const 12
-     i32.add
-     global.set $~lib/memory/__stack_pointer
-     local.get $3
-     return
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  i32.const 1
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $3
-  return
- )
  (func $src/as/assembly/Proposition/Proposition#subtract (param $this i32) (param $otherProposition i32) (result i32)
   (local $minesDiff i32)
   (local $3 i32)
@@ -14506,6 +15722,156 @@
   local.get $9
   return
  )
+ (func $src/as/assembly/Proposition/Proposition#isSubSetOf (param $this i32) (param $otherProposition i32) (result i32)
+  (local $i i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  local.get $this
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  call $~lib/array/Array<i32>#get:length
+  local.get $otherProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  call $~lib/array/Array<i32>#get:length
+  i32.ge_s
+  if
+   i32.const 0
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   i32.const 12
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $3
+   return
+  end
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $this
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store offset=4
+   local.get $3
+   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store
+   local.get $3
+   call $~lib/array/Array<i32>#get:length
+   i32.lt_s
+   if
+    local.get $otherProposition
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store
+    local.get $3
+    local.get $this
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=8
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    local.get $i
+    call $~lib/array/Array<i32>#__get
+    i32.const 0
+    call $~lib/array/Array<i32>#includes
+    i32.eqz
+    if
+     i32.const 0
+     local.set $3
+     global.get $~lib/memory/__stack_pointer
+     i32.const 12
+     i32.add
+     global.set $~lib/memory/__stack_pointer
+     local.get $3
+     return
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  i32.const 1
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $3
+  return
+ )
+ (func $src/as/assembly/Proposition/Proposition#getMines (param $this i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $src/as/assembly/Proposition/Proposition#get:mines
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+  return
+ )
  (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared (param $this i32) (result i32)
   (local $1 i32)
   (local $2 i32)
@@ -14571,46 +15937,70 @@
      call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
      i32.lt_s
      if
-      local.get $this
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=16
-      local.get $9
-      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=12
-      local.get $9
-      local.get $b
-      call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=4
-      local.get $9
-      local.get $this
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=16
-      local.get $9
-      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=12
-      local.get $9
-      local.get $a
-      call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=8
-      local.get $9
-      call $src/as/assembly/Proposition/Proposition#isSubSetOf
-      if
+      block $for-continue|1
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $a
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=8
+       local.get $9
+       call $src/as/assembly/Proposition/Proposition#getCells
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=4
+       local.get $9
+       call $~lib/array/Array<i32>#get:length
+       i32.const 0
+       i32.le_s
+       if (result i32)
+        i32.const 1
+       else
+        local.get $this
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=16
+        local.get $9
+        call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=12
+        local.get $9
+        local.get $b
+        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $src/as/assembly/Proposition/Proposition#getCells
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        call $~lib/array/Array<i32>#get:length
+        i32.const 0
+        i32.le_s
+       end
+       if
+        br $for-continue|1
+       end
        global.get $~lib/memory/__stack_pointer
        local.get $this
        local.set $9
@@ -14653,20 +16043,111 @@
        call $src/as/assembly/Proposition/Proposition#subtract
        local.tee $differenceProposition
        i32.store offset=20
-       local.get $newPropositions
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $b
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
        local.set $9
        global.get $~lib/memory/__stack_pointer
        local.get $9
        i32.store offset=4
        local.get $9
-       local.get $differenceProposition
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $a
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
        local.set $9
        global.get $~lib/memory/__stack_pointer
        local.get $9
        i32.store offset=8
        local.get $9
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
-       drop
+       call $src/as/assembly/Proposition/Proposition#isSubSetOf
+       if
+        local.get $newPropositions
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
+        drop
+       end
+       local.get $differenceProposition
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=4
+       local.get $9
+       call $src/as/assembly/Proposition/Proposition#getMines
+       i32.const 0
+       i32.gt_s
+       if (result i32)
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        call $src/as/assembly/Proposition/Proposition#getMines
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $src/as/assembly/Proposition/Proposition#getCells
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        call $~lib/array/Array<i32>#get:length
+        i32.eq
+       else
+        i32.const 0
+       end
+       if
+        local.get $newPropositions
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
+        drop
+       end
       end
       local.get $b
       i32.const 1
@@ -17384,15 +18865,123 @@
   local.get $5
   return
  )
+ (func $~lib/string/String#concat (param $this i32) (param $other i32) (result i32)
+  (local $thisSize i32)
+  (local $otherSize i32)
+  (local $outSize i32)
+  (local $out i32)
+  (local $6 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store
+  local.get $6
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.set $thisSize
+  local.get $other
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store
+  local.get $6
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.set $otherSize
+  local.get $thisSize
+  local.get $otherSize
+  i32.add
+  local.set $outSize
+  local.get $outSize
+  i32.const 0
+  i32.eq
+  if
+   i32.const 256
+   local.set $6
+   global.get $~lib/memory/__stack_pointer
+   i32.const 8
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $6
+   return
+  end
+  global.get $~lib/memory/__stack_pointer
+  local.get $outSize
+  i32.const 2
+  call $~lib/rt/itcms/__new
+  local.tee $out
+  i32.store offset=4
+  local.get $out
+  local.get $this
+  local.get $thisSize
+  memory.copy
+  local.get $out
+  local.get $thisSize
+  i32.add
+  local.get $other
+  local.get $otherSize
+  memory.copy
+  local.get $out
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $6
+  return
+ )
+ (func $~lib/string/String.__concat (param $left i32) (param $right i32) (result i32)
+  (local $2 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  local.get $left
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store
+  local.get $2
+  local.get $right
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store offset=4
+  local.get $2
+  call $~lib/string/String#concat
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $2
+  return
+ )
  (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#updatePropositions (param $this i32)
   (local $changed i32)
   (local $previousKnownCells i32)
   (local $currentKnownCells i32)
   (local $i i32)
   (local $proposition i32)
-  (local $6 i32)
+  (local $ratio f32)
+  (local $7 i32)
   global.get $~lib/memory/__stack_pointer
-  i32.const 12
+  i32.const 16
   i32.sub
   global.set $~lib/memory/__stack_pointer
   call $~stack_check
@@ -17400,64 +18989,64 @@
   i64.const 0
   i64.store
   global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store offset=8
+  i64.const 0
+  i64.store offset=8
   local.get $this
-  local.set $6
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  local.get $6
+  local.get $7
   i32.store
-  local.get $6
+  local.get $7
   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#createNewPropositions
   i32.const 0
   local.set $changed
   block $while-break|0
    loop $while-continue|0
     local.get $this
-    local.set $6
+    local.set $7
     global.get $~lib/memory/__stack_pointer
-    local.get $6
+    local.get $7
     i32.store
-    local.get $6
+    local.get $7
     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#isBoardSolved
     i32.eqz
     if
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store offset=4
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $~lib/array/Array<i32>#get:length
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store offset=4
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $~lib/array/Array<i32>#get:length
      i32.add
      local.set $previousKnownCells
      i32.const 0
      local.set $changed
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#removedKnownCellsFromPropositions
      if (result i32)
       i32.const 1
@@ -17466,11 +19055,11 @@
      end
      local.set $changed
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared
      if (result i32)
       i32.const 1
@@ -17479,11 +19068,11 @@
      end
      local.set $changed
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#satisfiedPropositionsRemoved
      if (result i32)
       i32.const 1
@@ -17492,11 +19081,11 @@
      end
      local.set $changed
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#checkMainPropositionAddition
      if (result i32)
       i32.const 1
@@ -17505,30 +19094,30 @@
      end
      local.set $changed
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store offset=4
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $~lib/array/Array<i32>#get:length
      local.get $this
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store offset=4
-     local.get $6
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-     local.set $6
+     local.set $7
      global.get $~lib/memory/__stack_pointer
-     local.get $6
+     local.get $7
      i32.store
-     local.get $6
+     local.get $7
      call $~lib/array/Array<i32>#get:length
      i32.add
      local.set $currentKnownCells
@@ -17549,60 +19138,60 @@
    end
   end
   i32.const 4624
-  local.set $6
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  local.get $6
+  local.get $7
   i32.store
-  local.get $6
+  local.get $7
   call $~lib/console/console.log
   i32.const 0
   local.set $i
   loop $for-loop|1
    local.get $i
    local.get $this
-   local.set $6
+   local.set $7
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $7
    i32.store offset=4
-   local.get $6
+   local.get $7
    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-   local.set $6
+   local.set $7
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $7
    i32.store
-   local.get $6
+   local.get $7
    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
    i32.lt_s
    if
     global.get $~lib/memory/__stack_pointer
     local.get $this
-    local.set $6
+    local.set $7
     global.get $~lib/memory/__stack_pointer
-    local.get $6
+    local.get $7
     i32.store offset=4
-    local.get $6
+    local.get $7
     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-    local.set $6
+    local.set $7
     global.get $~lib/memory/__stack_pointer
-    local.get $6
+    local.get $7
     i32.store
-    local.get $6
+    local.get $7
     local.get $i
     call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
     local.tee $proposition
     i32.store offset=8
     local.get $proposition
-    local.set $6
+    local.set $7
     global.get $~lib/memory/__stack_pointer
-    local.get $6
+    local.get $7
     i32.store offset=4
-    local.get $6
+    local.get $7
     call $src/as/assembly/Proposition/Proposition#toString
-    local.set $6
+    local.set $7
     global.get $~lib/memory/__stack_pointer
-    local.get $6
+    local.get $7
     i32.store
-    local.get $6
+    local.get $7
     call $~lib/console/console.log
     local.get $i
     i32.const 1
@@ -17611,8 +19200,59 @@
     br $for-loop|1
    end
   end
+  local.get $this
+  local.set $7
   global.get $~lib/memory/__stack_pointer
-  i32.const 12
+  local.get $7
+  i32.store offset=12
+  local.get $7
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store offset=4
+  local.get $7
+  call $src/as/assembly/Board/Board#getNotRevealedCells
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store
+  local.get $7
+  call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
+  f32.convert_i32_s
+  local.get $this
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store
+  local.get $7
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
+  f32.convert_i32_s
+  f32.div
+  local.set $ratio
+  i32.const 4960
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store offset=4
+  local.get $7
+  local.get $ratio
+  i32.const 0
+  call $~lib/number/F32#toString
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store offset=12
+  local.get $7
+  call $~lib/string/String.__concat
+  local.set $7
+  global.get $~lib/memory/__stack_pointer
+  local.get $7
+  i32.store
+  local.get $7
+  call $~lib/console/console.log
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
   i32.add
   global.set $~lib/memory/__stack_pointer
  )
@@ -17727,113 +19367,6 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $1
- )
- (func $~lib/string/String#concat (param $this i32) (param $other i32) (result i32)
-  (local $thisSize i32)
-  (local $otherSize i32)
-  (local $outSize i32)
-  (local $out i32)
-  (local $6 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store
-  local.get $6
-  call $~lib/string/String#get:length
-  i32.const 1
-  i32.shl
-  local.set $thisSize
-  local.get $other
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store
-  local.get $6
-  call $~lib/string/String#get:length
-  i32.const 1
-  i32.shl
-  local.set $otherSize
-  local.get $thisSize
-  local.get $otherSize
-  i32.add
-  local.set $outSize
-  local.get $outSize
-  i32.const 0
-  i32.eq
-  if
-   i32.const 256
-   local.set $6
-   global.get $~lib/memory/__stack_pointer
-   i32.const 8
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $6
-   return
-  end
-  global.get $~lib/memory/__stack_pointer
-  local.get $outSize
-  i32.const 2
-  call $~lib/rt/itcms/__new
-  local.tee $out
-  i32.store offset=4
-  local.get $out
-  local.get $this
-  local.get $thisSize
-  memory.copy
-  local.get $out
-  local.get $thisSize
-  i32.add
-  local.get $other
-  local.get $otherSize
-  memory.copy
-  local.get $out
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $6
-  return
- )
- (func $~lib/string/String.__concat (param $left i32) (param $right i32) (result i32)
-  (local $2 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  local.get $left
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store
-  local.get $2
-  local.get $right
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store offset=4
-  local.get $2
-  call $~lib/string/String#concat
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $2
-  return
  )
  (func $~lib/array/Array<src/as/assembly/models/Guess/Guess>#get:length (param $this i32) (result i32)
   (local $1 i32)
@@ -19370,7 +20903,7 @@
   i32.const 0
   i32.const 2
   i32.const 21
-  i32.const 4960
+  i32.const 6160
   call $~lib/rt/__newArray
   local.set $72
   global.get $~lib/memory/__stack_pointer
@@ -19708,7 +21241,7 @@
           call $~lib/number/I32#toString
           local.tee $67
           i32.store offset=160
-          i32.const 5424
+          i32.const 6624
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -19722,7 +21255,7 @@
           i32.store offset=116
           local.get $72
           call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-          i32.const 5424
+          i32.const 6624
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -19736,7 +21269,7 @@
           i32.store offset=116
           local.get $72
           call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-          i32.const 5424
+          i32.const 6624
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -19852,7 +21385,7 @@
         call $~lib/number/I32#toString
         local.tee $71
         i32.store offset=176
-        i32.const 5472
+        i32.const 6672
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -19866,7 +21399,7 @@
         i32.store offset=116
         local.get $72
         call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-        i32.const 5472
+        i32.const 6672
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -19880,7 +21413,7 @@
         i32.store offset=116
         local.get $72
         call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-        i32.const 5472
+        i32.const 6672
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -19937,7 +21470,7 @@
     end
     local.tee $60
     i32.store offset=180
-    i32.const 5168
+    i32.const 6368
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -19951,7 +21484,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 5168
+    i32.const 6368
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -19965,7 +21498,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 5168
+    i32.const 6368
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -19979,7 +21512,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 5168
+    i32.const 6368
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -20828,6 +22361,90 @@
   local.get $14
   return
  )
+ (func $~lib/util/number/dtoa (param $value f64) (result i32)
+  (local $size i32)
+  (local $result i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $value
+  f64.const 0
+  f64.eq
+  if
+   i32.const 5024
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   i32.const 4
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $3
+   return
+  end
+  local.get $value
+  local.get $value
+  f64.sub
+  f64.const 0
+  f64.eq
+  i32.eqz
+  if
+   local.get $value
+   local.get $value
+   f64.ne
+   if
+    i32.const 5056
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    i32.const 4
+    i32.add
+    global.set $~lib/memory/__stack_pointer
+    local.get $3
+    return
+   end
+   i32.const 5088
+   i32.const 5136
+   local.get $value
+   f64.const 0
+   f64.lt
+   select
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   i32.const 4
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $3
+   return
+  end
+  i32.const 5168
+  local.get $value
+  call $~lib/util/number/dtoa_core
+  i32.const 1
+  i32.shl
+  local.set $size
+  global.get $~lib/memory/__stack_pointer
+  local.get $size
+  i32.const 2
+  call $~lib/rt/itcms/__new
+  local.tee $result
+  i32.store
+  local.get $result
+  i32.const 5168
+  local.get $size
+  memory.copy
+  local.get $result
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $3
+  return
+ )
  (func $src/as/assembly/models/SolverResponse/SolverResponse#get:knownMineCellsIds (param $this i32) (result i32)
   (local $1 i32)
   (local $2 i32)
@@ -20849,7 +22466,7 @@
    local.get $1
   else
    i32.const 1760
-   i32.const 5216
+   i32.const 6416
    i32.const 6
    i32.const 5
    call $~lib/builtins/abort
@@ -20883,7 +22500,7 @@
    local.get $1
   else
    i32.const 1760
-   i32.const 5216
+   i32.const 6416
    i32.const 7
    i32.const 5
    call $~lib/builtins/abort
@@ -20917,7 +22534,7 @@
    local.get $1
   else
    i32.const 1760
-   i32.const 5216
+   i32.const 6416
    i32.const 8
    i32.const 5
    call $~lib/builtins/abort

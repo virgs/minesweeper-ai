@@ -4,7 +4,8 @@
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" :knownMineCellsIds="knownMineCellsIds"
                     :knownSafeCellsIds="knownSafeCellsIds" @clicked="cellClick" :gameOver="gameOver"
-                    @doubleClicked="cellDoubleClicked" @flagged="cellFlagged" @unflagged="cellUnflagged" />
+                    :explodedBombId="explodedBombId" @doubleClicked="cellDoubleClicked" @flagged="cellFlagged"
+                    @unflagged="cellUnflagged" />
             </div>
         </div>
     </div>
@@ -24,6 +25,10 @@ export default {
         board: {
             type: Object as PropType<Board>,
             required: true,
+        },
+        explodedBombId: {
+            type: Number,
+            required: false,
         },
         gameOver: {
             type: Boolean,

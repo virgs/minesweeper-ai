@@ -5,7 +5,6 @@ import { MineSweeperSolver } from "./MineSweeperSolver";
 import { SolverResponse } from "./models/SolverResponse";
 
 export function processBoard(text: string): string {
-
     const board = JSON.parse<Board>(text);
     const ai = new MineSweeperSolver(board)
 

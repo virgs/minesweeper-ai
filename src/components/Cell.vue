@@ -2,17 +2,18 @@
     <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
         :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
         :class="classStyle">
-        <div v-if="cell.isRevealed()">
-            <i v-if="cell.hasMine" style="color: black">
-                <font-awesome-icon icon="fa-solid fa-bomb" />
+        <!-- <small style="color: maroon; font-size: 8px;"> {{ cell.id }}</small> -->
+        <div v-if="flagged" class="flag">
+            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
+            <font-awesome-icon v-else icon="fa-solid fa-flag" />
+        </div>
+        <div v-else-if="isRevealed">
+            <i v-if="cell.hasMine" :style="bombStyle">
+                <font-awesome-icon icon="fa-solid fa-bomb" :shake="explodedBombId === cell.id" />
             </i>
             <i v-else :style="numberStyle" :cell-id="cell.id">
                 {{ cell.minesAround }}
             </i>
-        </div>
-        <div v-else-if="flagged" class="flag">
-            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
-            <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
     </div>
 </template>
@@ -30,6 +31,10 @@ export default {
         cell: {
             type: Object as PropType<Cell>,
             required: true,
+        },
+        explodedBombId: {
+            type: Number,
+            required: false,
         },
         knownSafeCellsIds: {
             type: Object as PropType<Number[]>,
@@ -58,20 +63,31 @@ export default {
         }
     },
     computed: {
+        isRevealed() {
+            return this.cell.isRevealed()
+        },
         classStyle() {
-            const revealed = this.cell.isRevealed()
             return {
                 cell: true,
-                revealed: revealed,
-                pressed: !revealed && !this.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
-                hover: !revealed && !this.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
-                hint: !revealed && toRaw(this.knownSafeCellsIds).includes(this.cell.id)
+                revealed: this.isRevealed,
+                pressed: !this.isRevealed && !this.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
+                hover: !this.isRevealed && !this.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
+                hint: !this.isRevealed && toRaw(this.knownSafeCellsIds).includes(this.cell.id)
             }
 
         },
         numberStyle() {
             const style: any = {
                 color: this.numberColor,
+            }
+            return style
+        },
+        bombStyle() {
+            const style: any = {
+                color: 'black'
+            }
+            if (this.explodedBombId === this.cell.id) {
+                style.color = 'red'
             }
             return style
         },
@@ -113,7 +129,7 @@ export default {
             this.mouseButtonDown = event.buttons
         },
         doubleClick(event: MouseEvent) {
-            if (this.cell.isRevealed()) {
+            if (this.isRevealed) {
                 this.$emit('doubleClicked', { cell: this.cell })
             }
         },

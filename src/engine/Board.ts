@@ -70,7 +70,6 @@ export class Board {
             clickedCell.reveal()
             if (clickedCell.hasMine) {
                 const mines = this.cells.filter((cell) => cell.hasMine)
-                // console.log('died', clickedCell, mines)
                 mines.forEach((cell) => cell.reveal())
                 return mines
             } else {
