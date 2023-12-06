@@ -7,6 +7,7 @@
 
 <script lang="ts">
 
+import { toRaw } from 'vue'
 import Grid from './components/Grid.vue'
 import { GameConfigurations } from './constants/GameConfiguration'
 import { Board } from './engine/Board'
@@ -36,20 +37,27 @@ export default {
             } else {
                 this.board.initializeMinesAroundCell(data.cell)
             }
-            if (this.board.isGameLost() || this.board.isGameWon()) {
-                this.gameIsOver({ victory: this.board.isGameWon() })
-            } else {
-                console.log('updating')
+
+            while (true) {
+                const previouslyKnownCells = this.knownSafeCellsIds.length + this.knownMineCellsIds.length
+                if (this.board.isGameLost() || this.board.isGameWon()) {
+                    this.gameIsOver({ victory: this.board.isGameWon() })
+                    return
+                }
                 await this.solver.update()
-                const previousKnownCellsLength = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
                 this.knownSafeCellsIds = this.solver.knownSafeCellsIds
                 this.knownMineCellsIds = this.solver.knownMineCellsIds
-                const knownCellsLength = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
-                console.log('updated')
-                if (previousKnownCellsLength !== knownCellsLength) {
-                    this.knownSafeCellsIds
-                        .forEach(cellId => this.cellClick({ cell: this.board.getCellById(cellId)! }))
+                this.knownSafeCellsIds
+                    .forEach(cellId => this.board.revealCell(this.board.getCellById(cellId)!))
+                const currentlyKnownCells = this.knownSafeCellsIds.length + this.knownMineCellsIds.length
+                if (previouslyKnownCells === currentlyKnownCells) {
+                    break;
                 }
+            }
+            console.log('mines', toRaw(this.knownMineCellsIds))
+            console.log('safe', toRaw(this.knownSafeCellsIds))
+            if (this.board.isGameLost() || this.board.isGameWon()) {
+                this.gameIsOver({ victory: this.board.isGameWon() })
             }
 
         },

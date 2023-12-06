@@ -1,8 +1,8 @@
 /** Exported memory */
 export declare const memory: WebAssembly.Memory;
 /**
- * src/as/assembly/index/board
+ * src/as/assembly/index/processBoard
  * @param text `~lib/string/String`
  * @returns `~lib/string/String`
  */
-export declare function board(text: string): string;
+export declare function processBoard(text: string): string;

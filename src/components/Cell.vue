@@ -1,12 +1,12 @@
 <template>
     <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
-        @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick" :class="classStyle">
-        <!-- <small style="color: maroon; font-size: 8px;"> {{ cell.id }}</small> -->
+        :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
+        :class="classStyle">
         <div v-if="cell.isRevealed()">
             <i v-if="cell.hasMine" style="color: black">
                 <font-awesome-icon icon="fa-solid fa-bomb" />
             </i>
-            <i v-else :style="numberStyle">
+            <i v-else :style="numberStyle" :cell-id="cell.id">
                 {{ cell.minesAround }}
             </i>
         </div>

@@ -1,12 +1,15 @@
 export class Proposition {
-    private cellsIndex: number[]
-    private mines: number
+    private cellsIndex: i32[]
+    private mines: i32
     readonly origin: string
 
-    public constructor(origin: string, cells: number[], mines: number) {
+    public constructor(origin: string, cells: i32[], mines: i32) {
         this.origin = origin
-        const set = new Set<number>()
-        cells.forEach(cell => set.add(cell))
+        const set = new Set<i32>()
+        for (let i = 0; i < cells.length; ++i) {
+            set.add(cells[i])
+        }
+
         this.cellsIndex = set.values()
         this.mines = mines
     }
@@ -19,52 +22,74 @@ export class Proposition {
         return `${this.cellsIndex.sort((a, b) => a - b)}:${this.mines}`
     }
 
-    public getMineRatio(): number {
+    public getMineRatio(): i32 {
         return this.mines / this.cellsIndex.length
     }
 
-    public getCells(): number[] {
+    public getCells(): i32[] {
         return this.cellsIndex
     }
 
-    public getMines(): number {
+    public getMines(): i32 {
         return this.mines
     }
 
     public isSubSetOf(otherProposition: Proposition): bool {
-        return (
-            this.cellsIndex.length < otherProposition.cellsIndex.length &&
-            this.cellsIndex.every((otherCell) => otherProposition.cellsIndex.includes(otherCell))
-        )
+        if (this.cellsIndex.length >= otherProposition.cellsIndex.length) {
+            return false
+        }
+
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (!otherProposition.cellsIndex.includes(this.cellsIndex[i])) {
+                return false
+            }
+        }
+        return true
     }
 
     public subtract(otherProposition: Proposition): Proposition {
         const minesDiff = this.mines - otherProposition.mines
-        const cellsDiff = this.cellsIndex.filter((cell) => !otherProposition.cellsIndex.includes(cell))
+        const cellsDiff: i32[] = []
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (!otherProposition.cellsIndex.includes(this.cellsIndex[i])) {
+                cellsDiff.push(this.cellsIndex[i])
+            }
+        }
         return new Proposition(`${this.origin}-${otherProposition.origin}`, cellsDiff, minesDiff)
     }
 
-    public getRandomCell(): number {
+    public getRandomCell(): i32 {
         return this.cellsIndex[Math.floor(Math.random() * this.cellsIndex.length)]
     }
 
     // returns true if this method changed the proposition
-    public removeMineCells(mines: number[]): boolean {
+    public removeMineCells(mines: i32[]): boolean {
         let previousCellsLength = this.cellsIndex.length
-        this.cellsIndex = this.cellsIndex.reduce((acc, cell) => {
-            if (mines.includes(cell)) {
+
+        const remainingCells: i32[] = []
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (mines.includes(this.cellsIndex[i])) {
                 --this.mines
             } else {
-                acc.push(cell)
+                remainingCells.push(this.cellsIndex[i])
             }
-            return acc
-        }, [] as number[])
+        }
+
+        this.cellsIndex = remainingCells
         return previousCellsLength !== this.cellsIndex.length
     }
 
-    public removeSafeCells(safes: number[]): boolean {
+    public removeSafeCells(safes: i32[]): boolean {
         let previousCellsLength = this.cellsIndex.length
-        this.cellsIndex = this.cellsIndex.filter((cell) => !safes.includes(cell))
+
+        const remainingCells: i32[] = []
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (!safes.includes(this.cellsIndex[i])) {
+                remainingCells.push(this.cellsIndex[i])
+            }
+        }
+
+        this.cellsIndex = remainingCells
         return previousCellsLength !== this.cellsIndex.length
     }
 
@@ -87,6 +112,12 @@ export class Proposition {
         if (this.cellsIndex.length != other.cellsIndex.length) {
             return false
         }
-        return this.cellsIndex.every((cell) => other.cellsIndex.includes(cell))
+
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (!other.cellsIndex.includes(this.cellsIndex[i])) {
+                return false
+            }
+        }
+        return true
     }
 }

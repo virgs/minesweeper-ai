@@ -1,7 +1,12 @@
-import { BoardProperties } from './BoardProperties';
-import { Cell } from './Cell';
+import { BoardProperties } from './models/BoardProperties';
+import { Cell } from './models/Cell';
 
-@serilizable
+class Location {
+    x!: i32;
+    y!: i32;
+};
+
+@serializable
 export class Board {
     properties!: BoardProperties
     cells!: Array<Cell>
@@ -36,15 +41,14 @@ export class Board {
             .filter((cell) => cell.revealed).length === (this.properties.height * this.properties.width) - this.properties.mines
     }
 
-    public getAdjacentCells(cell: Cell): Cell[] {
-        const cellPosition = {
+    public getAdjacentCells(cell: Cell): Array<Cell> {
+        const cellPosition: Location = {
             x: cell._id % this.properties.width,
-            y: Math.floor(cell._id / this.properties.width),
+            y: cell._id / this.properties.width as i32,
         }
-        const adjIndex = [-1, 0, 1]
-        const adjacentCells = []
-        for (let y = 0; y < adjIndex.length; ++y) {
-            for (let x = 0; x < adjIndex.length; ++x) {
+        const adjacentCells: Cell[] = []
+        for (let y = -1; y < 2; ++y) {
+            for (let x = -1; x < 2; ++x) {
                 const newX = cellPosition.x + x
                 const newY = cellPosition.y + y
                 if (newX < 0 || newX > this.properties.width - 1) {
@@ -56,9 +60,10 @@ export class Board {
                 if (x === 0 && y === 0) {
                     continue
                 }
-                adjacentCells.push(this.getCellByLocation(newX, newY)!)
+                adjacentCells.push(this.getCellByLocation(newX, newY))
             }
         }
+
         return adjacentCells
     }
 

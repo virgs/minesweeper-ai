@@ -1,10 +1,10 @@
 import type { BoardProperties } from "./BoardProperties";
 
-export type GameConfigurationType = {
-    [level: string]: BoardProperties;
-};
+// export type GameConfigurationType = {
+//     [level: string]: BoardProperties;
+// };
 
-export const GameConfigurations: GameConfigurationType = {
+export const GameConfigurations = {
     Beginner: {
         height: 9, width: 9, mines: 10
     },

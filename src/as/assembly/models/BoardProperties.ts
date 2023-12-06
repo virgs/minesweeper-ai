@@ -1,4 +1,4 @@
-@serilizable
+@serializable
 export class BoardProperties {
     height!: i32;
     width!: i32;
