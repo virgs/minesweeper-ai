@@ -14,6 +14,7 @@ import type { Cell } from './engine/Cell'
 import { Solver } from './solver/Solver'
 
 
+let solver: Solver;
 export default {
     name: 'App',
     components: {
@@ -21,28 +22,30 @@ export default {
     },
     data() {
         const board = new Board(GameConfigurations.Intermediate)
+        solver = new Solver(board)
         return {
             board: board,
             gameOver: false,
             explodedBombId: undefined as number | undefined,
-            solver: new Solver(board)
         }
     },
     methods: {
         async startAi() {
             console.log('thinking')
             while (true) {
-                const previouslyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
-                if (this.board.isGameLost() || this.board.isGameWon()) {
-                    this.gameIsOver({ victory: this.board.isGameWon() })
-                    return
-                }
-                await this.solver.update()
+                const previouslyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
+                await solver.update()
                 this.updateCellStates()
-                const currentlyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
+                const currentlyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
+                if (this.board.isGameLost() || this.board.isGameWon()) {
+                    console.log('ai lost?', this.board.isGameLost(), this.board.isGameWon())
+                    this.gameIsOver()
+                    break
+                }
                 if (previouslyKnownCells === currentlyKnownCells) {
                     break;
                 }
+
             }
             console.log('done thinking')
         },
@@ -53,36 +56,54 @@ export default {
                 this.board.initializeMinesAroundCell(data.cell)
             }
             if (this.board.isGameLost()) {
-                this.gameIsOver({ victory: this.board.isGameWon() })
+                this.gameIsOver()
                 this.explodedBombId = data.cell.id
                 return
             }
 
             this.startAi()
+            console.log('ai is over')
 
             if (this.board.isGameLost() || this.board.isGameWon()) {
-                this.explodedBombId = data.cell.id
-                this.gameIsOver({ victory: this.board.isGameWon() })
+                if (this.board.isGameLost()) {
+                    this.explodedBombId = data.cell.id
+                }
+                this.gameIsOver()
             }
 
         },
-        gameIsOver(data: { victory: boolean }) {
-            this.updateCellStates()
-            this.gameOver = true
-            console.log('game finished: ', data.victory ? 'you won' : 'you lost')
-        },
         updateCellStates() {
-            this.solver.knownSafeCellsIds
+            solver.knownSafeCellsIds
                 .forEach(cellId => {
-                    this.board.getCellById(cellId)!.aiMarkedSafe = true
-                    this.board.revealCell(this.board.getCellById(cellId)!)
+                    const cell = this.board.getCellById(cellId)!
+                    if (cell.aiMarkedMine || cell.flagged) {
+                        console.log('something wrong', cell)
+                    }
+                    if (cell.hasMine) {
+                        console.log('AI made a mistake. Cell has mine', cell)
+                    }
+                    cell.aiMarkedSafe = true
+                    this.board.revealCell(cell)
                 })
-            this.solver.knownMineCellsIds
-                .forEach(cell => {
-                    this.board.getCellById(cell)!.flagged = true
-                    this.board.getCellById(cell)!.aiMarkedMine = true
+            solver.knownMineCellsIds
+                .forEach(cellId => {
+                    const cell = this.board.getCellById(cellId)!
+                    if (!cell.hasMine) {
+                        console.log('AI made a mistake. Cell has no mine', cell)
+                    }
+
+                    cell.flagged = true
+                    cell.aiMarkedMine = true
                 })
-        }
+        },
+        gameIsOver() {
+            this.updateCellStates()
+            console.log(solver.knownMineCellsIds)
+            console.log(solver.knownSafeCellsIds)
+            this.gameOver = true
+            console.log('game finished: ' + (this.board.isGameWon() ? 'you won!' : 'you lost!'))
+        },
+
     }
 }
 </script>

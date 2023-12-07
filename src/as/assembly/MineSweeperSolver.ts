@@ -87,14 +87,14 @@ export class MineSweeperSolver {
                 notChangedIterationsCounter = 0
             }
         }
-        console.log('current propositions: ' + this.propositions.length.toString())
-        for (let i = 0; i < this.propositions.length; ++i) {
-            const proposition = this.propositions[i]
-            console.log(proposition.toString())
-        }
-        console.log('============\ncurrent propositions: ' + this.propositions.length.toString())
-        const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
-        console.log('not revealed ratio: ' + ratio.toString())
+        // console.log('current propositions: ' + this.propositions.length.toString())
+        // for (let i = 0; i < this.propositions.length; ++i) {
+        //     const proposition = this.propositions[i]
+        //     console.log(proposition.toString())
+        // }
+        // console.log('============\ncurrent propositions: ' + this.propositions.length.toString())
+        // const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
+        // console.log('not revealed ratio: ' + ratio.toString())
     }
 
     private checkMainPropositionAddition(): boolean {

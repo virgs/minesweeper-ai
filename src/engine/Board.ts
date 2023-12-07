@@ -61,7 +61,8 @@ export class Board {
     }
 
     public isGameWon(): boolean {
-        return this.cells.filter((cell) => cell.isRevealed()).length === this.totalCells - this.properties.mines
+        return this.cells
+            .filter(cell => cell.isNotRevealed()).length === this.properties.mines
     }
 
     public revealCell(clickedCell: Cell): Cell[] {
