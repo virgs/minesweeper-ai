@@ -14,8 +14,6 @@ import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 // <font-awesome - icon icon = "fa-solid fa-sun" />
 // <font-awesome - icon icon = "fa-regular fa-sun" />
-// <font-awesome-icon icon="fa-solid fa-bomb" shake />
-// <font-awesome-icon icon="fa-solid fa-bomb" shake />
 // <font-awesome-icon :icon="['fat', 'burst']" beat-fade style="color: #22511f;" />
 
 /* add icons to the library */

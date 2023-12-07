@@ -1,13 +1,12 @@
 <template>
     <main>
-        <Grid :board="(board as Board)" :gameOver="gameOver" :knownMineCellsIds="knownMineCellsIds"
-            :knownSafeCellsIds="knownSafeCellsIds" :explodedBombId="explodedBombId" @cell-click="cellClick"></Grid>
+        <Grid :board="(board as Board)" :gameOver="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
+        </Grid>
     </main>
 </template>
 
 <script lang="ts">
 
-import { toRaw } from 'vue'
 import Grid from './components/Grid.vue'
 import { GameConfigurations } from './constants/GameConfiguration'
 import { Board } from './engine/Board'
@@ -21,13 +20,11 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(GameConfigurations.Expert)
+        const board = new Board(GameConfigurations.Intermediate)
         return {
             board: board,
             gameOver: false,
             explodedBombId: undefined as number | undefined,
-            knownSafeCellsIds: [] as number[],
-            knownMineCellsIds: [] as number[],
             solver: new Solver(board)
         }
     },
@@ -35,24 +32,19 @@ export default {
         async startAi() {
             console.log('thinking')
             while (true) {
-                const previouslyKnownCells = this.knownSafeCellsIds.length + this.knownMineCellsIds.length
+                const previouslyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
                 if (this.board.isGameLost() || this.board.isGameWon()) {
                     this.gameIsOver({ victory: this.board.isGameWon() })
                     return
                 }
                 await this.solver.update()
-                this.knownSafeCellsIds = this.solver.knownSafeCellsIds
-                this.knownMineCellsIds = this.solver.knownMineCellsIds
-                this.knownSafeCellsIds
-                    .forEach(cellId => this.board.revealCell(this.board.getCellById(cellId)!))
-                const currentlyKnownCells = this.knownSafeCellsIds.length + this.knownMineCellsIds.length
+                this.updateCellStates()
+                const currentlyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
                 if (previouslyKnownCells === currentlyKnownCells) {
                     break;
                 }
             }
             console.log('done thinking')
-            console.log('mines', toRaw(this.knownMineCellsIds))
-            console.log('safe', toRaw(this.knownSafeCellsIds))
         },
         async cellClick(data: { cell: Cell }) {
             if (this.board.isInitialized()) {
@@ -75,11 +67,21 @@ export default {
 
         },
         gameIsOver(data: { victory: boolean }) {
-            this.knownSafeCellsIds = this.solver.knownSafeCellsIds
-            this.knownMineCellsIds = this.solver.knownMineCellsIds
-
+            this.updateCellStates()
             this.gameOver = true
             console.log('game finished: ', data.victory ? 'you won' : 'you lost')
+        },
+        updateCellStates() {
+            this.solver.knownSafeCellsIds
+                .forEach(cellId => {
+                    this.board.getCellById(cellId)!.aiMarkedSafe = true
+                    this.board.revealCell(this.board.getCellById(cellId)!)
+                })
+            this.solver.knownMineCellsIds
+                .forEach(cell => {
+                    this.board.getCellById(cell)!.flagged = true
+                    this.board.getCellById(cell)!.aiMarkedMine = true
+                })
         }
     }
 }

@@ -2,10 +2,8 @@
     <div id="grid">
         <div v-for="line in board.properties.height" style="display: inline-flex">
             <div v-for="column in board.properties.width">
-                <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" :knownMineCellsIds="knownMineCellsIds"
-                    :knownSafeCellsIds="knownSafeCellsIds" @clicked="cellClick" :gameOver="gameOver"
-                    :explodedBombId="explodedBombId" @doubleClicked="cellDoubleClicked" @flagged="cellFlagged"
-                    @unflagged="cellUnflagged" />
+                <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
+                    :explodedBombId="explodedBombId" @doubleClicked="cellDoubleClicked" />
             </div>
         </div>
     </div>
@@ -15,7 +13,7 @@
 import CellVue from '@/components/Cell.vue'
 import { Board } from '@/engine/Board'
 import type { Cell } from '@/engine/Cell'
-import type { PropType } from 'vue'
+import { toRaw, type PropType } from 'vue'
 
 export default {
     name: 'Grid',
@@ -33,19 +31,6 @@ export default {
         gameOver: {
             type: Boolean,
             required: true,
-        },
-        knownSafeCellsIds: {
-            type: Object as PropType<Number[]>,
-            required: true,
-        },
-        knownMineCellsIds: {
-            type: Object as PropType<Number[]>,
-            required: true,
-        },
-    },
-    data() {
-        return {
-            flaggedCells: [] as number[]
         }
     },
     methods: {
@@ -54,23 +39,14 @@ export default {
         },
         cellDoubleClicked(data: { cell: Cell }) {
             const adjacentCells = this.board.getAdjacentCells(data.cell)
-            const flagsAround = adjacentCells.filter(cell => this.flaggedCells.includes(cell.id)).length
+            const flagsAround = adjacentCells.filter(cell => cell.flagged).length
             if (flagsAround === data.cell.minesAround) {
                 adjacentCells
-                    .filter(cell => cell.isNotRevealed() && !this.flaggedCells.includes(cell.id))
-                    .forEach(cell => {
-                        this.$emit('cellClick', { cell: cell })
-                    })
+                    .filter(cell => cell.isNotRevealed() && !cell.flagged)
+                    .forEach(cell => this.$emit('cellClick', { cell: cell }))
             }
-        },
-        cellFlagged(data: { cell: Cell }) {
-            this.flaggedCells.push(data.cell.id)
-        },
-        cellUnflagged(data: { cell: Cell }) {
-            this.flaggedCells = this.flaggedCells
-                .filter(cell => cell !== data.cell.id)
-        },
-    },
+        }
+    }
 }
 </script>
 

@@ -3,8 +3,9 @@
         :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
         :class="classStyle">
         <!-- <small style="color: maroon; font-size: 8px;"> {{ cell.id }}</small> -->
-        <div v-if="flagged" class="flag">
+        <div v-if="cell.flagged" class="flag">
             <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
+            <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue;" />
             <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
         <div v-else-if="isRevealed">
@@ -19,14 +20,14 @@
 </template>
 
 <script lang="ts">
-import type { Cell } from '@/engine/Cell'
 import { MouseButtons } from '@/constants/MouseButtons'
 import { NumberColor } from '@/constants/NumberColor'
-import { toRaw, type PropType } from 'vue'
+import type { Cell } from '@/engine/Cell'
+import { type PropType } from 'vue'
 
 export default {
     name: 'Cell',
-    emits: ['clicked', 'doubleClicked', 'flagged', 'unflagged'],
+    emits: ['clicked', 'doubleClicked'],
     props: {
         cell: {
             type: Object as PropType<Cell>,
@@ -36,14 +37,6 @@ export default {
             type: Number,
             required: false,
         },
-        knownSafeCellsIds: {
-            type: Object as PropType<Number[]>,
-            required: true,
-        },
-        knownMineCellsIds: {
-            type: Object as PropType<Number[]>,
-            required: true,
-        },
         gameOver: {
             type: Boolean,
             required: true,
@@ -51,15 +44,8 @@ export default {
     },
     data() {
         return {
-            flagged: false,
             mouseOver: false,
             mouseButtonDown: 0
-        }
-    },
-    watch: {
-        knownMineCellsIds() {
-            this.flagged = toRaw(this.knownMineCellsIds).includes(this.cell.id)
-            this.emitFlagEvent()
         }
     },
     computed: {
@@ -70,9 +56,9 @@ export default {
             return {
                 cell: true,
                 revealed: this.isRevealed,
-                pressed: !this.isRevealed && !this.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
-                hover: !this.isRevealed && !this.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
-                hint: !this.isRevealed && toRaw(this.knownSafeCellsIds).includes(this.cell.id)
+                pressed: !this.isRevealed && !this.cell.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
+                hover: !this.isRevealed && !this.cell.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
+                hint: !this.isRevealed && this.cell.aiMarkedSafe
             }
 
         },
@@ -118,26 +104,20 @@ export default {
         },
         mouseUpEvent(event: MouseEvent) {
             if (this.mouseButtonDown === MouseButtons.LEFT) {
-                if (this.cell.isNotRevealed() && !this.flagged) {
+                if (this.cell.isNotRevealed() && !this.cell.flagged) {
                     this.$emit('clicked', { cell: this.cell })
                 }
             } else if (this.mouseButtonDown === MouseButtons.RIGHT) {
-                this.flagged = !this.flagged
-                this.emitFlagEvent()
+                this.cell.flagged = !this.cell.flagged
+                if (!this.cell.flagged) {
+                    this.cell.aiMarkedMine = false
+                }
             }
-
             this.mouseButtonDown = event.buttons
         },
         doubleClick(event: MouseEvent) {
             if (this.isRevealed) {
                 this.$emit('doubleClicked', { cell: this.cell })
-            }
-        },
-        emitFlagEvent() {
-            if (this.flagged) {
-                this.$emit('flagged', { cell: this.cell })
-            } else {
-                this.$emit('unflagged', { cell: this.cell })
             }
         }
     },
