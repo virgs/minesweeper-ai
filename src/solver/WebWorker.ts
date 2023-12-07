@@ -1,4 +1,4 @@
-import { processBoard } from '@/as/build/assembly'
+import { processBoard, virgs } from '@/as/build/assembly'
 import type { Guess } from '@/constants/Guess'
 
 export type SolverRequest = {
@@ -12,8 +12,8 @@ export type SolverResponse = {
 }
 
 self.onmessage = async (event: MessageEvent<SolverRequest>) => {
-    const request = event.data
     try {
+        const request = event.data
         const assemblyScriptResult: SolverResponse = JSON.parse(processBoard(request.board))
         self.postMessage(assemblyScriptResult)
     } catch (exception) {

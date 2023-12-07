@@ -3,7 +3,7 @@ import { Cell } from './Cell'
 
 export class Board {
     readonly properties: BoardProperties
-    private readonly cells: Cell[]
+    readonly cells: Cell[]
     private readonly totalCells: number
     private initialized: boolean
 
@@ -86,19 +86,19 @@ export class Board {
         return []
     }
 
-    public print(showIndex: boolean = false) {
-        const text = this.cells.reduce((acc, cell, index) => {
-            acc += `${cell.minesAround.toString().padStart(3)}`
-            if (showIndex) {
-                acc += ` (${index.toString().padStart(3)})`
-            }
-            if ((index + 1) % this.properties.width === 0) {
-                acc += '\n'
-            }
-            return acc
-        }, '')
-        console.log(text)
-    }
+    // public print(showIndex: boolean = false) {
+    //     const text = this.cells.reduce((acc, cell, index) => {
+    //         acc += `${cell.minesAround.toString().padStart(3)}`
+    //         if (showIndex) {
+    //             acc += ` (${index.toString().padStart(3)})`
+    //         }
+    //         if ((index + 1) % this.properties.width === 0) {
+    //             acc += '\n'
+    //         }
+    //         return acc
+    //     }, '')
+    //     console.log(text)
+    // }
 
     public getAdjacentCells(cell: Cell): Cell[] {
         const cellPosition = {

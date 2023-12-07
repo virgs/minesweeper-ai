@@ -2,6 +2,16 @@ import type { Board } from '@/engine/Board';
 import type { Guess } from '@/constants/Guess';
 import type { SolverRequest, SolverResponse } from './WebWorker';
 import Worker from './WebWorker?worker';
+import type { BoardProperties } from '@/constants/BoardProperties';
+
+type Model = {
+    properties: BoardProperties,
+    cells: {
+        _id: number,
+        minesCount?: number,
+        revealed: boolean,
+    }[]
+}
 
 export class Solver {
     private readonly worker: Worker;
@@ -27,11 +37,24 @@ export class Solver {
                 resolve()
             }
 
+            const model = this.createModel()
+
             const request: SolverRequest = {
-                board: JSON.stringify(this.board)
+                board: JSON.stringify(model)
             }
             this.worker.postMessage(request)
         })
+    }
+    private createModel(): Model {
+        return {
+            properties: this.board.properties,
+            cells: this.board.cells
+                .map(cell => ({
+                    _id: cell.id,
+                    minesCount: cell.isRevealed() ? cell.minesAround : undefined,
+                    revealed: cell.isRevealed()
+                }))
+        }
     }
 
     public get knownSafeCellsIds(): number[] {

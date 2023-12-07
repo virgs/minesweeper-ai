@@ -2,7 +2,7 @@ import { Board } from './Board'
 import { Cell } from './models/Cell'
 import { Proposition } from './Proposition'
 
-const mainPropositionThreshold: f32 = 0.225
+const mainPropositionThreshold: f32 = 0.85
 
 export class MineSweeperSolver {
     private readonly board: Board
@@ -65,6 +65,7 @@ export class MineSweeperSolver {
         this.createNewPropositions()
 
         let changed: bool = false;
+        let notChangedIterationsCounter: number = 0;
         while (!this.isBoardSolved()) {
             let previousKnownCells = this.safeCellsIds.length + this.mineCellsIds.length
             changed = false
@@ -72,24 +73,33 @@ export class MineSweeperSolver {
             changed = this.removedKnownCellsFromPropositions() || changed
             changed = this.propositionsCompared() || changed
             changed = this.satisfiedPropositionsRemoved() || changed
-            changed = this.checkMainPropositionAddition() || changed
+            // changed = this.checkMainPropositionAddition() || changed
             let currentKnownCells = this.safeCellsIds.length + this.mineCellsIds.length
             if (!changed && previousKnownCells === currentKnownCells) {
-                break
+                ++notChangedIterationsCounter
+                if (notChangedIterationsCounter > 5) {
+                    break
+                }
+            } else {
+                if (notChangedIterationsCounter > 0) {
+                    console.log('notChangedIterationsCounter: ' + notChangedIterationsCounter.toString())
+                }
+                notChangedIterationsCounter = 0
             }
         }
-        console.log('current propositions')
+        console.log('current propositions: ' + this.propositions.length.toString())
         for (let i = 0; i < this.propositions.length; ++i) {
             const proposition = this.propositions[i]
             console.log(proposition.toString())
         }
-        const ratio: f32 = f32(this.board.getNotRevealedCells().length) / f32(this.totalCells);
+        console.log('============\ncurrent propositions: ' + this.propositions.length.toString())
+        const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
         console.log('not revealed ratio: ' + ratio.toString())
     }
 
     private checkMainPropositionAddition(): boolean {
-        const ratio: f32 = f32(this.board.getNotRevealedCells().length) / f32(this.totalCells);
-        if (!this.addedMainProposition && ratio < mainPropositionThreshold) {
+        const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
+        if (!this.addedMainProposition && ratio > mainPropositionThreshold) {
             const initialPropositionCells: i32[] = new Array(this.totalCells)
             for (let i = 0; i < this.board.cells.length; ++i) {
                 initialPropositionCells.push(this.board.cells[i]._id)

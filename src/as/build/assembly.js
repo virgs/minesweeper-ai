@@ -27,7 +27,32 @@ async function instantiate(module, imports = {}) {
       text = __lowerString(text) || __notnull();
       return __liftString(exports.processBoard(text) >>> 0);
     },
+    virgs: {
+      // src/as/assembly/index/virgs: src/as/assembly/index/Virgs
+      valueOf() { return this.value; },
+      get value() {
+        return __liftRecord4(exports.virgs.value >>> 0);
+      }
+    },
+    test() {
+      // src/as/assembly/index/test() => src/as/assembly/index/Test
+      return __liftRecord5(exports.test() >>> 0);
+    },
   }, exports);
+  function __liftRecord4(pointer) {
+    // src/as/assembly/index/Virgs
+    // Hint: Opt-out from lifting as a record by providing an empty constructor
+    if (!pointer) return null;
+    return {
+    };
+  }
+  function __liftRecord5(pointer) {
+    // src/as/assembly/index/Test
+    // Hint: Opt-out from lifting as a record by providing an empty constructor
+    if (!pointer) return null;
+    return {
+    };
+  }
   function __liftString(pointer) {
     if (!pointer) return null;
     const
@@ -56,6 +81,8 @@ async function instantiate(module, imports = {}) {
 export const {
   memory,
   processBoard,
+  virgs,
+  test,
 } = await (async url => instantiate(
   await (async () => {
     try { return await globalThis.WebAssembly.compileStreaming(globalThis.fetch(url)); }
