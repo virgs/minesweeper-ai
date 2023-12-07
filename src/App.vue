@@ -37,15 +37,10 @@ export default {
                 await solver.update()
                 this.updateCellStates()
                 const currentlyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
-                if (this.board.isGameLost() || this.board.isGameWon()) {
-                    console.log('ai lost?', this.board.isGameLost(), this.board.isGameWon())
-                    this.gameIsOver()
-                    break
-                }
-                if (previouslyKnownCells === currentlyKnownCells) {
+                if (this.board.isGameLost() || this.board.isGameWon() ||
+                    previouslyKnownCells === currentlyKnownCells) {
                     break;
                 }
-
             }
             console.log('done thinking')
         },
@@ -61,8 +56,7 @@ export default {
                 return
             }
 
-            this.startAi()
-            console.log('ai is over')
+            await this.startAi()
 
             if (this.board.isGameLost() || this.board.isGameWon()) {
                 if (this.board.isGameLost()) {
@@ -70,15 +64,11 @@ export default {
                 }
                 this.gameIsOver()
             }
-
         },
         updateCellStates() {
             solver.knownSafeCellsIds
                 .forEach(cellId => {
                     const cell = this.board.getCellById(cellId)!
-                    if (cell.aiMarkedMine || cell.flagged) {
-                        console.log('something wrong', cell)
-                    }
                     if (cell.hasMine) {
                         console.log('AI made a mistake. Cell has mine', cell)
                     }

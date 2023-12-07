@@ -57,12 +57,14 @@ export class Board {
     }
 
     public isGameLost(): boolean {
-        return this.cells.some((cell) => cell.hasMine && cell.isRevealed())
+        return this.cells
+            .some((cell) => cell.hasMine && cell.isRevealed())
     }
 
     public isGameWon(): boolean {
         return this.cells
-            .filter(cell => cell.isNotRevealed()).length === this.properties.mines
+            .filter(cell => cell.isNotRevealed())
+            .every(cell => cell.hasMine)
     }
 
     public revealCell(clickedCell: Cell): Cell[] {
@@ -71,7 +73,9 @@ export class Board {
             clickedCell.reveal()
             if (clickedCell.hasMine) {
                 const mines = this.cells.filter((cell) => cell.hasMine)
-                mines.forEach((cell) => cell.reveal())
+                mines
+                    .filter(cel => !cel.flagged)
+                    .forEach((cell) => cell.reveal())
                 return mines
             } else {
                 if (clickedCell.minesAround === 0) {
