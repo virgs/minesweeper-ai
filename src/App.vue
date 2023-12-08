@@ -1,6 +1,8 @@
 <template>
     <main>
-        <Grid :board="(board as Board)" :gameOver="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
+        mouseDown {{ mouseDown }}
+        <Grid :board="(board as Board)" :gameOver="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick"
+            @mousedown="mouseDown = true" @mouseup="mouseDown = false">
         </Grid>
     </main>
 </template>
@@ -13,7 +15,6 @@ import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
 import { Solver } from './solver/Solver'
 
-
 let solver: Solver;
 export default {
     name: 'App',
@@ -21,9 +22,10 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(GameConfigurations.Intermediate)
+        const board = new Board(GameConfigurations.Expert)
         solver = new Solver(board)
         return {
+            mouseDown: false,
             board: board,
             gameOver: false,
             explodedBombId: undefined as number | undefined,
@@ -90,6 +92,8 @@ export default {
                         cell.aiMarkedMine = true
                     }
                 })
+            console.log(solver.knownMineCellsIds)
+            console.log(solver.knownSafeCellsIds)
         },
         finishGame() {
             this.updateCellStates()
@@ -97,7 +101,7 @@ export default {
             console.log(solver.knownMineCellsIds)
             console.log(solver.knownSafeCellsIds)
             this.gameOver = true
-            console.log('game finished: ' + (this.board.isGameWon() ? 'you won!' : 'you lost!'))
+            console.log('game finished. ' + (this.board.isGameWon() ? 'You won!' : 'You lost!'))
         },
 
     }

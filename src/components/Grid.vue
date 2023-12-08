@@ -13,7 +13,7 @@
 import CellVue from '@/components/Cell.vue'
 import { Board } from '@/engine/Board'
 import type { Cell } from '@/engine/Cell'
-import { toRaw, type PropType } from 'vue'
+import { type PropType } from 'vue'
 
 export default {
     name: 'Grid',

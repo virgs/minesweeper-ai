@@ -16,6 +16,13 @@ import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
 // <font-awesome - icon icon = "fa-regular fa-sun" />
 // <font-awesome-icon :icon="['fat', 'burst']" beat-fade style="color: #22511f;" />
 
+// <font-awesome - icon : icon = "['far', 'face-smile']" />
+// <font-awesome - icon : icon = "['far', 'face-smile-wink']" />
+// <font-awesome-icon :icon="['far', 'face-laugh']" />
+// <font-awesome-icon :icon="['far', 'face-dizzy']" />
+
+// <font-awesome-icon :icon="['fas', 'dice']" />
+
 /* add icons to the library */
 library.add(faBomb, faFlag, faXmark)
 

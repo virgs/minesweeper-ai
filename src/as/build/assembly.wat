@@ -25,7 +25,7 @@
  (global $~lib/as-string-sink/assembly/index/MIN_BUFFER_LEN i32 (i32.const 32))
  (global $~lib/as-string-sink/assembly/index/MIN_BUFFER_SIZE i32 (i32.const 64))
  (global $~lib/as-string-sink/assembly/index/NEW_LINE_CHAR i32 (i32.const 10))
- (global $src/as/assembly/MineSweeperSolver/mainPropositionThreshold f32 (f32.const 0.8500000238418579))
+ (global $src/as/assembly/MineSweeperSolver/mainPropositionThreshold f32 (f32.const 0.949999988079071))
  (global $~lib/shared/runtime/Runtime.Stub i32 (i32.const 0))
  (global $~lib/shared/runtime/Runtime.Minimal i32 (i32.const 1))
  (global $~lib/shared/runtime/Runtime.Incremental i32 (i32.const 2))
@@ -51,10 +51,10 @@
  (global $~lib/util/number/_frc_pow (mut i64) (i64.const 0))
  (global $~lib/util/number/_exp_pow (mut i32) (i32.const 0))
  (global $~lib/builtins/i32.MAX_VALUE i32 (i32.const 2147483647))
- (global $~lib/rt/__rtti_base i32 (i32.const 7168))
- (global $~lib/memory/__data_end i32 (i32.const 7264))
- (global $~lib/memory/__stack_pointer (mut i32) (i32.const 40032))
- (global $~lib/memory/__heap_base i32 (i32.const 40032))
+ (global $~lib/rt/__rtti_base i32 (i32.const 6928))
+ (global $~lib/memory/__data_end i32 (i32.const 7024))
+ (global $~lib/memory/__stack_pointer (mut i32) (i32.const 39792))
+ (global $~lib/memory/__heap_base i32 (i32.const 39792))
  (memory $0 1)
  (data $0 (i32.const 12) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\08\00\00\00t\00r\00u\00e\00\00\00\00\00")
  (data $1 (i32.const 44) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\n\00\00\00f\00a\00l\00s\00e\00\00\00")
@@ -111,53 +111,51 @@
  (data $52 (i32.const 2892) "\1c\04\00\00\00\00\00\00\00\00\00\00\02\00\00\00\00\04\00\000\000\000\001\000\002\000\003\000\004\000\005\000\006\000\007\000\008\000\009\000\00a\000\00b\000\00c\000\00d\000\00e\000\00f\001\000\001\001\001\002\001\003\001\004\001\005\001\006\001\007\001\008\001\009\001\00a\001\00b\001\00c\001\00d\001\00e\001\00f\002\000\002\001\002\002\002\003\002\004\002\005\002\006\002\007\002\008\002\009\002\00a\002\00b\002\00c\002\00d\002\00e\002\00f\003\000\003\001\003\002\003\003\003\004\003\005\003\006\003\007\003\008\003\009\003\00a\003\00b\003\00c\003\00d\003\00e\003\00f\004\000\004\001\004\002\004\003\004\004\004\005\004\006\004\007\004\008\004\009\004\00a\004\00b\004\00c\004\00d\004\00e\004\00f\005\000\005\001\005\002\005\003\005\004\005\005\005\006\005\007\005\008\005\009\005\00a\005\00b\005\00c\005\00d\005\00e\005\00f\006\000\006\001\006\002\006\003\006\004\006\005\006\006\006\007\006\008\006\009\006\00a\006\00b\006\00c\006\00d\006\00e\006\00f\007\000\007\001\007\002\007\003\007\004\007\005\007\006\007\007\007\008\007\009\007\00a\007\00b\007\00c\007\00d\007\00e\007\00f\008\000\008\001\008\002\008\003\008\004\008\005\008\006\008\007\008\008\008\009\008\00a\008\00b\008\00c\008\00d\008\00e\008\00f\009\000\009\001\009\002\009\003\009\004\009\005\009\006\009\007\009\008\009\009\009\00a\009\00b\009\00c\009\00d\009\00e\009\00f\00a\000\00a\001\00a\002\00a\003\00a\004\00a\005\00a\006\00a\007\00a\008\00a\009\00a\00a\00a\00b\00a\00c\00a\00d\00a\00e\00a\00f\00b\000\00b\001\00b\002\00b\003\00b\004\00b\005\00b\006\00b\007\00b\008\00b\009\00b\00a\00b\00b\00b\00c\00b\00d\00b\00e\00b\00f\00c\000\00c\001\00c\002\00c\003\00c\004\00c\005\00c\006\00c\007\00c\008\00c\009\00c\00a\00c\00b\00c\00c\00c\00d\00c\00e\00c\00f\00d\000\00d\001\00d\002\00d\003\00d\004\00d\005\00d\006\00d\007\00d\008\00d\009\00d\00a\00d\00b\00d\00c\00d\00d\00d\00e\00d\00f\00e\000\00e\001\00e\002\00e\003\00e\004\00e\005\00e\006\00e\007\00e\008\00e\009\00e\00a\00e\00b\00e\00c\00e\00d\00e\00e\00e\00f\00f\000\00f\001\00f\002\00f\003\00f\004\00f\005\00f\006\00f\007\00f\008\00f\009\00f\00a\00f\00b\00f\00c\00f\00d\00f\00e\00f\00f\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data $53 (i32.const 3948) "\\\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00H\00\00\000\001\002\003\004\005\006\007\008\009\00a\00b\00c\00d\00e\00f\00g\00h\00i\00j\00k\00l\00m\00n\00o\00p\00q\00r\00s\00t\00u\00v\00w\00x\00y\00z\00\00\00\00\00")
  (data $54 (i32.const 4044) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $55 (i32.const 4076) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00c\00 \00n\00e\00w\00 \00s\00a\00f\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $56 (i32.const 4156) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00d\00 \00n\00e\00w\00 \00m\00i\00n\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $57 (i32.const 4236) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $58 (i32.const 4268) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\02\00\00\00\00\00\00\00\00\00\00\00")
- (data $59 (i32.const 4300) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\18\00\00\00b\00o\00a\00r\00d\00 \00s\00o\00l\00v\00e\00d\00\00\00\00\00")
- (data $60 (i32.const 4348) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00a\00 \00n\00e\00w\00 \00s\00a\00f\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $61 (i32.const 4428) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00b\00 \00n\00e\00w\00 \00m\00i\00n\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $62 (i32.const 4508) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $63 (i32.const 4540) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $64 (i32.const 4572) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00(\00\00\00\00\00\00\00\00\00\00\00")
- (data $65 (i32.const 4604) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00 \00-\00 \00\00\00\00\00\00\00")
- (data $66 (i32.const 4636) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00)\00\00\00\00\00\00\00\00\00\00\00")
- (data $67 (i32.const 4668) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\f0\11\00\00\00\00\00\00\10\12\00\00\00\00\00\000\12\00\00\00\00\00\00\00\00\00\00")
- (data $68 (i32.const 4716) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00e\00 \00n\00e\00w\00 \00s\00a\00f\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $69 (i32.const 4796) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00f\00 \00n\00e\00w\00 \00s\00a\00f\00e\00 \00c\00e\00l\00l\00s\00 \00d\00i\00s\00c\00o\00v\00e\00r\00e\00d\00:\00 \00\00\00")
- (data $70 (i32.const 4876) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00:\00\00\00\00\00\00\00\00\00\00\00")
- (data $71 (i32.const 4908) "\1c\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\0c\00\00\00\00\00\00\00 \13\00\00\00\00\00\00")
- (data $72 (i32.const 4940) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\03\00\00\00\00\00\00\00\00\00\00\00")
- (data $73 (i32.const 4972) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00n\00o\00t\00C\00h\00a\00n\00g\00e\00d\00I\00t\00e\00r\00a\00t\00i\00o\00n\00s\00C\00o\00u\00n\00t\00e\00r\00:\00 \00\00\00")
- (data $74 (i32.const 5052) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\000\00.\000\00\00\00\00\00\00\00")
- (data $75 (i32.const 5084) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00N\00a\00N\00\00\00\00\00\00\00")
- (data $76 (i32.const 5116) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00-\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00")
- (data $77 (i32.const 5164) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\10\00\00\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $78 (i32.const 5216) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $79 (i32.const 5272) "\88\02\1c\08\a0\d5\8f\fav\bf>\a2\7f\e1\ae\bav\acU0 \fb\16\8b\ea5\ce]J\89B\cf-;eU\aa\b0k\9a\dfE\1a=\03\cf\1a\e6\ca\c6\9a\c7\17\fep\abO\dc\bc\be\fc\b1w\ff\0c\d6kA\ef\91V\be<\fc\7f\90\ad\1f\d0\8d\83\9aU1(\\Q\d3\b5\c9\a6\ad\8f\acq\9d\cb\8b\ee#w\"\9c\eamSx@\91I\cc\aeW\ce\b6]y\12<\827V\fbM6\94\10\c2O\98H8o\ea\96\90\c7:\82%\cb\85t\d7\f4\97\bf\97\cd\cf\86\a0\e5\ac*\17\98\n4\ef\8e\b25*\fbg8\b2;?\c6\d2\df\d4\c8\84\ba\cd\d3\1a\'D\dd\c5\96\c9%\bb\ce\9fk\93\84\a5b}$l\ac\db\f6\da_\rXf\ab\a3&\f1\c3\de\93\f8\e2\f3\b8\80\ff\aa\a8\ad\b5\b5\8bJ|l\05_b\87S0\c14`\ff\bc\c9U&\ba\91\8c\85N\96\bd~)p$w\f9\df\8f\b8\e5\b8\9f\bd\df\a6\94}t\88\cf_\a9\f8\cf\9b\a8\8f\93pD\b9k\15\0f\bf\f8\f0\08\8a\b611eU%\b0\cd\ac\7f{\d0\c6\e2?\99\06;+*\c4\10\\\e4\d3\92si\99$$\aa\0e\ca\00\83\f2\b5\87\fd\eb\1a\11\92d\08\e5\bc\cc\88Po\t\cc\bc\8c,e\19\e2X\17\b7\d1\00\00\00\00\00\00@\9c\00\00\00\00\10\a5\d4\e8\00\00b\ac\c5\ebx\ad\84\t\94\f8x9?\81\b3\15\07\c9{\ce\97\c0p\\\ea{\ce2~\8fh\80\e9\ab\a48\d2\d5E\"\9a\17&\'O\9f\'\fb\c4\d41\a2c\ed\a8\ad\c8\8c8e\de\b0\dbe\ab\1a\8e\08\c7\83\9a\1dqB\f9\1d]\c4X\e7\1b\a6,iM\92\ea\8dp\1ad\ee\01\daJw\ef\9a\99\a3m\a2\85k}\b4{x\t\f2w\18\ddy\a1\e4T\b4\c2\c5\9b[\92\86[\86=]\96\c8\c5S5\c8\b3\a0\97\fa\\\b4*\95\e3_\a0\99\bd\9fF\de%\8c9\db4\c2\9b\a5\\\9f\98\a3r\9a\c6\f6\ce\be\e9TS\bf\dc\b7\e2A\"\f2\17\f3\fc\88\a5x\\\d3\9b\ce \cc\dfS!{\f3Z\16\98:0\1f\97\dc\b5\a0\e2\96\b3\e3\\S\d1\d9\a8<D\a7\a4\d9|\9b\fb\10D\a4\a7LLv\bb\1a\9c@\b6\ef\8e\ab\8b,\84W\a6\10\ef\1f\d0)1\91\e9\e5\a4\10\9b\9d\0c\9c\a1\fb\9b\10\e7)\f4;b\d9 (\ac\85\cf\a7z^KD\80-\dd\ac\03@\e4!\bf\8f\ffD^/\9cg\8eA\b8\8c\9c\9d\173\d4\a9\1b\e3\b4\92\db\19\9e\d9w\df\ban\bf\96\ebk\ee\f0\9b;\02\87\af")
- (data $80 (i32.const 5968) "<\fbW\fbr\fb\8c\fb\a7\fb\c1\fb\dc\fb\f6\fb\11\fc,\fcF\fca\fc{\fc\96\fc\b1\fc\cb\fc\e6\fc\00\fd\1b\fd5\fdP\fdk\fd\85\fd\a0\fd\ba\fd\d5\fd\ef\fd\n\fe%\fe?\feZ\fet\fe\8f\fe\a9\fe\c4\fe\df\fe\f9\fe\14\ff.\ffI\ffc\ff~\ff\99\ff\b3\ff\ce\ff\e8\ff\03\00\1e\008\00S\00m\00\88\00\a2\00\bd\00\d8\00\f2\00\r\01\'\01B\01\\\01w\01\92\01\ac\01\c7\01\e1\01\fc\01\16\021\02L\02f\02\81\02\9b\02\b6\02\d0\02\eb\02\06\03 \03;\03U\03p\03\8b\03\a5\03\c0\03\da\03\f5\03\0f\04*\04")
- (data $81 (i32.const 6144) "\01\00\00\00\n\00\00\00d\00\00\00\e8\03\00\00\10\'\00\00\a0\86\01\00@B\0f\00\80\96\98\00\00\e1\f5\05\00\ca\9a;")
- (data $82 (i32.const 6188) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00,\00\00\00c\00u\00r\00r\00e\00n\00t\00 \00p\00r\00o\00p\00o\00s\00i\00t\00i\00o\00n\00s\00:\00 \00")
- (data $83 (i32.const 6252) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00|\00\00\00\00\00\00\00\00\00\00\00")
- (data $84 (i32.const 6284) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\08\00\00\00|\00:\00 \00{\00\00\00\00\00")
- (data $85 (i32.const 6316) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\0e\00\00\00}\00 \00=\00 \00-\00>\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $86 (i32.const 6364) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\18\00\00\00\80\18\00\00\00\00\00\00\a0\18\00\00\00\00\00\00\c0\18\00\00\00\00\00\00\00\00\00\00")
- (data $87 (i32.const 6412) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\04\00\00\00\00\00\00\00\00\00\00\00")
- (data $88 (i32.const 6444) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $89 (i32.const 6476) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00{\00\"\00k\00n\00o\00w\00n\00M\00i\00n\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
- (data $90 (i32.const 6540) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00,\00\"\00k\00n\00o\00w\00n\00S\00a\00f\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
- (data $91 (i32.const 6604) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\16\00\00\00,\00\"\00g\00u\00e\00s\00s\00e\00s\00\"\00:\00\00\00\00\00\00\00")
- (data $92 (i32.const 6652) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00}\00\00\00\00\00\00\00\00\00\00\00")
- (data $93 (i32.const 6684) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\1c\00\00\00`\19\00\00\00\00\00\00\a0\19\00\00\00\00\00\00\e0\19\00\00\00\00\00\00\10\1a\00\00")
- (data $94 (i32.const 6732) "l\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00P\00\00\00s\00r\00c\00/\00a\00s\00/\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00o\00d\00e\00l\00s\00/\00S\00o\00l\00v\00e\00r\00R\00e\00s\00p\00o\00n\00s\00e\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data $95 (i32.const 6844) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00{\00\"\00m\00i\00n\00e\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
- (data $96 (i32.const 6892) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00,\00\"\00c\00e\00l\00l\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
- (data $97 (i32.const 6940) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\d0\1a\00\00\00\00\00\00\00\1b\00\00\00\00\00\00\10\1a\00\00\00\00\00\00\00\00\00\00")
- (data $98 (i32.const 6988) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\d0\1a\00\00\00\00\00\00\00\1b\00\00\00\00\00\00\10\1a\00\00\00\00\00\00\00\00\00\00")
- (data $99 (i32.const 7036) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
- (data $100 (i32.const 7100) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
- (data $101 (i32.const 7168) "\17\00\00\00 \00\00\00 \00\00\00 \00\00\00\00\00\00\00\00\00\00\00 \00\00\00 \00\00\00\02A\00\00 \00\00\00\04A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\02A\00\00\00\00\00\00 \00\00\00\08\t\00\00\10A\82\00\00\00\00\00 \00\00\00\02A\00\00 \00\00\00\00\00\00\00")
+ (data $55 (i32.const 4076) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $56 (i32.const 4108) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\02\00\00\00\00\00\00\00\00\00\00\00")
+ (data $57 (i32.const 4140) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\18\00\00\00b\00o\00a\00r\00d\00 \00s\00o\00l\00v\00e\00d\00\00\00\00\00")
+ (data $58 (i32.const 4188) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00:\00\00\00\00\00\00\00\00\00\00\00")
+ (data $59 (i32.const 4220) "\1c\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\0c\00\00\00\00\00\00\00p\10\00\00\00\00\00\00")
+ (data $60 (i32.const 4252) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\03\00\00\00\00\00\00\00\00\00\00\00")
+ (data $61 (i32.const 4284) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $62 (i32.const 4316) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $63 (i32.const 4348) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00(\00\00\00\00\00\00\00\00\00\00\00")
+ (data $64 (i32.const 4380) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00 \00-\00 \00\00\00\00\00\00\00")
+ (data $65 (i32.const 4412) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00)\00\00\00\00\00\00\00\00\00\00\00")
+ (data $66 (i32.const 4444) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\10\11\00\00\00\00\00\000\11\00\00\00\00\00\00P\11\00\00\00\00\00\00\00\00\00\00")
+ (data $67 (i32.const 4492) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\0c\00\00\00=\00=\00=\00=\00=\00=\00")
+ (data $68 (i32.const 4524) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00|\00\00\00\00\00\00\00\00\00\00\00")
+ (data $69 (i32.const 4556) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00|\00 \00{\00\00\00\00\00\00\00")
+ (data $70 (i32.const 4588) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\0e\00\00\00}\00 \00=\00 \00-\00>\00 \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $71 (i32.const 4636) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\18\00\00\00\c0\11\00\00\00\00\00\00\e0\11\00\00\00\00\00\00\00\12\00\00\00\00\00\00\00\00\00\00")
+ (data $72 (i32.const 4684) "\1c\00\00\00\00\00\00\00\00\00\00\00\0e\00\00\00\08\00\00\00\04\00\00\00\00\00\00\00\00\00\00\00")
+ (data $73 (i32.const 4716) "\\\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00L\00\00\00A\00d\00d\00i\00n\00g\00 \00n\00e\00w\00 \00p\00r\00o\00p\00o\00s\00i\00t\00i\00o\00n\00 \00(\00n\00o\00t\00 \00a\00 \00s\00u\00b\00s\00e\00t\00)\00 \00")
+ (data $74 (i32.const 4812) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00.\00\00\00a\00d\00d\00i\00n\00g\00 \00m\00a\00i\00n\00 \00p\00r\00o\00p\00o\00s\00i\00t\00i\00o\00n\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $75 (i32.const 4892) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00*\00\00\00\00\00\00\00\00\00\00\00")
+ (data $76 (i32.const 4924) "L\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00:\00\00\00n\00o\00t\00C\00h\00a\00n\00g\00e\00d\00I\00t\00e\00r\00a\00t\00i\00o\00n\00s\00C\00o\00u\00n\00t\00e\00r\00:\00 \00\00\00")
+ (data $77 (i32.const 5004) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\000\00.\000\00\00\00\00\00\00\00")
+ (data $78 (i32.const 5036) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\06\00\00\00N\00a\00N\00\00\00\00\00\00\00")
+ (data $79 (i32.const 5068) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00-\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00")
+ (data $80 (i32.const 5116) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\10\00\00\00I\00n\00f\00i\00n\00i\00t\00y\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $81 (i32.const 5168) "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $82 (i32.const 5224) "\88\02\1c\08\a0\d5\8f\fav\bf>\a2\7f\e1\ae\bav\acU0 \fb\16\8b\ea5\ce]J\89B\cf-;eU\aa\b0k\9a\dfE\1a=\03\cf\1a\e6\ca\c6\9a\c7\17\fep\abO\dc\bc\be\fc\b1w\ff\0c\d6kA\ef\91V\be<\fc\7f\90\ad\1f\d0\8d\83\9aU1(\\Q\d3\b5\c9\a6\ad\8f\acq\9d\cb\8b\ee#w\"\9c\eamSx@\91I\cc\aeW\ce\b6]y\12<\827V\fbM6\94\10\c2O\98H8o\ea\96\90\c7:\82%\cb\85t\d7\f4\97\bf\97\cd\cf\86\a0\e5\ac*\17\98\n4\ef\8e\b25*\fbg8\b2;?\c6\d2\df\d4\c8\84\ba\cd\d3\1a\'D\dd\c5\96\c9%\bb\ce\9fk\93\84\a5b}$l\ac\db\f6\da_\rXf\ab\a3&\f1\c3\de\93\f8\e2\f3\b8\80\ff\aa\a8\ad\b5\b5\8bJ|l\05_b\87S0\c14`\ff\bc\c9U&\ba\91\8c\85N\96\bd~)p$w\f9\df\8f\b8\e5\b8\9f\bd\df\a6\94}t\88\cf_\a9\f8\cf\9b\a8\8f\93pD\b9k\15\0f\bf\f8\f0\08\8a\b611eU%\b0\cd\ac\7f{\d0\c6\e2?\99\06;+*\c4\10\\\e4\d3\92si\99$$\aa\0e\ca\00\83\f2\b5\87\fd\eb\1a\11\92d\08\e5\bc\cc\88Po\t\cc\bc\8c,e\19\e2X\17\b7\d1\00\00\00\00\00\00@\9c\00\00\00\00\10\a5\d4\e8\00\00b\ac\c5\ebx\ad\84\t\94\f8x9?\81\b3\15\07\c9{\ce\97\c0p\\\ea{\ce2~\8fh\80\e9\ab\a48\d2\d5E\"\9a\17&\'O\9f\'\fb\c4\d41\a2c\ed\a8\ad\c8\8c8e\de\b0\dbe\ab\1a\8e\08\c7\83\9a\1dqB\f9\1d]\c4X\e7\1b\a6,iM\92\ea\8dp\1ad\ee\01\daJw\ef\9a\99\a3m\a2\85k}\b4{x\t\f2w\18\ddy\a1\e4T\b4\c2\c5\9b[\92\86[\86=]\96\c8\c5S5\c8\b3\a0\97\fa\\\b4*\95\e3_\a0\99\bd\9fF\de%\8c9\db4\c2\9b\a5\\\9f\98\a3r\9a\c6\f6\ce\be\e9TS\bf\dc\b7\e2A\"\f2\17\f3\fc\88\a5x\\\d3\9b\ce \cc\dfS!{\f3Z\16\98:0\1f\97\dc\b5\a0\e2\96\b3\e3\\S\d1\d9\a8<D\a7\a4\d9|\9b\fb\10D\a4\a7LLv\bb\1a\9c@\b6\ef\8e\ab\8b,\84W\a6\10\ef\1f\d0)1\91\e9\e5\a4\10\9b\9d\0c\9c\a1\fb\9b\10\e7)\f4;b\d9 (\ac\85\cf\a7z^KD\80-\dd\ac\03@\e4!\bf\8f\ffD^/\9cg\8eA\b8\8c\9c\9d\173\d4\a9\1b\e3\b4\92\db\19\9e\d9w\df\ban\bf\96\ebk\ee\f0\9b;\02\87\af")
+ (data $83 (i32.const 5920) "<\fbW\fbr\fb\8c\fb\a7\fb\c1\fb\dc\fb\f6\fb\11\fc,\fcF\fca\fc{\fc\96\fc\b1\fc\cb\fc\e6\fc\00\fd\1b\fd5\fdP\fdk\fd\85\fd\a0\fd\ba\fd\d5\fd\ef\fd\n\fe%\fe?\feZ\fet\fe\8f\fe\a9\fe\c4\fe\df\fe\f9\fe\14\ff.\ffI\ffc\ff~\ff\99\ff\b3\ff\ce\ff\e8\ff\03\00\1e\008\00S\00m\00\88\00\a2\00\bd\00\d8\00\f2\00\r\01\'\01B\01\\\01w\01\92\01\ac\01\c7\01\e1\01\fc\01\16\021\02L\02f\02\81\02\9b\02\b6\02\d0\02\eb\02\06\03 \03;\03U\03p\03\8b\03\a5\03\c0\03\da\03\f5\03\0f\04*\04")
+ (data $84 (i32.const 6096) "\01\00\00\00\n\00\00\00d\00\00\00\e8\03\00\00\10\'\00\00\a0\86\01\00@B\0f\00\80\96\98\00\00\e1\f5\05\00\ca\9a;")
+ (data $85 (i32.const 6140) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00,\00\00\00c\00u\00r\00r\00e\00n\00t\00 \00p\00r\00o\00p\00o\00s\00i\00t\00i\00o\00n\00s\00:\00 \00")
+ (data $86 (i32.const 6204) "\1c\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $87 (i32.const 6236) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00{\00\"\00k\00n\00o\00w\00n\00M\00i\00n\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
+ (data $88 (i32.const 6300) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00,\00\"\00k\00n\00o\00w\00n\00S\00a\00f\00e\00C\00e\00l\00l\00s\00I\00d\00s\00\"\00:\00\00\00")
+ (data $89 (i32.const 6364) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\16\00\00\00,\00\"\00g\00u\00e\00s\00s\00e\00s\00\"\00:\00\00\00\00\00\00\00")
+ (data $90 (i32.const 6412) "\1c\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\02\00\00\00}\00\00\00\00\00\00\00\00\00\00\00")
+ (data $91 (i32.const 6444) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\1c\00\00\00p\18\00\00\00\00\00\00\b0\18\00\00\00\00\00\00\f0\18\00\00\00\00\00\00 \19\00\00")
+ (data $92 (i32.const 6492) "l\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00P\00\00\00s\00r\00c\00/\00a\00s\00/\00a\00s\00s\00e\00m\00b\00l\00y\00/\00m\00o\00d\00e\00l\00s\00/\00S\00o\00l\00v\00e\00r\00R\00e\00s\00p\00o\00n\00s\00e\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data $93 (i32.const 6604) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00{\00\"\00m\00i\00n\00e\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
+ (data $94 (i32.const 6652) ",\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00\12\00\00\00,\00\"\00c\00e\00l\00l\00s\00\"\00:\00\00\00\00\00\00\00\00\00\00\00")
+ (data $95 (i32.const 6700) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\e0\19\00\00\00\00\00\00\10\1a\00\00\00\00\00\00 \19\00\00\00\00\00\00\00\00\00\00")
+ (data $96 (i32.const 6748) ",\00\00\00\03\00\00\00\00\00\00\00\t\00\00\00\14\00\00\00\e0\19\00\00\00\00\00\00\10\1a\00\00\00\00\00\00 \19\00\00\00\00\00\00\00\00\00\00")
+ (data $97 (i32.const 6796) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00*\00\00\00O\00b\00j\00e\00c\00t\00 \00a\00l\00r\00e\00a\00d\00y\00 \00p\00i\00n\00n\00e\00d\00\00\00")
+ (data $98 (i32.const 6860) "<\00\00\00\00\00\00\00\00\00\00\00\02\00\00\00(\00\00\00O\00b\00j\00e\00c\00t\00 \00i\00s\00 \00n\00o\00t\00 \00p\00i\00n\00n\00e\00d\00\00\00\00\00")
+ (data $99 (i32.const 6928) "\17\00\00\00 \00\00\00 \00\00\00 \00\00\00\00\00\00\00\00\00\00\00 \00\00\00 \00\00\00\02A\00\00 \00\00\00\04A\00\00\00\00\00\00\02\t\00\00\00\00\00\00\02A\00\00\00\00\00\00 \00\00\00\08\t\00\00\10A\82\00\00\00\00\00 \00\00\00\02A\00\00 \00\00\00\00\00\00\00")
  (table $0 5 5 funcref)
  (elem $0 (i32.const 1) $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells~anonymous|0 $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells~anonymous|0 $src/as/assembly/Proposition/Proposition#hash~anonymous|0 $src/as/assembly/Proposition/Proposition#toString~anonymous|0)
  (export "__new" (func $~lib/rt/itcms/__new))
@@ -4120,6 +4118,86 @@
   local.get $this
   i32.load offset=4
  )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells~anonymous|0 (param $a i32) (param $b i32) (result i32)
+  local.get $a
+  local.get $b
+  i32.sub
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_ (param $this i32) (param $length_ i32)
+  local.get $this
+  local.get $length_
+  i32.store offset=12
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells (param $this i32) (result i32)
+  local.get $this
+  i32.load offset=4
+ )
+ (func $src/as/assembly/models/BoardProperties/BoardProperties#get:mines (param $this i32) (result i32)
+  local.get $this
+  i32.load offset=8
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer (param $this i32) (param $buffer i32)
+  local.get $this
+  local.get $buffer
+  i32.store
+  local.get $this
+  local.get $buffer
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart (param $this i32) (param $dataStart i32)
+  local.get $this
+  local.get $dataStart
+  i32.store offset=4
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength (param $this i32) (param $byteLength i32)
+  local.get $this
+  local.get $byteLength
+  i32.store offset=8
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:buckets (param $this i32) (param $buckets i32)
+  local.get $this
+  local.get $buckets
+  i32.store
+  local.get $this
+  local.get $buckets
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:bucketsMask (param $this i32) (param $bucketsMask i32)
+  local.get $this
+  local.get $bucketsMask
+  i32.store offset=4
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entries (param $this i32) (param $entries i32)
+  local.get $this
+  local.get $entries
+  i32.store offset=8
+  local.get $this
+  local.get $entries
+  i32.const 0
+  call $~lib/rt/itcms/__link
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCapacity (param $this i32) (param $entriesCapacity i32)
+  local.get $this
+  local.get $entriesCapacity
+  i32.store offset=12
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesOffset (param $this i32) (param $entriesOffset i32)
+  local.get $this
+  local.get $entriesOffset
+  i32.store offset=16
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCount (param $this i32) (param $entriesCount i32)
+  local.get $this
+  local.get $entriesCount
+  i32.store offset=20
+ )
+ (func $src/as/assembly/Proposition/Proposition#hash~anonymous|0 (param $a i32) (param $b i32) (result i32)
+  local.get $a
+  local.get $b
+  i32.sub
+ )
  (func $~lib/util/number/itoa_buffered<i32> (param $buffer i32) (param $value i32) (result i32)
   (local $sign i32)
   (local $dest i32)
@@ -4214,90 +4292,6 @@
   i32.add
   return
  )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells~anonymous|0 (param $a i32) (param $b i32) (result i32)
-  local.get $a
-  local.get $b
-  i32.sub
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_ (param $this i32) (param $length_ i32)
-  local.get $this
-  local.get $length_
-  i32.store offset=12
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells (param $this i32) (result i32)
-  local.get $this
-  i32.load offset=4
- )
- (func $src/as/assembly/models/BoardProperties/BoardProperties#get:mines (param $this i32) (result i32)
-  local.get $this
-  i32.load offset=8
- )
- (func $src/as/assembly/Proposition/Proposition#get:origin (param $this i32) (result i32)
-  local.get $this
-  i32.load offset=8
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer (param $this i32) (param $buffer i32)
-  local.get $this
-  local.get $buffer
-  i32.store
-  local.get $this
-  local.get $buffer
-  i32.const 0
-  call $~lib/rt/itcms/__link
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart (param $this i32) (param $dataStart i32)
-  local.get $this
-  local.get $dataStart
-  i32.store offset=4
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength (param $this i32) (param $byteLength i32)
-  local.get $this
-  local.get $byteLength
-  i32.store offset=8
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:buckets (param $this i32) (param $buckets i32)
-  local.get $this
-  local.get $buckets
-  i32.store
-  local.get $this
-  local.get $buckets
-  i32.const 0
-  call $~lib/rt/itcms/__link
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:bucketsMask (param $this i32) (param $bucketsMask i32)
-  local.get $this
-  local.get $bucketsMask
-  i32.store offset=4
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entries (param $this i32) (param $entries i32)
-  local.get $this
-  local.get $entries
-  i32.store offset=8
-  local.get $this
-  local.get $entries
-  i32.const 0
-  call $~lib/rt/itcms/__link
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCapacity (param $this i32) (param $entriesCapacity i32)
-  local.get $this
-  local.get $entriesCapacity
-  i32.store offset=12
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesOffset (param $this i32) (param $entriesOffset i32)
-  local.get $this
-  local.get $entriesOffset
-  i32.store offset=16
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCount (param $this i32) (param $entriesCount i32)
-  local.get $this
-  local.get $entriesCount
-  i32.store offset=20
- )
- (func $src/as/assembly/Proposition/Proposition#hash~anonymous|0 (param $a i32) (param $b i32) (result i32)
-  local.get $a
-  local.get $b
-  i32.sub
- )
  (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#get:buckets (param $this i32) (result i32)
   local.get $this
   i32.load
@@ -4348,6 +4342,19 @@
   local.get $this
   local.get $taggedNext
   i32.store offset=8
+ )
+ (func $src/as/assembly/Proposition/Proposition#get:origin (param $this i32) (result i32)
+  local.get $this
+  i32.load offset=8
+ )
+ (func $src/as/assembly/Proposition/Proposition#toString~anonymous|0 (param $a i32) (param $b i32) (result i32)
+  local.get $a
+  local.get $b
+  i32.sub
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:addedMainProposition (param $this i32) (result i32)
+  local.get $this
+  i32.load8_u offset=20
  )
  (func $~lib/util/number/genDigits (param $buffer i32) (param $w_frc i64) (param $w_exp i32) (param $mp_frc i64) (param $mp_exp i32) (param $delta i64) (param $sign i32) (result i32)
   (local $one_exp i32)
@@ -4622,7 +4629,7 @@
      local.set $delta|21
      local.get $tmp
      local.set $rest
-     i32.const 6144
+     i32.const 6096
      local.get $kappa
      i32.const 2
      i32.shl
@@ -4759,7 +4766,7 @@
      i32.add
      global.set $~lib/util/number/_K
      local.get $wp_w_frc
-     i32.const 6144
+     i32.const 6096
      i32.const 0
      local.get $kappa
      i32.sub
@@ -5384,14 +5391,14 @@
    i32.shl
    i32.sub
    global.set $~lib/util/number/_K
-   i32.const 5272
+   i32.const 5224
    local.get $index
    i32.const 3
    i32.shl
    i32.add
    i64.load
    global.set $~lib/util/number/_frc_pow
-   i32.const 5968
+   i32.const 5920
    local.get $index
    i32.const 1
    i32.shl
@@ -5670,11 +5677,6 @@
   call $~lib/util/number/dtoa
   return
  )
- (func $src/as/assembly/Proposition/Proposition#toString~anonymous|0 (param $a i32) (param $b i32) (result i32)
-  local.get $a
-  local.get $b
-  i32.sub
- )
  (func $src/as/assembly/models/SolverResponse/SolverResponse#set:knownMineCellsIds (param $this i32) (param $knownMineCellsIds i32)
   local.get $this
   local.get $knownMineCellsIds
@@ -5760,7 +5762,7 @@
    i32.const 3
    i32.eq
    if
-    i32.const 7056
+    i32.const 6816
     i32.const 352
     i32.const 338
     i32.const 7
@@ -5793,7 +5795,7 @@
   i32.const 3
   i32.ne
   if
-   i32.const 7120
+   i32.const 6880
    i32.const 352
    i32.const 352
    i32.const 5
@@ -5875,10 +5877,10 @@
   i32.const 288
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 7056
+  i32.const 6816
   local.get $0
   call $~lib/rt/itcms/__visit
-  i32.const 7120
+  i32.const 6880
   local.get $0
   call $~lib/rt/itcms/__visit
   i32.const 2912
@@ -6317,8 +6319,8 @@
   global.get $~lib/memory/__data_end
   i32.lt_s
   if
-   i32.const 40064
-   i32.const 40112
+   i32.const 39824
+   i32.const 39872
    i32.const 1
    i32.const 1
    call $~lib/builtins/abort
@@ -14109,6 +14111,1272 @@
   local.get $1
   return
  )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells (param $this i32) (param $cellIndexes i32) (result i32)
+  (local $changed i32)
+  (local $a i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $newCells i32)
+  (local $i i32)
+  (local $8 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 24
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 24
+  memory.fill
+  local.get $cellIndexes
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store
+  local.get $8
+  call $~lib/array/Array<i32>#get:length
+  i32.const 0
+  i32.le_s
+  if
+   i32.const 0
+   local.set $8
+   global.get $~lib/memory/__stack_pointer
+   i32.const 24
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $8
+   return
+  end
+  i32.const 0
+  local.set $changed
+  i32.const 0
+  local.set $a
+  loop $for-loop|0
+   local.get $a
+   local.get $this
+   local.set $8
+   global.get $~lib/memory/__stack_pointer
+   local.get $8
+   i32.store offset=4
+   local.get $8
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+   local.set $8
+   global.get $~lib/memory/__stack_pointer
+   local.get $8
+   i32.store
+   local.get $8
+   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+   i32.lt_s
+   if
+    local.get $this
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store offset=12
+    local.get $8
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store offset=8
+    local.get $8
+    local.get $a
+    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store
+    local.get $8
+    local.get $cellIndexes
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store offset=4
+    local.get $8
+    call $src/as/assembly/Proposition/Proposition#removeMineCells
+    if (result i32)
+     i32.const 1
+    else
+     local.get $changed
+    end
+    local.set $changed
+    local.get $a
+    i32.const 1
+    i32.add
+    local.set $a
+    br $for-loop|0
+   end
+  end
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 2
+  i32.const 11
+  i32.const 4096
+  call $~lib/rt/__newArray
+  local.tee $newCells
+  i32.store offset=16
+  i32.const 0
+  local.set $i
+  loop $for-loop|1
+   local.get $i
+   local.get $cellIndexes
+   local.set $8
+   global.get $~lib/memory/__stack_pointer
+   local.get $8
+   i32.store
+   local.get $8
+   call $~lib/array/Array<i32>#get:length
+   i32.lt_s
+   if
+    local.get $this
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store offset=4
+    local.get $8
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store
+    local.get $8
+    local.get $cellIndexes
+    local.set $8
+    global.get $~lib/memory/__stack_pointer
+    local.get $8
+    i32.store offset=4
+    local.get $8
+    local.get $i
+    call $~lib/array/Array<i32>#__get
+    i32.const 0
+    call $~lib/array/Array<i32>#includes
+    i32.eqz
+    if
+     local.get $newCells
+     local.set $8
+     global.get $~lib/memory/__stack_pointer
+     local.get $8
+     i32.store
+     local.get $8
+     local.get $cellIndexes
+     local.set $8
+     global.get $~lib/memory/__stack_pointer
+     local.get $8
+     i32.store offset=4
+     local.get $8
+     local.get $i
+     call $~lib/array/Array<i32>#__get
+     call $~lib/array/Array<i32>#push
+     drop
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|1
+   end
+  end
+  local.get $this
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store
+  local.get $8
+  local.get $this
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=20
+  local.get $8
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=8
+  local.get $8
+  local.get $newCells
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=12
+  local.get $8
+  call $~lib/array/Array<i32>#concat
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=4
+  local.get $8
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#set:mineCellsIds
+  local.get $this
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=8
+  local.get $8
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store
+  local.get $8
+  i32.const 4128
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  local.get $8
+  i32.store offset=4
+  local.get $8
+  call $~lib/array/Array<i32>#sort
+  drop
+  local.get $changed
+  if (result i32)
+   i32.const 1
+  else
+   local.get $newCells
+   local.set $8
+   global.get $~lib/memory/__stack_pointer
+   local.get $8
+   i32.store
+   local.get $8
+   call $~lib/array/Array<i32>#get:length
+   i32.const 0
+   i32.gt_s
+  end
+  local.set $8
+  global.get $~lib/memory/__stack_pointer
+  i32.const 24
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $8
+  return
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push (param $this i32) (param $value i32) (result i32)
+  (local $oldLen i32)
+  (local $len i32)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length_
+  local.set $oldLen
+  local.get $oldLen
+  i32.const 1
+  i32.add
+  local.set $len
+  local.get $this
+  local.get $len
+  i32.const 2
+  i32.const 1
+  call $~lib/array/ensureCapacity
+  i32.const 1
+  drop
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:dataStart
+  local.get $oldLen
+  i32.const 2
+  i32.shl
+  i32.add
+  local.get $value
+  i32.store
+  local.get $this
+  local.get $value
+  i32.const 1
+  call $~lib/rt/itcms/__link
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  local.get $len
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
+  local.get $len
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $4
+  return
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition (param $this i32) (param $newProposition i32) (result i32)
+  (local $i i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store offset=8
+  local.get $newProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  local.get $this
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=8
+  local.get $3
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#removeMineCells
+  drop
+  local.get $newProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  local.get $this
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=8
+  local.get $3
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#removeSafeCells
+  drop
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $this
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store offset=4
+   local.get $3
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store
+   local.get $3
+   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+   i32.lt_s
+   if
+    local.get $this
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=12
+    local.get $3
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=8
+    local.get $3
+    local.get $i
+    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store
+    local.get $3
+    local.get $newProposition
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#isEqual
+    if
+     i32.const 0
+     local.set $3
+     global.get $~lib/memory/__stack_pointer
+     i32.const 16
+     i32.add
+     global.set $~lib/memory/__stack_pointer
+     local.get $3
+     return
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  local.get $newProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#isSatisfied
+  if
+   local.get $newProposition
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store
+   local.get $3
+   call $src/as/assembly/Proposition/Proposition#hasNoMine
+   if
+    local.get $this
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store
+    local.get $3
+    local.get $newProposition
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=8
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#getCells
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    i32.const 16
+    i32.add
+    global.set $~lib/memory/__stack_pointer
+    local.get $3
+    return
+   else
+    local.get $this
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store
+    local.get $3
+    local.get $newProposition
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=8
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#getCells
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    i32.const 16
+    i32.add
+    global.set $~lib/memory/__stack_pointer
+    local.get $3
+    return
+   end
+   unreachable
+  end
+  local.get $this
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=8
+  local.get $3
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  local.get $newProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
+  drop
+  i32.const 1
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $3
+  return
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#createNewPropositions (param $this i32)
+  (local $revealedCells i32)
+  (local $i i32)
+  (local $cell i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $adjCells i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $adjCellsIds i32)
+  (local $i|10 i32)
+  (local $newProposition i32)
+  (local $12 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 40
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 40
+  memory.fill
+  global.get $~lib/memory/__stack_pointer
+  local.get $this
+  local.set $12
+  global.get $~lib/memory/__stack_pointer
+  local.get $12
+  i32.store offset=4
+  local.get $12
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+  local.set $12
+  global.get $~lib/memory/__stack_pointer
+  local.get $12
+  i32.store
+  local.get $12
+  call $src/as/assembly/Board/Board#getRevealedCells
+  local.tee $revealedCells
+  i32.store offset=8
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $revealedCells
+   local.set $12
+   global.get $~lib/memory/__stack_pointer
+   local.get $12
+   i32.store
+   local.get $12
+   call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
+   i32.lt_s
+   if
+    global.get $~lib/memory/__stack_pointer
+    local.get $revealedCells
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store
+    local.get $12
+    local.get $i
+    call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
+    local.tee $cell
+    i32.store offset=12
+    local.get $this
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store
+    local.get $12
+    global.get $~lib/memory/__stack_pointer
+    i32.const 1
+    i32.const 2
+    i32.const 11
+    i32.const 0
+    call $~lib/rt/__newArray
+    local.tee $4
+    i32.store offset=16
+    global.get $~lib/memory/__stack_pointer
+    local.get $4
+    i32.load offset=4
+    local.tee $5
+    i32.store offset=20
+    local.get $4
+    i32.const 0
+    local.get $cell
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=24
+    local.get $12
+    call $src/as/assembly/models/Cell/Cell#get:_id
+    call $~lib/array/Array<i32>#__set
+    local.get $4
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=4
+    local.get $12
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
+    drop
+    global.get $~lib/memory/__stack_pointer
+    local.get $this
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=24
+    local.get $12
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store
+    local.get $12
+    local.get $cell
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=4
+    local.get $12
+    call $src/as/assembly/Board/Board#getAdjacentCells
+    local.tee $adjCells
+    i32.store offset=28
+    global.get $~lib/memory/__stack_pointer
+    i32.const 0
+    i32.const 2
+    i32.const 11
+    i32.const 2192
+    call $~lib/rt/__newArray
+    local.tee $adjCellsIds
+    i32.store offset=32
+    i32.const 0
+    local.set $i|10
+    loop $for-loop|1
+     local.get $i|10
+     local.get $adjCells
+     local.set $12
+     global.get $~lib/memory/__stack_pointer
+     local.get $12
+     i32.store
+     local.get $12
+     call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
+     i32.lt_s
+     if
+      local.get $adjCellsIds
+      local.set $12
+      global.get $~lib/memory/__stack_pointer
+      local.get $12
+      i32.store
+      local.get $12
+      local.get $adjCells
+      local.set $12
+      global.get $~lib/memory/__stack_pointer
+      local.get $12
+      i32.store offset=24
+      local.get $12
+      local.get $i|10
+      call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
+      local.set $12
+      global.get $~lib/memory/__stack_pointer
+      local.get $12
+      i32.store offset=4
+      local.get $12
+      call $src/as/assembly/models/Cell/Cell#get:_id
+      call $~lib/array/Array<i32>#push
+      drop
+      local.get $i|10
+      i32.const 1
+      i32.add
+      local.set $i|10
+      br $for-loop|1
+     end
+    end
+    global.get $~lib/memory/__stack_pointer
+    i32.const 0
+    local.get $cell
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=24
+    local.get $12
+    call $src/as/assembly/models/Cell/Cell#get:_id
+    i32.const 10
+    call $~lib/number/I32#toString
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store
+    local.get $12
+    local.get $adjCellsIds
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=4
+    local.get $12
+    local.get $cell
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=24
+    local.get $12
+    call $src/as/assembly/models/Cell/Cell#get:minesCount
+    call $src/as/assembly/Proposition/Proposition#constructor
+    local.tee $newProposition
+    i32.store offset=36
+    local.get $this
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store
+    local.get $12
+    local.get $newProposition
+    local.set $12
+    global.get $~lib/memory/__stack_pointer
+    local.get $12
+    i32.store offset=4
+    local.get $12
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition
+    drop
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  global.get $~lib/memory/__stack_pointer
+  i32.const 40
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $~lib/console/console.log (param $message i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $message
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $~lib/bindings/dom/console.log
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#isBoardSolved (param $this i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $~lib/array/Array<i32>#get:length
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=8
+  local.get $1
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  call $src/as/assembly/Board/Board#get:properties
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $src/as/assembly/models/BoardProperties/BoardProperties#get:mines
+  i32.sub
+  i32.lt_s
+  if (result i32)
+   local.get $this
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   local.get $1
+   i32.store offset=4
+   local.get $1
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   local.get $1
+   i32.store
+   local.get $1
+   call $~lib/array/Array<i32>#get:length
+   local.get $this
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   local.get $1
+   i32.store offset=8
+   local.get $1
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   local.get $1
+   i32.store offset=4
+   local.get $1
+   call $src/as/assembly/Board/Board#get:properties
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   local.get $1
+   i32.store
+   local.get $1
+   call $src/as/assembly/models/BoardProperties/BoardProperties#get:mines
+   i32.lt_s
+  else
+   i32.const 0
+  end
+  if
+   i32.const 0
+   local.set $1
+   global.get $~lib/memory/__stack_pointer
+   i32.const 12
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $1
+   return
+  end
+  i32.const 4160
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $~lib/console/console.log
+  i32.const 1
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+  return
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#removedKnownCellsFromPropositions (param $this i32) (result i32)
+  (local $result i32)
+  (local $i i32)
+  (local $proposition i32)
+  (local $satisfiedCells i32)
+  (local $5 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store offset=8
+  i32.const 0
+  local.set $result
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $this
+   local.set $5
+   global.get $~lib/memory/__stack_pointer
+   local.get $5
+   i32.store offset=4
+   local.get $5
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+   local.set $5
+   global.get $~lib/memory/__stack_pointer
+   local.get $5
+   i32.store
+   local.get $5
+   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+   i32.lt_s
+   if
+    global.get $~lib/memory/__stack_pointer
+    local.get $this
+    local.set $5
+    global.get $~lib/memory/__stack_pointer
+    local.get $5
+    i32.store offset=4
+    local.get $5
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+    local.set $5
+    global.get $~lib/memory/__stack_pointer
+    local.get $5
+    i32.store
+    local.get $5
+    local.get $i
+    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+    local.tee $proposition
+    i32.store offset=8
+    local.get $proposition
+    local.set $5
+    global.get $~lib/memory/__stack_pointer
+    local.get $5
+    i32.store
+    local.get $5
+    call $src/as/assembly/Proposition/Proposition#isSatisfied
+    if
+     global.get $~lib/memory/__stack_pointer
+     local.get $proposition
+     local.set $5
+     global.get $~lib/memory/__stack_pointer
+     local.get $5
+     i32.store
+     local.get $5
+     call $src/as/assembly/Proposition/Proposition#getCells
+     local.tee $satisfiedCells
+     i32.store offset=12
+     local.get $proposition
+     local.set $5
+     global.get $~lib/memory/__stack_pointer
+     local.get $5
+     i32.store
+     local.get $5
+     call $src/as/assembly/Proposition/Proposition#hasNoMine
+     if
+      local.get $this
+      local.set $5
+      global.get $~lib/memory/__stack_pointer
+      local.get $5
+      i32.store
+      local.get $5
+      local.get $satisfiedCells
+      local.set $5
+      global.get $~lib/memory/__stack_pointer
+      local.get $5
+      i32.store offset=4
+      local.get $5
+      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
+      if (result i32)
+       i32.const 1
+      else
+       local.get $result
+      end
+      local.set $result
+     else
+      local.get $this
+      local.set $5
+      global.get $~lib/memory/__stack_pointer
+      local.get $5
+      i32.store
+      local.get $5
+      local.get $satisfiedCells
+      local.set $5
+      global.get $~lib/memory/__stack_pointer
+      local.get $5
+      i32.store offset=4
+      local.get $5
+      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells
+      if (result i32)
+       i32.const 1
+      else
+       local.get $result
+      end
+      local.set $result
+     end
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  local.get $result
+  local.set $5
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $5
+  return
+ )
+ (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#constructor (param $this i32) (param $length i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $bufferSize i32)
+  (local $buffer i32)
+  (local $6 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store offset=8
+  local.get $this
+  i32.eqz
+  if
+   global.get $~lib/memory/__stack_pointer
+   i32.const 16
+   i32.const 13
+   call $~lib/rt/itcms/__new
+   local.tee $this
+   i32.store
+  end
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  i32.const 0
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  i32.const 0
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  i32.const 0
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  i32.const 0
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
+  local.get $length
+  i32.const 1073741820
+  i32.const 2
+  i32.shr_u
+  i32.gt_u
+  if
+   i32.const 1136
+   i32.const 1184
+   i32.const 70
+   i32.const 60
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $length
+  local.tee $2
+  i32.const 8
+  local.tee $3
+  local.get $2
+  local.get $3
+  i32.gt_u
+  select
+  i32.const 2
+  i32.shl
+  local.set $bufferSize
+  global.get $~lib/memory/__stack_pointer
+  local.get $bufferSize
+  i32.const 1
+  call $~lib/rt/itcms/__new
+  local.tee $buffer
+  i32.store offset=8
+  i32.const 2
+  global.get $~lib/shared/runtime/Runtime.Incremental
+  i32.ne
+  drop
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  local.get $buffer
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=12
+  local.get $6
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  local.get $buffer
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  local.get $bufferSize
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store offset=4
+  local.get $6
+  local.get $length
+  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  i32.const 16
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $6
+ )
+ (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#constructor (param $this i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  local.get $this
+  i32.eqz
+  if
+   global.get $~lib/memory/__stack_pointer
+   i32.const 24
+   i32.const 17
+   call $~lib/rt/itcms/__new
+   local.tee $this
+   i32.store
+  end
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  i32.const 4
+  i32.const 4
+  i32.mul
+  call $~lib/arraybuffer/ArrayBuffer#constructor
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=8
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:buckets
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 4
+  i32.const 1
+  i32.sub
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:bucketsMask
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  i32.const 4
+  block $~lib/map/ENTRY_SIZE<~lib/string/String,src/as/assembly/Proposition/Proposition>|inlined.0 (result i32)
+   i32.const 12
+   br $~lib/map/ENTRY_SIZE<~lib/string/String,src/as/assembly/Proposition/Proposition>|inlined.0
+  end
+  i32.mul
+  call $~lib/arraybuffer/ArrayBuffer#constructor
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=8
+  local.get $1
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entries
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 4
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCapacity
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesOffset
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store offset=4
+  local.get $1
+  i32.const 0
+  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCount
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
+ )
  (func $~lib/string/String#substring (param $this i32) (param $start i32) (param $end i32) (result i32)
   (local $len i32)
   (local $4 i32)
@@ -14517,2187 +15785,6 @@
   local.get $1
   return
  )
- (func $~lib/string/String#concat (param $this i32) (param $other i32) (result i32)
-  (local $thisSize i32)
-  (local $otherSize i32)
-  (local $outSize i32)
-  (local $out i32)
-  (local $6 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store
-  local.get $6
-  call $~lib/string/String#get:length
-  i32.const 1
-  i32.shl
-  local.set $thisSize
-  local.get $other
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store
-  local.get $6
-  call $~lib/string/String#get:length
-  i32.const 1
-  i32.shl
-  local.set $otherSize
-  local.get $thisSize
-  local.get $otherSize
-  i32.add
-  local.set $outSize
-  local.get $outSize
-  i32.const 0
-  i32.eq
-  if
-   i32.const 256
-   local.set $6
-   global.get $~lib/memory/__stack_pointer
-   i32.const 8
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $6
-   return
-  end
-  global.get $~lib/memory/__stack_pointer
-  local.get $outSize
-  i32.const 2
-  call $~lib/rt/itcms/__new
-  local.tee $out
-  i32.store offset=4
-  local.get $out
-  local.get $this
-  local.get $thisSize
-  memory.copy
-  local.get $out
-  local.get $thisSize
-  i32.add
-  local.get $other
-  local.get $otherSize
-  memory.copy
-  local.get $out
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $6
-  return
- )
- (func $~lib/string/String.__concat (param $left i32) (param $right i32) (result i32)
-  (local $2 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  local.get $left
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store
-  local.get $2
-  local.get $right
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  local.get $2
-  i32.store offset=4
-  local.get $2
-  call $~lib/string/String#concat
-  local.set $2
-  global.get $~lib/memory/__stack_pointer
-  i32.const 8
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $2
-  return
- )
- (func $~lib/console/console.log (param $message i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  local.get $message
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $~lib/bindings/dom/console.log
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells (param $this i32) (param $cellIndexes i32) (result i32)
-  (local $changed i32)
-  (local $a i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $newCells i32)
-  (local $i i32)
-  (local $8 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 24
-  memory.fill
-  local.get $cellIndexes
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store
-  local.get $8
-  call $~lib/array/Array<i32>#get:length
-  i32.const 0
-  i32.le_s
-  if
-   i32.const 0
-   local.set $8
-   global.get $~lib/memory/__stack_pointer
-   i32.const 24
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $8
-   return
-  end
-  i32.const 0
-  local.set $changed
-  i32.const 0
-  local.set $a
-  loop $for-loop|0
-   local.get $a
-   local.get $this
-   local.set $8
-   global.get $~lib/memory/__stack_pointer
-   local.get $8
-   i32.store offset=4
-   local.get $8
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-   local.set $8
-   global.get $~lib/memory/__stack_pointer
-   local.get $8
-   i32.store
-   local.get $8
-   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-   i32.lt_s
-   if
-    local.get $this
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store offset=12
-    local.get $8
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store offset=8
-    local.get $8
-    local.get $a
-    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store
-    local.get $8
-    local.get $cellIndexes
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store offset=4
-    local.get $8
-    call $src/as/assembly/Proposition/Proposition#removeMineCells
-    if (result i32)
-     i32.const 1
-    else
-     local.get $changed
-    end
-    local.set $changed
-    local.get $a
-    i32.const 1
-    i32.add
-    local.set $a
-    br $for-loop|0
-   end
-  end
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 2
-  i32.const 11
-  i32.const 4256
-  call $~lib/rt/__newArray
-  local.tee $newCells
-  i32.store offset=16
-  i32.const 0
-  local.set $i
-  loop $for-loop|1
-   local.get $i
-   local.get $cellIndexes
-   local.set $8
-   global.get $~lib/memory/__stack_pointer
-   local.get $8
-   i32.store
-   local.get $8
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   if
-    local.get $this
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store offset=4
-    local.get $8
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store
-    local.get $8
-    local.get $cellIndexes
-    local.set $8
-    global.get $~lib/memory/__stack_pointer
-    local.get $8
-    i32.store offset=4
-    local.get $8
-    local.get $i
-    call $~lib/array/Array<i32>#__get
-    i32.const 0
-    call $~lib/array/Array<i32>#includes
-    i32.eqz
-    if
-     local.get $newCells
-     local.set $8
-     global.get $~lib/memory/__stack_pointer
-     local.get $8
-     i32.store
-     local.get $8
-     local.get $cellIndexes
-     local.set $8
-     global.get $~lib/memory/__stack_pointer
-     local.get $8
-     i32.store offset=4
-     local.get $8
-     local.get $i
-     call $~lib/array/Array<i32>#__get
-     call $~lib/array/Array<i32>#push
-     drop
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|1
-   end
-  end
-  local.get $this
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store
-  local.get $8
-  local.get $this
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=20
-  local.get $8
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=8
-  local.get $8
-  local.get $newCells
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=12
-  local.get $8
-  call $~lib/array/Array<i32>#concat
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=4
-  local.get $8
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#set:mineCellsIds
-  local.get $this
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=8
-  local.get $8
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store
-  local.get $8
-  i32.const 4288
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  local.get $8
-  i32.store offset=4
-  local.get $8
-  call $~lib/array/Array<i32>#sort
-  drop
-  local.get $changed
-  if (result i32)
-   i32.const 1
-  else
-   local.get $newCells
-   local.set $8
-   global.get $~lib/memory/__stack_pointer
-   local.get $8
-   i32.store
-   local.get $8
-   call $~lib/array/Array<i32>#get:length
-   i32.const 0
-   i32.gt_s
-  end
-  local.set $8
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $8
-  return
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push (param $this i32) (param $value i32) (result i32)
-  (local $oldLen i32)
-  (local $len i32)
-  (local $4 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  local.get $this
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  local.get $4
-  i32.store
-  local.get $4
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length_
-  local.set $oldLen
-  local.get $oldLen
-  i32.const 1
-  i32.add
-  local.set $len
-  local.get $this
-  local.get $len
-  i32.const 2
-  i32.const 1
-  call $~lib/array/ensureCapacity
-  i32.const 1
-  drop
-  local.get $this
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  local.get $4
-  i32.store
-  local.get $4
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:dataStart
-  local.get $oldLen
-  i32.const 2
-  i32.shl
-  i32.add
-  local.get $value
-  i32.store
-  local.get $this
-  local.get $value
-  i32.const 1
-  call $~lib/rt/itcms/__link
-  local.get $this
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  local.get $4
-  i32.store
-  local.get $4
-  local.get $len
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
-  local.get $len
-  local.set $4
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $4
-  return
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition (param $this i32) (param $newProposition i32) (result i32)
-  (local $i i32)
-  (local $3 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 20
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 20
-  memory.fill
-  local.get $newProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  local.get $this
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=8
-  local.get $3
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#removeMineCells
-  drop
-  local.get $newProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  local.get $this
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=8
-  local.get $3
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#removeSafeCells
-  drop
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $this
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store offset=4
-   local.get $3
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store
-   local.get $3
-   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-   i32.lt_s
-   if
-    local.get $this
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=12
-    local.get $3
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    local.get $i
-    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    local.get $newProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#isEqual
-    if
-     i32.const 0
-     local.set $3
-     global.get $~lib/memory/__stack_pointer
-     i32.const 20
-     i32.add
-     global.set $~lib/memory/__stack_pointer
-     local.get $3
-     return
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  local.get $newProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#isSatisfied
-  if
-   local.get $newProposition
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store
-   local.get $3
-   call $src/as/assembly/Proposition/Proposition#hasNoMine
-   if
-    i32.const 4096
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    local.get $newProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=16
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#getCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=12
-    local.get $3
-    call $~lib/array/Array<i32>#toString
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $~lib/string/String.__concat
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    call $~lib/console/console.log
-    local.get $this
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    local.get $newProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#getCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    i32.const 20
-    i32.add
-    global.set $~lib/memory/__stack_pointer
-    local.get $3
-    return
-   else
-    i32.const 4176
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    local.get $newProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=16
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#getCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=12
-    local.get $3
-    call $~lib/array/Array<i32>#toString
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $~lib/string/String.__concat
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    call $~lib/console/console.log
-    local.get $this
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    local.get $newProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#getCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    i32.const 20
-    i32.add
-    global.set $~lib/memory/__stack_pointer
-    local.get $3
-    return
-   end
-   unreachable
-  end
-  local.get $this
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=8
-  local.get $3
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  local.get $newProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
-  drop
-  i32.const 1
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  i32.const 20
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $3
-  return
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#createNewPropositions (param $this i32)
-  (local $revealedCells i32)
-  (local $i i32)
-  (local $cell i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $adjCells i32)
-  (local $7 i32)
-  (local $8 i32)
-  (local $adjCellsIds i32)
-  (local $i|10 i32)
-  (local $newProposition i32)
-  (local $12 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 40
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 40
-  memory.fill
-  global.get $~lib/memory/__stack_pointer
-  local.get $this
-  local.set $12
-  global.get $~lib/memory/__stack_pointer
-  local.get $12
-  i32.store offset=4
-  local.get $12
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
-  local.set $12
-  global.get $~lib/memory/__stack_pointer
-  local.get $12
-  i32.store
-  local.get $12
-  call $src/as/assembly/Board/Board#getRevealedCells
-  local.tee $revealedCells
-  i32.store offset=8
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $revealedCells
-   local.set $12
-   global.get $~lib/memory/__stack_pointer
-   local.get $12
-   i32.store
-   local.get $12
-   call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
-   i32.lt_s
-   if
-    global.get $~lib/memory/__stack_pointer
-    local.get $revealedCells
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store
-    local.get $12
-    local.get $i
-    call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
-    local.tee $cell
-    i32.store offset=12
-    local.get $this
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store
-    local.get $12
-    global.get $~lib/memory/__stack_pointer
-    i32.const 1
-    i32.const 2
-    i32.const 11
-    i32.const 0
-    call $~lib/rt/__newArray
-    local.tee $4
-    i32.store offset=16
-    global.get $~lib/memory/__stack_pointer
-    local.get $4
-    i32.load offset=4
-    local.tee $5
-    i32.store offset=20
-    local.get $4
-    i32.const 0
-    local.get $cell
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=24
-    local.get $12
-    call $src/as/assembly/models/Cell/Cell#get:_id
-    call $~lib/array/Array<i32>#__set
-    local.get $4
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=4
-    local.get $12
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
-    drop
-    global.get $~lib/memory/__stack_pointer
-    local.get $this
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=24
-    local.get $12
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store
-    local.get $12
-    local.get $cell
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=4
-    local.get $12
-    call $src/as/assembly/Board/Board#getAdjacentCells
-    local.tee $adjCells
-    i32.store offset=28
-    global.get $~lib/memory/__stack_pointer
-    i32.const 0
-    i32.const 2
-    i32.const 11
-    i32.const 2192
-    call $~lib/rt/__newArray
-    local.tee $adjCellsIds
-    i32.store offset=32
-    i32.const 0
-    local.set $i|10
-    loop $for-loop|1
-     local.get $i|10
-     local.get $adjCells
-     local.set $12
-     global.get $~lib/memory/__stack_pointer
-     local.get $12
-     i32.store
-     local.get $12
-     call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
-     i32.lt_s
-     if
-      local.get $adjCellsIds
-      local.set $12
-      global.get $~lib/memory/__stack_pointer
-      local.get $12
-      i32.store
-      local.get $12
-      local.get $adjCells
-      local.set $12
-      global.get $~lib/memory/__stack_pointer
-      local.get $12
-      i32.store offset=24
-      local.get $12
-      local.get $i|10
-      call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
-      local.set $12
-      global.get $~lib/memory/__stack_pointer
-      local.get $12
-      i32.store offset=4
-      local.get $12
-      call $src/as/assembly/models/Cell/Cell#get:_id
-      call $~lib/array/Array<i32>#push
-      drop
-      local.get $i|10
-      i32.const 1
-      i32.add
-      local.set $i|10
-      br $for-loop|1
-     end
-    end
-    global.get $~lib/memory/__stack_pointer
-    i32.const 0
-    local.get $cell
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=24
-    local.get $12
-    call $src/as/assembly/models/Cell/Cell#get:_id
-    i32.const 10
-    call $~lib/number/I32#toString
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store
-    local.get $12
-    local.get $adjCellsIds
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=4
-    local.get $12
-    local.get $cell
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=24
-    local.get $12
-    call $src/as/assembly/models/Cell/Cell#get:minesCount
-    call $src/as/assembly/Proposition/Proposition#constructor
-    local.tee $newProposition
-    i32.store offset=36
-    local.get $this
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store
-    local.get $12
-    local.get $newProposition
-    local.set $12
-    global.get $~lib/memory/__stack_pointer
-    local.get $12
-    i32.store offset=4
-    local.get $12
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition
-    drop
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  global.get $~lib/memory/__stack_pointer
-  i32.const 40
-  i32.add
-  global.set $~lib/memory/__stack_pointer
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#isBoardSolved (param $this i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store offset=8
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $~lib/array/Array<i32>#get:length
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=8
-  local.get $1
-  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  call $src/as/assembly/Board/Board#get:properties
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $src/as/assembly/models/BoardProperties/BoardProperties#get:mines
-  i32.sub
-  i32.lt_s
-  if (result i32)
-   local.get $this
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   local.get $1
-   i32.store offset=4
-   local.get $1
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   local.get $1
-   i32.store
-   local.get $1
-   call $~lib/array/Array<i32>#get:length
-   local.get $this
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   local.get $1
-   i32.store offset=8
-   local.get $1
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   local.get $1
-   i32.store offset=4
-   local.get $1
-   call $src/as/assembly/Board/Board#get:properties
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   local.get $1
-   i32.store
-   local.get $1
-   call $src/as/assembly/models/BoardProperties/BoardProperties#get:mines
-   i32.lt_s
-  else
-   i32.const 0
-  end
-  if
-   i32.const 0
-   local.set $1
-   global.get $~lib/memory/__stack_pointer
-   i32.const 12
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $1
-   return
-  end
-  i32.const 4320
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $~lib/console/console.log
-  i32.const 1
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
-  return
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#removedKnownCellsFromPropositions (param $this i32) (result i32)
-  (local $result i32)
-  (local $i i32)
-  (local $proposition i32)
-  (local $satisfiedCells i32)
-  (local $5 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 24
-  memory.fill
-  i32.const 0
-  local.set $result
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $this
-   local.set $5
-   global.get $~lib/memory/__stack_pointer
-   local.get $5
-   i32.store offset=4
-   local.get $5
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-   local.set $5
-   global.get $~lib/memory/__stack_pointer
-   local.get $5
-   i32.store
-   local.get $5
-   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-   i32.lt_s
-   if
-    global.get $~lib/memory/__stack_pointer
-    local.get $this
-    local.set $5
-    global.get $~lib/memory/__stack_pointer
-    local.get $5
-    i32.store offset=4
-    local.get $5
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-    local.set $5
-    global.get $~lib/memory/__stack_pointer
-    local.get $5
-    i32.store
-    local.get $5
-    local.get $i
-    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-    local.tee $proposition
-    i32.store offset=8
-    local.get $proposition
-    local.set $5
-    global.get $~lib/memory/__stack_pointer
-    local.get $5
-    i32.store
-    local.get $5
-    call $src/as/assembly/Proposition/Proposition#isSatisfied
-    if
-     global.get $~lib/memory/__stack_pointer
-     local.get $proposition
-     local.set $5
-     global.get $~lib/memory/__stack_pointer
-     local.get $5
-     i32.store
-     local.get $5
-     call $src/as/assembly/Proposition/Proposition#getCells
-     local.tee $satisfiedCells
-     i32.store offset=12
-     local.get $proposition
-     local.set $5
-     global.get $~lib/memory/__stack_pointer
-     local.get $5
-     i32.store
-     local.get $5
-     call $src/as/assembly/Proposition/Proposition#hasNoMine
-     if
-      i32.const 4368
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=4
-      local.get $5
-      local.get $satisfiedCells
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=20
-      local.get $5
-      call $~lib/array/Array<i32>#toString
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=16
-      local.get $5
-      call $~lib/string/String.__concat
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store
-      local.get $5
-      call $~lib/console/console.log
-      local.get $this
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store
-      local.get $5
-      local.get $satisfiedCells
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=4
-      local.get $5
-      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
-      if (result i32)
-       i32.const 1
-      else
-       local.get $result
-      end
-      local.set $result
-     else
-      i32.const 4448
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=4
-      local.get $5
-      local.get $satisfiedCells
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=20
-      local.get $5
-      call $~lib/array/Array<i32>#toString
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=16
-      local.get $5
-      call $~lib/string/String.__concat
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store
-      local.get $5
-      call $~lib/console/console.log
-      local.get $this
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store
-      local.get $5
-      local.get $satisfiedCells
-      local.set $5
-      global.get $~lib/memory/__stack_pointer
-      local.get $5
-      i32.store offset=4
-      local.get $5
-      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addMineCells
-      if (result i32)
-       i32.const 1
-      else
-       local.get $result
-      end
-      local.set $result
-     end
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  local.get $result
-  local.set $5
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $5
-  return
- )
- (func $src/as/assembly/Proposition/Proposition#subtract (param $this i32) (param $otherProposition i32) (result i32)
-  (local $minesDiff i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $cellsDiff i32)
-  (local $i i32)
-  (local $7 i32)
-  (local $8 i32)
-  (local $9 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 28
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 28
-  memory.fill
-  local.get $this
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store
-  local.get $9
-  call $src/as/assembly/Proposition/Proposition#get:mines
-  local.get $otherProposition
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store
-  local.get $9
-  call $src/as/assembly/Proposition/Proposition#get:mines
-  i32.sub
-  local.set $minesDiff
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 2
-  i32.const 11
-  i32.const 4560
-  call $~lib/rt/__newArray
-  local.tee $cellsDiff
-  i32.store offset=4
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $this
-   local.set $9
-   global.get $~lib/memory/__stack_pointer
-   local.get $9
-   i32.store offset=8
-   local.get $9
-   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-   local.set $9
-   global.get $~lib/memory/__stack_pointer
-   local.get $9
-   i32.store
-   local.get $9
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   if
-    local.get $otherProposition
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=8
-    local.get $9
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store
-    local.get $9
-    local.get $this
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=12
-    local.get $9
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=8
-    local.get $9
-    local.get $i
-    call $~lib/array/Array<i32>#__get
-    i32.const 0
-    call $~lib/array/Array<i32>#includes
-    i32.eqz
-    if
-     local.get $cellsDiff
-     local.set $9
-     global.get $~lib/memory/__stack_pointer
-     local.get $9
-     i32.store
-     local.get $9
-     local.get $this
-     local.set $9
-     global.get $~lib/memory/__stack_pointer
-     local.get $9
-     i32.store offset=12
-     local.get $9
-     call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-     local.set $9
-     global.get $~lib/memory/__stack_pointer
-     local.get $9
-     i32.store offset=8
-     local.get $9
-     local.get $i
-     call $~lib/array/Array<i32>#__get
-     call $~lib/array/Array<i32>#push
-     drop
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  global.get $~lib/memory/__stack_pointer
-  local.get $this
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=12
-  local.get $9
-  call $src/as/assembly/Proposition/Proposition#get:origin
-  local.tee $7
-  i32.store offset=16
-  global.get $~lib/memory/__stack_pointer
-  local.get $otherProposition
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=12
-  local.get $9
-  call $src/as/assembly/Proposition/Proposition#get:origin
-  local.tee $8
-  i32.store offset=20
-  i32.const 4688
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=12
-  local.get $9
-  i32.const 1
-  local.get $7
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=24
-  local.get $9
-  call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 4688
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=12
-  local.get $9
-  i32.const 3
-  local.get $8
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=24
-  local.get $9
-  call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 4688
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=12
-  local.get $9
-  i32.const 256
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=24
-  local.get $9
-  call $~lib/staticarray/StaticArray<~lib/string/String>#join
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store
-  local.get $9
-  local.get $cellsDiff
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  local.get $9
-  i32.store offset=8
-  local.get $9
-  local.get $minesDiff
-  call $src/as/assembly/Proposition/Proposition#constructor
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  i32.const 28
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $9
-  return
- )
- (func $src/as/assembly/Proposition/Proposition#isSubSetOf (param $this i32) (param $otherProposition i32) (result i32)
-  (local $i i32)
-  (local $3 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store offset=8
-  local.get $this
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  call $~lib/array/Array<i32>#get:length
-  local.get $otherProposition
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store offset=4
-  local.get $3
-  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  local.get $3
-  i32.store
-  local.get $3
-  call $~lib/array/Array<i32>#get:length
-  i32.ge_s
-  if
-   i32.const 0
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   i32.const 12
-   i32.add
-   global.set $~lib/memory/__stack_pointer
-   local.get $3
-   return
-  end
-  i32.const 0
-  local.set $i
-  loop $for-loop|0
-   local.get $i
-   local.get $this
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store offset=4
-   local.get $3
-   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-   local.set $3
-   global.get $~lib/memory/__stack_pointer
-   local.get $3
-   i32.store
-   local.get $3
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   if
-    local.get $otherProposition
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store
-    local.get $3
-    local.get $this
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=8
-    local.get $3
-    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
-    local.set $3
-    global.get $~lib/memory/__stack_pointer
-    local.get $3
-    i32.store offset=4
-    local.get $3
-    local.get $i
-    call $~lib/array/Array<i32>#__get
-    i32.const 0
-    call $~lib/array/Array<i32>#includes
-    i32.eqz
-    if
-     i32.const 0
-     local.set $3
-     global.get $~lib/memory/__stack_pointer
-     i32.const 12
-     i32.add
-     global.set $~lib/memory/__stack_pointer
-     local.get $3
-     return
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|0
-   end
-  end
-  i32.const 1
-  local.set $3
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $3
-  return
- )
- (func $src/as/assembly/Proposition/Proposition#getMines (param $this i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store
-  local.get $1
-  call $src/as/assembly/Proposition/Proposition#get:mines
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 4
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
-  return
- )
- (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared (param $this i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $newPropositions i32)
-  (local $a i32)
-  (local $b i32)
-  (local $differenceProposition i32)
-  (local $changed i32)
-  (local $i i32)
-  (local $9 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 24
-  memory.fill
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.const 2
-  i32.const 13
-  i32.const 4528
-  call $~lib/rt/__newArray
-  local.tee $newPropositions
-  i32.store
-  i32.const 0
-  local.set $a
-  loop $for-loop|0
-   local.get $a
-   local.get $this
-   local.set $9
-   global.get $~lib/memory/__stack_pointer
-   local.get $9
-   i32.store offset=8
-   local.get $9
-   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-   local.set $9
-   global.get $~lib/memory/__stack_pointer
-   local.get $9
-   i32.store offset=4
-   local.get $9
-   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-   i32.lt_s
-   if
-    i32.const 0
-    local.set $b
-    loop $for-loop|1
-     local.get $b
-     local.get $this
-     local.set $9
-     global.get $~lib/memory/__stack_pointer
-     local.get $9
-     i32.store offset=8
-     local.get $9
-     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-     local.set $9
-     global.get $~lib/memory/__stack_pointer
-     local.get $9
-     i32.store offset=4
-     local.get $9
-     call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-     i32.lt_s
-     if
-      block $for-continue|1
-       local.get $this
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=16
-       local.get $9
-       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=12
-       local.get $9
-       local.get $a
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=8
-       local.get $9
-       call $src/as/assembly/Proposition/Proposition#getCells
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=4
-       local.get $9
-       call $~lib/array/Array<i32>#get:length
-       i32.const 0
-       i32.le_s
-       if (result i32)
-        i32.const 1
-       else
-        local.get $this
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=16
-        local.get $9
-        call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=12
-        local.get $9
-        local.get $b
-        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=8
-        local.get $9
-        call $src/as/assembly/Proposition/Proposition#getCells
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=4
-        local.get $9
-        call $~lib/array/Array<i32>#get:length
-        i32.const 0
-        i32.le_s
-       end
-       if
-        br $for-continue|1
-       end
-       global.get $~lib/memory/__stack_pointer
-       local.get $this
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=16
-       local.get $9
-       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=12
-       local.get $9
-       local.get $a
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=4
-       local.get $9
-       local.get $this
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=16
-       local.get $9
-       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=12
-       local.get $9
-       local.get $b
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=8
-       local.get $9
-       call $src/as/assembly/Proposition/Proposition#subtract
-       local.tee $differenceProposition
-       i32.store offset=20
-       local.get $this
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=16
-       local.get $9
-       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=12
-       local.get $9
-       local.get $b
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=4
-       local.get $9
-       local.get $this
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=16
-       local.get $9
-       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=12
-       local.get $9
-       local.get $a
-       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=8
-       local.get $9
-       call $src/as/assembly/Proposition/Proposition#isSubSetOf
-       if
-        local.get $newPropositions
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=4
-        local.get $9
-        local.get $differenceProposition
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=8
-        local.get $9
-        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
-        drop
-       end
-       local.get $differenceProposition
-       local.set $9
-       global.get $~lib/memory/__stack_pointer
-       local.get $9
-       i32.store offset=4
-       local.get $9
-       call $src/as/assembly/Proposition/Proposition#getMines
-       i32.const 0
-       i32.gt_s
-       if (result i32)
-        local.get $differenceProposition
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=4
-        local.get $9
-        call $src/as/assembly/Proposition/Proposition#getMines
-        local.get $differenceProposition
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=8
-        local.get $9
-        call $src/as/assembly/Proposition/Proposition#getCells
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=4
-        local.get $9
-        call $~lib/array/Array<i32>#get:length
-        i32.eq
-       else
-        i32.const 0
-       end
-       if
-        local.get $newPropositions
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=4
-        local.get $9
-        local.get $differenceProposition
-        local.set $9
-        global.get $~lib/memory/__stack_pointer
-        local.get $9
-        i32.store offset=8
-        local.get $9
-        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
-        drop
-       end
-      end
-      local.get $b
-      i32.const 1
-      i32.add
-      local.set $b
-      br $for-loop|1
-     end
-    end
-    local.get $a
-    i32.const 1
-    i32.add
-    local.set $a
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  local.set $changed
-  i32.const 0
-  local.set $i
-  loop $for-loop|2
-   local.get $i
-   local.get $newPropositions
-   local.set $9
-   global.get $~lib/memory/__stack_pointer
-   local.get $9
-   i32.store offset=4
-   local.get $9
-   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
-   i32.lt_s
-   if
-    local.get $this
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=4
-    local.get $9
-    local.get $newPropositions
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=12
-    local.get $9
-    local.get $i
-    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
-    local.set $9
-    global.get $~lib/memory/__stack_pointer
-    local.get $9
-    i32.store offset=8
-    local.get $9
-    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition
-    if
-     i32.const 1
-     local.set $changed
-    end
-    local.get $i
-    i32.const 1
-    i32.add
-    local.set $i
-    br $for-loop|2
-   end
-  end
-  local.get $changed
-  local.set $9
-  global.get $~lib/memory/__stack_pointer
-  i32.const 24
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $9
-  return
- )
- (func $~lib/array/Array<src/as/assembly/Proposition/Proposition>#constructor (param $this i32) (param $length i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $bufferSize i32)
-  (local $buffer i32)
-  (local $6 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 16
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store offset=8
-  local.get $this
-  i32.eqz
-  if
-   global.get $~lib/memory/__stack_pointer
-   i32.const 16
-   i32.const 13
-   call $~lib/rt/itcms/__new
-   local.tee $this
-   i32.store
-  end
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  i32.const 0
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  i32.const 0
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  i32.const 0
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  i32.const 0
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
-  local.get $length
-  i32.const 1073741820
-  i32.const 2
-  i32.shr_u
-  i32.gt_u
-  if
-   i32.const 1136
-   i32.const 1184
-   i32.const 70
-   i32.const 60
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $length
-  local.tee $2
-  i32.const 8
-  local.tee $3
-  local.get $2
-  local.get $3
-  i32.gt_u
-  select
-  i32.const 2
-  i32.shl
-  local.set $bufferSize
-  global.get $~lib/memory/__stack_pointer
-  local.get $bufferSize
-  i32.const 1
-  call $~lib/rt/itcms/__new
-  local.tee $buffer
-  i32.store offset=8
-  i32.const 2
-  global.get $~lib/shared/runtime/Runtime.Incremental
-  i32.ne
-  drop
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  local.get $buffer
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=12
-  local.get $6
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:buffer
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  local.get $buffer
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:dataStart
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  local.get $bufferSize
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:byteLength
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  local.get $6
-  i32.store offset=4
-  local.get $6
-  local.get $length
-  call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#set:length_
-  local.get $this
-  local.set $6
-  global.get $~lib/memory/__stack_pointer
-  i32.const 16
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $6
- )
- (func $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#constructor (param $this i32) (result i32)
-  (local $1 i32)
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.sub
-  global.set $~lib/memory/__stack_pointer
-  call $~stack_check
-  global.get $~lib/memory/__stack_pointer
-  i64.const 0
-  i64.store
-  global.get $~lib/memory/__stack_pointer
-  i32.const 0
-  i32.store offset=8
-  local.get $this
-  i32.eqz
-  if
-   global.get $~lib/memory/__stack_pointer
-   i32.const 24
-   i32.const 17
-   call $~lib/rt/itcms/__new
-   local.tee $this
-   i32.store
-  end
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 0
-  i32.const 4
-  i32.const 4
-  i32.mul
-  call $~lib/arraybuffer/ArrayBuffer#constructor
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=8
-  local.get $1
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:buckets
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 4
-  i32.const 1
-  i32.sub
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:bucketsMask
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 0
-  i32.const 4
-  block $~lib/map/ENTRY_SIZE<~lib/string/String,src/as/assembly/Proposition/Proposition>|inlined.0 (result i32)
-   i32.const 12
-   br $~lib/map/ENTRY_SIZE<~lib/string/String,src/as/assembly/Proposition/Proposition>|inlined.0
-  end
-  i32.mul
-  call $~lib/arraybuffer/ArrayBuffer#constructor
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=8
-  local.get $1
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entries
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 4
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCapacity
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 0
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesOffset
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  local.get $1
-  i32.store offset=4
-  local.get $1
-  i32.const 0
-  call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set:entriesCount
-  local.get $this
-  local.set $1
-  global.get $~lib/memory/__stack_pointer
-  i32.const 12
-  i32.add
-  global.set $~lib/memory/__stack_pointer
-  local.get $1
- )
  (func $src/as/assembly/Proposition/Proposition#hash (param $this i32) (result i32)
   (local $1 i32)
   (local $2 i32)
@@ -16724,7 +15811,7 @@
   local.get $3
   i32.store offset=4
   local.get $3
-  i32.const 4960
+  i32.const 4272
   local.set $3
   global.get $~lib/memory/__stack_pointer
   local.get $3
@@ -16751,7 +15838,7 @@
   call $~lib/number/I32#toString
   local.tee $2
   i32.store offset=20
-  i32.const 4928
+  i32.const 4240
   local.set $3
   global.get $~lib/memory/__stack_pointer
   local.get $3
@@ -16765,7 +15852,7 @@
   i32.store offset=4
   local.get $3
   call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 4928
+  i32.const 4240
   local.set $3
   global.get $~lib/memory/__stack_pointer
   local.get $3
@@ -16779,7 +15866,7 @@
   i32.store offset=4
   local.get $3
   call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 4928
+  i32.const 4240
   local.set $3
   global.get $~lib/memory/__stack_pointer
   local.get $3
@@ -18085,31 +17172,6 @@
      local.get $9
      call $src/as/assembly/Proposition/Proposition#hasNoMine
      if
-      i32.const 4736
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=4
-      local.get $9
-      local.get $cells
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=24
-      local.get $9
-      call $~lib/array/Array<i32>#toString
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=20
-      local.get $9
-      call $~lib/string/String.__concat
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store
-      local.get $9
-      call $~lib/console/console.log
       local.get $this
       local.set $9
       global.get $~lib/memory/__stack_pointer
@@ -18125,31 +17187,6 @@
       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addSafeCells
       drop
      else
-      i32.const 4816
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=4
-      local.get $9
-      local.get $cells
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=24
-      local.get $9
-      call $~lib/array/Array<i32>#toString
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store offset=20
-      local.get $9
-      call $~lib/string/String.__concat
-      local.set $9
-      global.get $~lib/memory/__stack_pointer
-      local.get $9
-      i32.store
-      local.get $9
-      call $~lib/console/console.log
       local.get $this
       local.set $9
       global.get $~lib/memory/__stack_pointer
@@ -18177,7 +17214,7 @@
   i32.const 0
   call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#constructor
   local.tee $propositionMap
-  i32.store offset=28
+  i32.store offset=20
   i32.const 0
   local.set $i|7
   loop $for-loop|1
@@ -18208,7 +17245,7 @@
     local.set $9
     global.get $~lib/memory/__stack_pointer
     local.get $9
-    i32.store offset=24
+    i32.store offset=28
     local.get $9
     call $src/as/assembly/Proposition/Proposition#hash
     local.set $9
@@ -18220,14 +17257,14 @@
     local.set $9
     global.get $~lib/memory/__stack_pointer
     local.get $9
-    i32.store offset=24
+    i32.store offset=28
     local.get $9
     local.get $i|7
     call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
     local.set $9
     global.get $~lib/memory/__stack_pointer
     local.get $9
-    i32.store offset=20
+    i32.store offset=24
     local.get $9
     call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#set
     drop
@@ -18248,7 +17285,7 @@
   local.set $9
   global.get $~lib/memory/__stack_pointer
   local.get $9
-  i32.store offset=20
+  i32.store offset=24
   local.get $9
   call $~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#values
   local.set $9
@@ -18280,6 +17317,360 @@
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $9
+  return
+ )
+ (func $src/as/assembly/Proposition/Proposition#subtract (param $this i32) (param $otherProposition i32) (result i32)
+  (local $minesDiff i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $cellsDiff i32)
+  (local $i i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 28
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 28
+  memory.fill
+  local.get $this
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store
+  local.get $9
+  call $src/as/assembly/Proposition/Proposition#get:mines
+  local.get $otherProposition
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store
+  local.get $9
+  call $src/as/assembly/Proposition/Proposition#get:mines
+  i32.sub
+  local.set $minesDiff
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 2
+  i32.const 11
+  i32.const 4336
+  call $~lib/rt/__newArray
+  local.tee $cellsDiff
+  i32.store offset=4
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $this
+   local.set $9
+   global.get $~lib/memory/__stack_pointer
+   local.get $9
+   i32.store offset=8
+   local.get $9
+   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+   local.set $9
+   global.get $~lib/memory/__stack_pointer
+   local.get $9
+   i32.store
+   local.get $9
+   call $~lib/array/Array<i32>#get:length
+   i32.lt_s
+   if
+    local.get $otherProposition
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=8
+    local.get $9
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store
+    local.get $9
+    local.get $this
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=12
+    local.get $9
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=8
+    local.get $9
+    local.get $i
+    call $~lib/array/Array<i32>#__get
+    i32.const 0
+    call $~lib/array/Array<i32>#includes
+    i32.eqz
+    if
+     local.get $cellsDiff
+     local.set $9
+     global.get $~lib/memory/__stack_pointer
+     local.get $9
+     i32.store
+     local.get $9
+     local.get $this
+     local.set $9
+     global.get $~lib/memory/__stack_pointer
+     local.get $9
+     i32.store offset=12
+     local.get $9
+     call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+     local.set $9
+     global.get $~lib/memory/__stack_pointer
+     local.get $9
+     i32.store offset=8
+     local.get $9
+     local.get $i
+     call $~lib/array/Array<i32>#__get
+     call $~lib/array/Array<i32>#push
+     drop
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  global.get $~lib/memory/__stack_pointer
+  local.get $this
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=12
+  local.get $9
+  call $src/as/assembly/Proposition/Proposition#get:origin
+  local.tee $7
+  i32.store offset=16
+  global.get $~lib/memory/__stack_pointer
+  local.get $otherProposition
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=12
+  local.get $9
+  call $src/as/assembly/Proposition/Proposition#get:origin
+  local.tee $8
+  i32.store offset=20
+  i32.const 4464
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=12
+  local.get $9
+  i32.const 1
+  local.get $7
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=24
+  local.get $9
+  call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
+  i32.const 4464
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=12
+  local.get $9
+  i32.const 3
+  local.get $8
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=24
+  local.get $9
+  call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
+  i32.const 4464
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=12
+  local.get $9
+  i32.const 256
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=24
+  local.get $9
+  call $~lib/staticarray/StaticArray<~lib/string/String>#join
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store
+  local.get $9
+  local.get $cellsDiff
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  local.get $9
+  i32.store offset=8
+  local.get $9
+  local.get $minesDiff
+  call $src/as/assembly/Proposition/Proposition#constructor
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  i32.const 28
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $9
+  return
+ )
+ (func $src/as/assembly/Proposition/Proposition#isSubSetOf (param $this i32) (param $otherProposition i32) (result i32)
+  (local $i i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store offset=8
+  local.get $this
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  call $~lib/array/Array<i32>#get:length
+  local.get $otherProposition
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store offset=4
+  local.get $3
+  call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  local.get $3
+  call $~lib/array/Array<i32>#get:length
+  i32.ge_s
+  if
+   i32.const 0
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   i32.const 12
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $3
+   return
+  end
+  i32.const 0
+  local.set $i
+  loop $for-loop|0
+   local.get $i
+   local.get $this
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store offset=4
+   local.get $3
+   call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+   local.set $3
+   global.get $~lib/memory/__stack_pointer
+   local.get $3
+   i32.store
+   local.get $3
+   call $~lib/array/Array<i32>#get:length
+   i32.lt_s
+   if
+    local.get $otherProposition
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store
+    local.get $3
+    local.get $this
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=8
+    local.get $3
+    call $src/as/assembly/Proposition/Proposition#get:cellsIndex
+    local.set $3
+    global.get $~lib/memory/__stack_pointer
+    local.get $3
+    i32.store offset=4
+    local.get $3
+    local.get $i
+    call $~lib/array/Array<i32>#__get
+    i32.const 0
+    call $~lib/array/Array<i32>#includes
+    i32.eqz
+    if
+     i32.const 0
+     local.set $3
+     global.get $~lib/memory/__stack_pointer
+     i32.const 12
+     i32.add
+     global.set $~lib/memory/__stack_pointer
+     local.get $3
+     return
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|0
+   end
+  end
+  i32.const 1
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $3
+  return
+ )
+ (func $src/as/assembly/Proposition/Proposition#getMines (param $this i32) (result i32)
+  (local $1 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.store
+  local.get $this
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  local.get $1
+  i32.store
+  local.get $1
+  call $src/as/assembly/Proposition/Proposition#get:mines
+  local.set $1
+  global.get $~lib/memory/__stack_pointer
+  i32.const 4
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $1
   return
  )
  (func $src/as/assembly/Proposition/Proposition#toString (param $this i32) (result i32)
@@ -18319,7 +17710,7 @@
   local.get $4
   i32.store offset=8
   local.get $4
-  i32.const 6432
+  i32.const 4704
   local.set $4
   global.get $~lib/memory/__stack_pointer
   local.get $4
@@ -18346,7 +17737,7 @@
   call $~lib/number/I32#toString
   local.tee $3
   i32.store offset=24
-  i32.const 6384
+  i32.const 4656
   local.set $4
   global.get $~lib/memory/__stack_pointer
   local.get $4
@@ -18360,7 +17751,7 @@
   i32.store offset=8
   local.get $4
   call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 6384
+  i32.const 4656
   local.set $4
   global.get $~lib/memory/__stack_pointer
   local.get $4
@@ -18374,7 +17765,7 @@
   i32.store offset=8
   local.get $4
   call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 6384
+  i32.const 4656
   local.set $4
   global.get $~lib/memory/__stack_pointer
   local.get $4
@@ -18388,7 +17779,7 @@
   i32.store offset=8
   local.get $4
   call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-  i32.const 6384
+  i32.const 4656
   local.set $4
   global.get $~lib/memory/__stack_pointer
   local.get $4
@@ -18404,6 +17795,818 @@
   local.set $4
   global.get $~lib/memory/__stack_pointer
   i32.const 28
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $4
+  return
+ )
+ (func $~lib/string/String#concat (param $this i32) (param $other i32) (result i32)
+  (local $thisSize i32)
+  (local $otherSize i32)
+  (local $outSize i32)
+  (local $out i32)
+  (local $6 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  local.get $this
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store
+  local.get $6
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.set $thisSize
+  local.get $other
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  local.get $6
+  i32.store
+  local.get $6
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.set $otherSize
+  local.get $thisSize
+  local.get $otherSize
+  i32.add
+  local.set $outSize
+  local.get $outSize
+  i32.const 0
+  i32.eq
+  if
+   i32.const 256
+   local.set $6
+   global.get $~lib/memory/__stack_pointer
+   i32.const 8
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $6
+   return
+  end
+  global.get $~lib/memory/__stack_pointer
+  local.get $outSize
+  i32.const 2
+  call $~lib/rt/itcms/__new
+  local.tee $out
+  i32.store offset=4
+  local.get $out
+  local.get $this
+  local.get $thisSize
+  memory.copy
+  local.get $out
+  local.get $thisSize
+  i32.add
+  local.get $other
+  local.get $otherSize
+  memory.copy
+  local.get $out
+  local.set $6
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $6
+  return
+ )
+ (func $~lib/string/String.__concat (param $left i32) (param $right i32) (result i32)
+  (local $2 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i64.const 0
+  i64.store
+  local.get $left
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store
+  local.get $2
+  local.get $right
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  local.get $2
+  i32.store offset=4
+  local.get $2
+  call $~lib/string/String#concat
+  local.set $2
+  global.get $~lib/memory/__stack_pointer
+  i32.const 8
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $2
+  return
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared (param $this i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $newPropositions i32)
+  (local $a i32)
+  (local $b i32)
+  (local $differenceProposition i32)
+  (local $changed i32)
+  (local $i i32)
+  (local $9 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 24
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 24
+  memory.fill
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 2
+  i32.const 13
+  i32.const 4304
+  call $~lib/rt/__newArray
+  local.tee $newPropositions
+  i32.store
+  i32.const 0
+  local.set $a
+  loop $for-loop|0
+   local.get $a
+   local.get $this
+   local.set $9
+   global.get $~lib/memory/__stack_pointer
+   local.get $9
+   i32.store offset=8
+   local.get $9
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+   local.set $9
+   global.get $~lib/memory/__stack_pointer
+   local.get $9
+   i32.store offset=4
+   local.get $9
+   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+   i32.lt_s
+   if
+    i32.const 0
+    local.set $b
+    loop $for-loop|1
+     local.get $b
+     local.get $this
+     local.set $9
+     global.get $~lib/memory/__stack_pointer
+     local.get $9
+     i32.store offset=8
+     local.get $9
+     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+     local.set $9
+     global.get $~lib/memory/__stack_pointer
+     local.get $9
+     i32.store offset=4
+     local.get $9
+     call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+     i32.lt_s
+     if
+      block $for-continue|1
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $a
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=8
+       local.get $9
+       call $src/as/assembly/Proposition/Proposition#getCells
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=4
+       local.get $9
+       call $~lib/array/Array<i32>#get:length
+       i32.const 0
+       i32.le_s
+       if (result i32)
+        i32.const 1
+       else
+        local.get $this
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=16
+        local.get $9
+        call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=12
+        local.get $9
+        local.get $b
+        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $src/as/assembly/Proposition/Proposition#getCells
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        call $~lib/array/Array<i32>#get:length
+        i32.const 0
+        i32.le_s
+       end
+       if
+        br $for-continue|1
+       end
+       global.get $~lib/memory/__stack_pointer
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $a
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=4
+       local.get $9
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $b
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=8
+       local.get $9
+       call $src/as/assembly/Proposition/Proposition#subtract
+       local.tee $differenceProposition
+       i32.store offset=20
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $b
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=4
+       local.get $9
+       local.get $this
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=16
+       local.get $9
+       call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=12
+       local.get $9
+       local.get $a
+       call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+       local.set $9
+       global.get $~lib/memory/__stack_pointer
+       local.get $9
+       i32.store offset=8
+       local.get $9
+       call $src/as/assembly/Proposition/Proposition#isSubSetOf
+       if
+        local.get $newPropositions
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=8
+        local.get $9
+        call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
+        drop
+       else
+        local.get $differenceProposition
+        local.set $9
+        global.get $~lib/memory/__stack_pointer
+        local.get $9
+        i32.store offset=4
+        local.get $9
+        call $src/as/assembly/Proposition/Proposition#getMines
+        i32.const 0
+        i32.gt_s
+        if (result i32)
+         local.get $differenceProposition
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $src/as/assembly/Proposition/Proposition#getMines
+         local.get $differenceProposition
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=8
+         local.get $9
+         call $src/as/assembly/Proposition/Proposition#getCells
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/array/Array<i32>#get:length
+         i32.eq
+        else
+         i32.const 0
+        end
+        if
+         i32.const 4512
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/console/console.log
+         local.get $this
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=16
+         local.get $9
+         call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=12
+         local.get $9
+         local.get $a
+         call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=8
+         local.get $9
+         call $src/as/assembly/Proposition/Proposition#toString
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/console/console.log
+         local.get $this
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=16
+         local.get $9
+         call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:propositions
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=12
+         local.get $9
+         local.get $b
+         call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=8
+         local.get $9
+         call $src/as/assembly/Proposition/Proposition#toString
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/console/console.log
+         i32.const 4736
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=8
+         local.get $9
+         local.get $differenceProposition
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=16
+         local.get $9
+         call $src/as/assembly/Proposition/Proposition#toString
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=12
+         local.get $9
+         call $~lib/string/String.__concat
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/console/console.log
+         i32.const 4512
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         call $~lib/console/console.log
+         local.get $newPropositions
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=4
+         local.get $9
+         local.get $differenceProposition
+         local.set $9
+         global.get $~lib/memory/__stack_pointer
+         local.get $9
+         i32.store offset=8
+         local.get $9
+         call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#push
+         drop
+        end
+       end
+      end
+      local.get $b
+      i32.const 1
+      i32.add
+      local.set $b
+      br $for-loop|1
+     end
+    end
+    local.get $a
+    i32.const 1
+    i32.add
+    local.set $a
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  local.set $changed
+  i32.const 0
+  local.set $i
+  loop $for-loop|2
+   local.get $i
+   local.get $newPropositions
+   local.set $9
+   global.get $~lib/memory/__stack_pointer
+   local.get $9
+   i32.store offset=4
+   local.get $9
+   call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#get:length
+   i32.lt_s
+   if
+    local.get $this
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=4
+    local.get $9
+    local.get $newPropositions
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=12
+    local.get $9
+    local.get $i
+    call $~lib/array/Array<src/as/assembly/Proposition/Proposition>#__get
+    local.set $9
+    global.get $~lib/memory/__stack_pointer
+    local.get $9
+    i32.store offset=8
+    local.get $9
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition
+    if
+     i32.const 1
+     local.set $changed
+    end
+    local.get $i
+    i32.const 1
+    i32.add
+    local.set $i
+    br $for-loop|2
+   end
+  end
+  local.get $changed
+  local.set $9
+  global.get $~lib/memory/__stack_pointer
+  i32.const 24
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $9
+  return
+ )
+ (func $src/as/assembly/MineSweeperSolver/MineSweeperSolver#checkMainPropositionAddition (param $this i32) (result i32)
+  (local $ratio f32)
+  (local $initialPropositionCells i32)
+  (local $i i32)
+  (local $4 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 32
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  call $~stack_check
+  global.get $~lib/memory/__stack_pointer
+  i32.const 0
+  i32.const 32
+  memory.fill
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store offset=4
+  local.get $4
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $~lib/array/Array<i32>#get:length
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store offset=4
+  local.get $4
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $~lib/array/Array<i32>#get:length
+  i32.add
+  f32.convert_i32_s
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
+  f32.convert_i32_s
+  f32.div
+  local.set $ratio
+  local.get $this
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  local.get $4
+  i32.store
+  local.get $4
+  call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:addedMainProposition
+  i32.eqz
+  if (result i32)
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=4
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:safeCellsIds
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $~lib/array/Array<i32>#get:length
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=4
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:mineCellsIds
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $~lib/array/Array<i32>#get:length
+   i32.add
+   i32.sub
+   i32.const 10
+   i32.le_s
+  else
+   i32.const 0
+  end
+  if
+   global.get $~lib/memory/__stack_pointer
+   i32.const 0
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:totalCells
+   call $~lib/array/Array<i32>#constructor
+   local.tee $initialPropositionCells
+   i32.store offset=8
+   i32.const 0
+   local.set $i
+   loop $for-loop|0
+    local.get $i
+    local.get $this
+    local.set $4
+    global.get $~lib/memory/__stack_pointer
+    local.get $4
+    i32.store offset=12
+    local.get $4
+    call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+    local.set $4
+    global.get $~lib/memory/__stack_pointer
+    local.get $4
+    i32.store offset=4
+    local.get $4
+    call $src/as/assembly/Board/Board#get:cells
+    local.set $4
+    global.get $~lib/memory/__stack_pointer
+    local.get $4
+    i32.store
+    local.get $4
+    call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
+    i32.lt_s
+    if
+     local.get $initialPropositionCells
+     local.set $4
+     global.get $~lib/memory/__stack_pointer
+     local.get $4
+     i32.store
+     local.get $4
+     local.get $this
+     local.set $4
+     global.get $~lib/memory/__stack_pointer
+     local.get $4
+     i32.store offset=20
+     local.get $4
+     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+     local.set $4
+     global.get $~lib/memory/__stack_pointer
+     local.get $4
+     i32.store offset=16
+     local.get $4
+     call $src/as/assembly/Board/Board#get:cells
+     local.set $4
+     global.get $~lib/memory/__stack_pointer
+     local.get $4
+     i32.store offset=12
+     local.get $4
+     local.get $i
+     call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
+     local.set $4
+     global.get $~lib/memory/__stack_pointer
+     local.get $4
+     i32.store offset=4
+     local.get $4
+     call $src/as/assembly/models/Cell/Cell#get:_id
+     call $~lib/array/Array<i32>#push
+     drop
+     local.get $i
+     i32.const 1
+     i32.add
+     local.set $i
+     br $for-loop|0
+    end
+   end
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   i32.const 1
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#set:addedMainProposition
+   i32.const 4832
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $~lib/console/console.log
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   i32.const 0
+   i32.const 4912
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=12
+   local.get $4
+   local.get $initialPropositionCells
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=16
+   local.get $4
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=28
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#get:board
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=24
+   local.get $4
+   call $src/as/assembly/Board/Board#get:properties
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=20
+   local.get $4
+   call $src/as/assembly/models/BoardProperties/BoardProperties#get:mines
+   call $src/as/assembly/Proposition/Proposition#constructor
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store offset=4
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#addProposition
+   drop
+   local.get $this
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   local.get $4
+   i32.store
+   local.get $4
+   call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared
+   drop
+   i32.const 1
+   local.set $4
+   global.get $~lib/memory/__stack_pointer
+   i32.const 32
+   i32.add
+   global.set $~lib/memory/__stack_pointer
+   local.get $4
+   return
+  end
+  i32.const 0
+  local.set $4
+  global.get $~lib/memory/__stack_pointer
+  i32.const 32
   i32.add
   global.set $~lib/memory/__stack_pointer
   local.get $4
@@ -18497,6 +18700,19 @@
      local.get $7
      i32.store
      local.get $7
+     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#satisfiedPropositionsRemoved
+     if (result i32)
+      i32.const 1
+     else
+      local.get $changed
+     end
+     local.set $changed
+     local.get $this
+     local.set $7
+     global.get $~lib/memory/__stack_pointer
+     local.get $7
+     i32.store
+     local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#propositionsCompared
      if (result i32)
       i32.const 1
@@ -18511,6 +18727,19 @@
      i32.store
      local.get $7
      call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#satisfiedPropositionsRemoved
+     if (result i32)
+      i32.const 1
+     else
+      local.get $changed
+     end
+     local.set $changed
+     local.get $this
+     local.set $7
+     global.get $~lib/memory/__stack_pointer
+     local.get $7
+     i32.store
+     local.get $7
+     call $src/as/assembly/MineSweeperSolver/MineSweeperSolver#checkMainPropositionAddition
      if (result i32)
       i32.const 1
      else
@@ -18570,7 +18799,7 @@
       f64.const 0
       f64.gt
       if
-       i32.const 4992
+       i32.const 4944
        local.set $7
        global.get $~lib/memory/__stack_pointer
        local.get $7
@@ -18599,7 +18828,7 @@
     end
    end
   end
-  i32.const 6208
+  i32.const 6160
   local.set $7
   global.get $~lib/memory/__stack_pointer
   local.get $7
@@ -20340,7 +20569,7 @@
   i32.const 0
   i32.const 2
   i32.const 20
-  i32.const 6464
+  i32.const 6224
   call $~lib/rt/__newArray
   local.set $72
   global.get $~lib/memory/__stack_pointer
@@ -20678,7 +20907,7 @@
           call $~lib/number/I32#toString
           local.tee $67
           i32.store offset=160
-          i32.const 6960
+          i32.const 6720
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -20692,7 +20921,7 @@
           i32.store offset=116
           local.get $72
           call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-          i32.const 6960
+          i32.const 6720
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -20706,7 +20935,7 @@
           i32.store offset=116
           local.get $72
           call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-          i32.const 6960
+          i32.const 6720
           local.set $72
           global.get $~lib/memory/__stack_pointer
           local.get $72
@@ -20822,7 +21051,7 @@
         call $~lib/number/I32#toString
         local.tee $71
         i32.store offset=176
-        i32.const 7008
+        i32.const 6768
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -20836,7 +21065,7 @@
         i32.store offset=116
         local.get $72
         call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-        i32.const 7008
+        i32.const 6768
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -20850,7 +21079,7 @@
         i32.store offset=116
         local.get $72
         call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-        i32.const 7008
+        i32.const 6768
         local.set $72
         global.get $~lib/memory/__stack_pointer
         local.get $72
@@ -20907,7 +21136,7 @@
     end
     local.tee $60
     i32.store offset=180
-    i32.const 6704
+    i32.const 6464
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -20921,7 +21150,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 6704
+    i32.const 6464
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -20935,7 +21164,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 6704
+    i32.const 6464
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -20949,7 +21178,7 @@
     i32.store offset=32
     local.get $72
     call $~lib/staticarray/StaticArray<~lib/string/String>#__uset
-    i32.const 6704
+    i32.const 6464
     local.set $72
     global.get $~lib/memory/__stack_pointer
     local.get $72
@@ -21790,7 +22019,7 @@
   f64.const 0
   f64.eq
   if
-   i32.const 5072
+   i32.const 5024
    local.set $3
    global.get $~lib/memory/__stack_pointer
    i32.const 4
@@ -21810,7 +22039,7 @@
    local.get $value
    f64.ne
    if
-    i32.const 5104
+    i32.const 5056
     local.set $3
     global.get $~lib/memory/__stack_pointer
     i32.const 4
@@ -21819,8 +22048,8 @@
     local.get $3
     return
    end
+   i32.const 5088
    i32.const 5136
-   i32.const 5184
    local.get $value
    f64.const 0
    f64.lt
@@ -21833,7 +22062,7 @@
    local.get $3
    return
   end
-  i32.const 5216
+  i32.const 5168
   local.get $value
   call $~lib/util/number/dtoa_core
   i32.const 1
@@ -21846,7 +22075,7 @@
   local.tee $result
   i32.store
   local.get $result
-  i32.const 5216
+  i32.const 5168
   local.get $size
   memory.copy
   local.get $result
@@ -21879,7 +22108,7 @@
    local.get $1
   else
    i32.const 1696
-   i32.const 6752
+   i32.const 6512
    i32.const 6
    i32.const 5
    call $~lib/builtins/abort
@@ -21913,7 +22142,7 @@
    local.get $1
   else
    i32.const 1696
-   i32.const 6752
+   i32.const 6512
    i32.const 7
    i32.const 5
    call $~lib/builtins/abort
@@ -21947,7 +22176,7 @@
    local.get $1
   else
    i32.const 1696
-   i32.const 6752
+   i32.const 6512
    i32.const 8
    i32.const 5
    call $~lib/builtins/abort

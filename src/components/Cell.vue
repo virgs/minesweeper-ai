@@ -103,14 +103,16 @@ export default {
             this.mouseButtonDown = event.buttons
         },
         mouseUpEvent(event: MouseEvent) {
-            if (this.mouseButtonDown === MouseButtons.LEFT) {
-                if (this.cell.isNotRevealed() && !this.cell.flagged) {
-                    this.$emit('clicked', { cell: this.cell })
-                }
-            } else if (this.mouseButtonDown === MouseButtons.RIGHT) {
-                this.cell.flagged = !this.cell.flagged
-                if (!this.cell.flagged) {
-                    this.cell.aiMarkedMine = false
+            if (this.cell.isNotRevealed()) {
+                if (this.mouseButtonDown === MouseButtons.LEFT) {
+                    if (this.cell.isNotRevealed() && !this.cell.flagged) {
+                        this.$emit('clicked', { cell: this.cell })
+                    }
+                } else if (this.mouseButtonDown === MouseButtons.RIGHT) {
+                    this.cell.flagged = !this.cell.flagged
+                    if (!this.cell.flagged) {
+                        this.cell.aiMarkedMine = false
+                    }
                 }
             }
             this.mouseButtonDown = event.buttons

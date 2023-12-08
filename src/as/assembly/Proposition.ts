@@ -15,7 +15,7 @@ export class Proposition {
     }
 
     public toString(): string {
-        return `|${this.origin}|: {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.mines}`
+        return `|${this.origin}| {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.mines}`
     }
 
     public hash(): string {
@@ -45,6 +45,16 @@ export class Proposition {
             }
         }
         return true
+    }
+
+    public getOverlappingCells(otherProposition: Proposition): i32[] {
+        const overlappingCells: i32[] = []
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (otherProposition.cellsIndex.includes(this.cellsIndex[i])) {
+                overlappingCells.push(this.cellsIndex[i])
+            }
+        }
+        return overlappingCells
     }
 
     public subtract(otherProposition: Proposition): Proposition {
