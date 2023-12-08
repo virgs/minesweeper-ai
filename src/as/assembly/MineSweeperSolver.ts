@@ -213,6 +213,9 @@ export class MineSweeperSolver {
     }
 
     private addSafeCells(cellIndexes: i32[]): boolean {
+        if (cellIndexes.length <= 0) {
+            return false
+        }
         let changed = false;
         for (let a = 0; a < this.propositions.length; ++a) {
             changed = this.propositions[a].removeSafeCells(cellIndexes) || changed
@@ -231,6 +234,10 @@ export class MineSweeperSolver {
     }
 
     private addMineCells(cellIndexes: i32[]): boolean {
+        if (cellIndexes.length <= 0) {
+            return false
+        }
+
         let changed = false;
         for (let a = 0; a < this.propositions.length; ++a) {
             changed = this.propositions[a].removeMineCells(cellIndexes) || changed
@@ -253,16 +260,16 @@ export class MineSweeperSolver {
         let newPropositions: Proposition[] = []
         for (let a = 0; a < this.propositions.length; ++a) {
             for (let b = 0; b < this.propositions.length; ++b) {
-                // if (this.propositions[a].getCells().length <= 0 || this.propositions[b].getCells().length <= 0) {
-                //     continue
-                // }
+                if (this.propositions[a].getCells().length <= 0 || this.propositions[b].getCells().length <= 0) {
+                    continue
+                }
                 const differenceProposition = this.propositions[a].subtract(this.propositions[b])
                 if (this.propositions[b].isSubSetOf(this.propositions[a])) {
                     newPropositions.push(differenceProposition)
                 }
-                // if (differenceProposition.getMines() > 0 && differenceProposition.getMines() === differenceProposition.getCells().length) {
-                //     newPropositions.push(differenceProposition)
-                // }
+                if (differenceProposition.getMines() > 0 && differenceProposition.getMines() === differenceProposition.getCells().length) {
+                    newPropositions.push(differenceProposition)
+                }
             }
         }
 
