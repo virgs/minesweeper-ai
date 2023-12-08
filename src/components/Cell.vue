@@ -2,7 +2,7 @@
     <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
         :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
         :class="classStyle">
-        <!-- <small style="color: maroon; font-size: 8px;"> {{ cell.id }}</small> -->
+        <!-- <small style="position: absolute;color: maroon; font-size: 8px; font-weight: bold;"> {{ cell.id }}</small> -->
         <div v-if="cell.flagged" class="flag">
             <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
             <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue;" />

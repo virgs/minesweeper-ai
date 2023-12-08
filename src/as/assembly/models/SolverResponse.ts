@@ -6,5 +6,4 @@ export class SolverResponse {
     knownMineCellsIds!: i32[];
     knownSafeCellsIds!: i32[];
     guesses!: Guess[];
-
 }

@@ -19,20 +19,3 @@ export function processBoard(text: string): string {
     }
     return JSON.stringify(response)
 }
-
-
-interface Test {
-    method(): void
-}
-
-class Virgs implements Test {
-    method(): void {
-        console.log('sdsd')
-    }
-}
-
-export const virgs = new Virgs()
-
-export function test(): Test {
-    return virgs
-}

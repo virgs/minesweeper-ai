@@ -15,7 +15,7 @@ export class Proposition {
     }
 
     public toString(): string {
-        return `/${this.origin}/: (${this.cellsIndex.length}) ${this.cellsIndex.sort((a, b) => a - b)}: mines -> {${this.mines}}`
+        return `|${this.origin}|: {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.mines}`
     }
 
     public hash(): string {
@@ -55,7 +55,7 @@ export class Proposition {
                 cellsDiff.push(this.cellsIndex[i])
             }
         }
-        return new Proposition(`${this.origin}-${otherProposition.origin}`, cellsDiff, minesDiff)
+        return new Proposition(`(${this.origin} - ${otherProposition.origin})`, cellsDiff, minesDiff)
     }
 
     public getRandomCell(): i32 {
@@ -93,11 +93,10 @@ export class Proposition {
         return previousCellsLength !== this.cellsIndex.length
     }
 
-    public isContradictory(): boolean {
-        return this.mines < this.cellsIndex.length
-    }
-
     public isSatisfied(): boolean {
+        if (this.cellsIndex.length <= 0) {
+            return true;
+        }
         return this.hasNoMine() || (this.mines >= this.cellsIndex.length && this.cellsIndex.length > 0)
     }
 

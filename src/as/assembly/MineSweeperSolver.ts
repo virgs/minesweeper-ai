@@ -1,5 +1,4 @@
 import { Board } from './Board'
-import { Cell } from './models/Cell'
 import { Proposition } from './Proposition'
 
 const mainPropositionThreshold: f32 = 0.85
@@ -29,37 +28,34 @@ export class MineSweeperSolver {
         return this.safeCellsIds;
     }
 
-    public selectUnrevealedSafeCell(): Cell[] {
-        return this.board.getNotRevealedCells().filter((cell) => this.safeCellsIds.includes(cell._id))
-    }
-
-    public selectLowestChanceCell(): i32 {
-        let lowetRatioPropositionIndex = -1
-        this.propositions.reduce((lowestMineRatio, proposition, index) => {
-            const mineRation = proposition.getMineRatio()
-            if (mineRation < lowestMineRatio) {
-                lowetRatioPropositionIndex = index
-                lowestMineRatio = mineRation
-            }
-            return lowestMineRatio
-        }, Infinity)
-        if (lowetRatioPropositionIndex >= 0) {
-            const selectedProposition = this.propositions[lowetRatioPropositionIndex]
-            console.log(
-                'Going luck based: ' +
-                selectedProposition.toString() +
-                ' ' +
-                Math.trunc(selectedProposition.getMineRatio() * 10000) / 100 +
-                '%'
-            )
-            return selectedProposition.getRandomCell()
-        }
-        console.log('Going blind')
-        const unsafeCells: Cell[] = this.board.cells
-            .filter(cell => !this.safeCellsIds.includes(cell._id))
-            .filter(cell => !this.mineCellsIds.includes(cell._id))
-        return unsafeCells[Math.floor(Math.random() * unsafeCells.length)]._id
-    }
+    // public selectLowestChanceCell(): i32 {
+    //     let lowetRatioPropositionIndex = -1
+    //     this.propositions.reduce((lowestMineRatio, proposition, index) => {
+    //         const mineRation = proposition.getMineRatio()
+    //         if (mineRation < lowestMineRatio) {
+    //             lowetRatioPropositionIndex = index
+    //             lowestMineRatio = mineRation
+    //         }
+    //         return lowestMineRatio
+    //     }, Infinity)
+    //     if (lowetRatioPropositionIndex >= 0) {
+    //         const selectedProposition = this.propositions[lowetRatioPropositionIndex]
+    //         console.log(
+    //             'Going luck based: ' +
+    //             // selectedProposition.toString() +
+    //             ' ' +
+    //             Math.trunc(selectedProposition.getMineRatio() * 10000) / 100 +
+    //             '%'
+    //         )
+    //         return selectedProposition.getRandomCell()
+    //     }
+    //     console.log('Going blind')
+    //     const unsafeCells: i32[] = this.board.cells
+    //         .filter(cell => !this.safeCellsIds.includes(cell._id))
+    //         .filter(cell => !this.mineCellsIds.includes(cell._id))
+    //         .map(cell => cell._id)
+    //     return unsafeCells[Math.floor(Math.random() * unsafeCells.length)]
+    // }
 
     public updatePropositions(): void {
         this.createNewPropositions()
@@ -87,11 +83,11 @@ export class MineSweeperSolver {
                 notChangedIterationsCounter = 0
             }
         }
-        // console.log('current propositions: ' + this.propositions.length.toString())
-        // for (let i = 0; i < this.propositions.length; ++i) {
-        //     const proposition = this.propositions[i]
-        //     console.log(proposition.toString())
-        // }
+        console.log('current propositions: ' + this.propositions.length.toString())
+        for (let i = 0; i < this.propositions.length; ++i) {
+            const proposition = this.propositions[i]
+            console.log(proposition.toString())
+        }
         // console.log('============\ncurrent propositions: ' + this.propositions.length.toString())
         // const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
         // console.log('not revealed ratio: ' + ratio.toString())
@@ -105,7 +101,7 @@ export class MineSweeperSolver {
                 initialPropositionCells.push(this.board.cells[i]._id)
             }
             this.addedMainProposition = true
-            this.addProposition(new Proposition('(initial)', initialPropositionCells, this.board.properties.mines))
+            this.addProposition(new Proposition('*', initialPropositionCells, this.board.properties.mines))
             this.propositionsCompared()
             return true
         }
@@ -123,8 +119,10 @@ export class MineSweeperSolver {
             } else {
                 const cells = proposition.getCells()
                 if (proposition.hasNoMine()) {
+                    console.log('e new safe cells discovered: ' + cells.toString())
                     this.addSafeCells(cells)
                 } else {
+                    console.log('f new safe cells discovered: ' + cells.toString())
                     this.addMineCells(cells)
                 }
             }
@@ -145,14 +143,7 @@ export class MineSweeperSolver {
             this.mineCellsIds.length < this.board.properties.mines) {
             return false
         }
-        for (let i = 0; i < this.board.cells.length; ++i) {
-            const cell = this.board.cells[i]
-            if (!this.safeCellsIds.includes(cell._id)) {
-                this.addMineCells([cell._id])
-            } else if (!this.mineCellsIds.includes(cell._id)) {
-                this.addSafeCells([cell._id])
-            }
-        }
+        console.log('board solved')
         return true
     }
 
@@ -167,7 +158,7 @@ export class MineSweeperSolver {
                 adjCellsIds.push(adjCells[i]._id)
             }
             const newProposition = new Proposition(
-                `(${cell._id})`,
+                `${cell._id}`,
                 adjCellsIds,
                 cell.minesCount
             )
@@ -183,8 +174,10 @@ export class MineSweeperSolver {
             if (proposition.isSatisfied()) {
                 const satisfiedCells = proposition.getCells()
                 if (proposition.hasNoMine()) {
+                    console.log('a new safe cells discovered: ' + satisfiedCells.toString())
                     result = this.addSafeCells(satisfiedCells) || result
                 } else {
+                    console.log('b new mine cells discovered: ' + satisfiedCells.toString())
                     result = this.addMineCells(satisfiedCells) || result
                 }
             }
@@ -205,8 +198,10 @@ export class MineSweeperSolver {
 
         if (newProposition.isSatisfied()) {
             if (newProposition.hasNoMine()) {
+                console.log('c new safe cells discovered: ' + newProposition.getCells().toString())
                 return this.addSafeCells(newProposition.getCells())
             } else {
+                console.log('d new mine cells discovered: ' + newProposition.getCells().toString())
                 return this.addMineCells(newProposition.getCells())
             }
         }
@@ -258,16 +253,16 @@ export class MineSweeperSolver {
         let newPropositions: Proposition[] = []
         for (let a = 0; a < this.propositions.length; ++a) {
             for (let b = 0; b < this.propositions.length; ++b) {
-                if (this.propositions[a].getCells().length <= 0 || this.propositions[b].getCells().length <= 0) {
-                    continue
-                }
+                // if (this.propositions[a].getCells().length <= 0 || this.propositions[b].getCells().length <= 0) {
+                //     continue
+                // }
                 const differenceProposition = this.propositions[a].subtract(this.propositions[b])
                 if (this.propositions[b].isSubSetOf(this.propositions[a])) {
                     newPropositions.push(differenceProposition)
                 }
-                if (differenceProposition.getMines() > 0 && differenceProposition.getMines() === differenceProposition.getCells().length) {
-                    newPropositions.push(differenceProposition)
-                }
+                // if (differenceProposition.getMines() > 0 && differenceProposition.getMines() === differenceProposition.getCells().length) {
+                //     newPropositions.push(differenceProposition)
+                // }
             }
         }
 
