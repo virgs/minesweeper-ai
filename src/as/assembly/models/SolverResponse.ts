@@ -1,9 +1,14 @@
 import { JSON } from "json-as/assembly";
-import { Guess } from "./Guess";
 
 @serializable
-export class SolverResponse {
-    knownMineCellsIds!: i32[];
-    knownSafeCellsIds!: i32[];
-    guesses!: Guess[];
+export class SolverUpdateResponse {
+    knownMineCellsIds!: i32[]
+    knownSafeCellsIds!: i32[]
+}
+
+@serializable
+export class SolverGuessResponse {
+    id!: i32;
+    mines!: i32;
+    cells!: i32;
 }

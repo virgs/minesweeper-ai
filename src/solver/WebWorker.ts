@@ -1,21 +1,39 @@
-import { processBoard, virgs } from '@/as/build/assembly'
-import type { Guess } from '@/constants/Guess'
+import { guess, update } from '@/as/build/assembly'
+
+export enum SolverRequestAction {
+    UPDATE,
+    GUESS
+}
 
 export type SolverRequest = {
+    action: SolverRequestAction,
     board: string
 }
 
-export type SolverResponse = {
+export type SolverUpdateResponse = {
     knownMineCellsIds: number[],
     knownSafeCellsIds: number[],
-    guesses: Guess[]
+}
+
+export type SolverGuessResponse = {
+    id: number;
+    mines: number;
+    cells: number;
 }
 
 self.onmessage = async (event: MessageEvent<SolverRequest>) => {
     try {
         const request = event.data
-        const assemblyScriptResult: SolverResponse = JSON.parse(processBoard(request.board))
-        self.postMessage(assemblyScriptResult)
+        switch (request.action) {
+            case SolverRequestAction.UPDATE:
+                const assemblyScriptUpdateResult: SolverUpdateResponse = JSON.parse(update(request.board))
+                self.postMessage(assemblyScriptUpdateResult)
+                break;
+            case SolverRequestAction.GUESS:
+                const assemblyScriptGuessResult: SolverGuessResponse = JSON.parse(guess(request.board))
+                self.postMessage(assemblyScriptGuessResult)
+                break;
+        }
     } catch (exception) {
         console.log(exception)
         self.postMessage(exception)

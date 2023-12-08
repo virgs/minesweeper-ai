@@ -22,10 +22,15 @@ async function instantiate(module, imports = {}) {
   const { exports } = await WebAssembly.instantiate(module, adaptedImports);
   const memory = exports.memory || imports.env.memory;
   const adaptedExports = Object.setPrototypeOf({
-    processBoard(text) {
-      // src/as/assembly/index/processBoard(~lib/string/String) => ~lib/string/String
-      text = __lowerString(text) || __notnull();
-      return __liftString(exports.processBoard(text) >>> 0);
+    update(stringifiedBoard) {
+      // src/as/assembly/index/update(~lib/string/String) => ~lib/string/String
+      stringifiedBoard = __lowerString(stringifiedBoard) || __notnull();
+      return __liftString(exports.update(stringifiedBoard) >>> 0);
+    },
+    guess(stringifiedBoard) {
+      // src/as/assembly/index/guess(~lib/string/String) => ~lib/string/String
+      stringifiedBoard = __lowerString(stringifiedBoard) || __notnull();
+      return __liftString(exports.guess(stringifiedBoard) >>> 0);
     },
   }, exports);
   function __liftString(pointer) {
@@ -55,7 +60,8 @@ async function instantiate(module, imports = {}) {
 }
 export const {
   memory,
-  processBoard,
+  update,
+  guess,
 } = await (async url => instantiate(
   await (async () => {
     try { return await globalThis.WebAssembly.compileStreaming(globalThis.fetch(url)); }
