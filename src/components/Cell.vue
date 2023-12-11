@@ -2,6 +2,7 @@
     <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
         :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
         :class="classStyle">
+        <!-- remove these cell-id attributes -->
         <!-- <small style="position: absolute;color: maroon; font-size: 8px; font-weight: bold;"> {{ cell.id }}</small> -->
         <div v-if="cell.flagged" class="flag">
             <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
@@ -27,7 +28,7 @@ import { type PropType } from 'vue'
 
 export default {
     name: 'Cell',
-    emits: ['clicked', 'doubleClicked'],
+    emits: ['clicked', 'chorded'],
     props: {
         cell: {
             type: Object as PropType<Cell>,
@@ -97,21 +98,22 @@ export default {
             this.mouseButtonDown = MouseButtons.NONE
         },
         mouseDownEvent(event: MouseEvent) {
-            if (this.gameOver) {
+            if (this.gameOver || this.cell.isRevealed()) {
                 return
             }
             this.mouseButtonDown = event.buttons
+            if (this.mouseButtonDown === MouseButtons.RIGHT) {
+                this.cell.flagged = !this.cell.flagged
+                if (!this.cell.flagged) {
+                    this.cell.aiMarkedMine = false
+                }
+            }
         },
         mouseUpEvent(event: MouseEvent) {
-            if (this.cell.isNotRevealed()) {
+            if (this.cell.isNotRevealed() && !this.cell.flagged) {
                 if (this.mouseButtonDown === MouseButtons.LEFT) {
                     if (this.cell.isNotRevealed() && !this.cell.flagged) {
                         this.$emit('clicked', { cell: this.cell })
-                    }
-                } else if (this.mouseButtonDown === MouseButtons.RIGHT) {
-                    this.cell.flagged = !this.cell.flagged
-                    if (!this.cell.flagged) {
-                        this.cell.aiMarkedMine = false
                     }
                 }
             }
@@ -119,7 +121,7 @@ export default {
         },
         doubleClick(event: MouseEvent) {
             if (this.isRevealed) {
-                this.$emit('doubleClicked', { cell: this.cell })
+                this.$emit('chorded', { cell: this.cell })
             }
         }
     },

@@ -22,7 +22,7 @@ export default {
         Grid
     },
     data() {
-        const board = new Board(GameConfigurations.Expert)
+        const board = new Board(GameConfigurations.Intermediate)
         solver = new Solver(board)
         return {
             mouseDown: false,

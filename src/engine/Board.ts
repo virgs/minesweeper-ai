@@ -62,9 +62,14 @@ export class Board {
     }
 
     public isGameWon(): boolean {
-        return this.cells
+        const notRevealedCells = this.cells
             .filter(cell => cell.isNotRevealed())
-            .every(cell => cell.hasMine)
+        return notRevealedCells
+            .every(cell => cell.hasMine) && notRevealedCells.length === this.properties.mines
+    }
+
+    public isGameFinished(): boolean {
+        return this.isGameLost() || this.isGameWon()
     }
 
     public revealCell(clickedCell: Cell): Cell[] {

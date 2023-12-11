@@ -3,7 +3,7 @@
         <div v-for="line in board.properties.height" style="display: inline-flex">
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
-                    :explodedBombId="explodedBombId" @doubleClicked="cellDoubleClicked" />
+                    :explodedBombId="explodedBombId" @chorded="cellChorded" />
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@ export default {
         cellClick(data: { cell: Cell }) {
             this.$emit('cellClick', { cell: data.cell })
         },
-        cellDoubleClicked(data: { cell: Cell }) {
+        cellChorded(data: { cell: Cell }) {
             const adjacentCells = this.board.getAdjacentCells(data.cell)
             const flagsAround = adjacentCells.filter(cell => cell.flagged).length
             if (flagsAround === data.cell.minesAround) {

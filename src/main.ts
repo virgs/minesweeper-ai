@@ -7,13 +7,14 @@ import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* import font awesome icon component */
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-// import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { GameConfigurations } from './constants/GameConfiguration'
 import { Board } from './engine/Board'
 import { Solver } from './solver/Solver'
+import { Cell } from './engine/Cell'
 
 // <font-awesome - icon icon = "fa-solid fa-sun" />
 // <font-awesome - icon icon = "fa-regular fa-sun" />
@@ -27,17 +28,38 @@ import { Solver } from './solver/Solver'
 // <font-awesome-icon :icon="['fas', 'dice']" />
 
 /* add icons to the library */
-// library.add(faBomb, faFlag, faXmark)
+library.add(faBomb, faFlag, faXmark)
 
 // const app = createApp(App)
 // app.component('font-awesome-icon', FontAwesomeIcon)
 // app.mount('#app')
 
-console.log('virgs')
-
-const board = new Board(GameConfigurations.Expert)
+const board = new Board(GameConfigurations.Intermediate)
 const solver = new Solver(board)
+// solver.runTests()
 
-await solver.makeGuess()
+const initializationClick = await solver.makeGuess()
 
-await solver.update()
+board.initializeMinesAroundCell(board.getCellById(initializationClick.id)!)
+
+while (!board.isGameFinished()) {
+    await solver.update()
+    const cellsToReveal = solver.knownSafeCellsIds
+        .filter(cell => board.cells[cell].isNotRevealed())
+    if (cellsToReveal.length > 0) {
+        cellsToReveal
+            .forEach(cell => board.revealCell(board.getCellById(cell)!))
+    } else {
+        if (board.isGameLost() || board.isGameWon()) {
+            console.log('game over')
+            break
+        }
+        const guess = await solver.makeGuess()
+        board.revealCell(board.getCellById(guess.id)!)
+        // break
+    }
+}
+
+console.log('guesses', solver.guesses)
+console.log('won?', board.isGameWon(), 'lost?', board.isGameLost())
+

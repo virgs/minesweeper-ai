@@ -22,8 +22,8 @@ export class Proposition {
         return `${this.cellsIndex.sort((a, b) => a - b)}:${this.mines}`
     }
 
-    public getMineRatio(): i32 {
-        return this.mines / this.cellsIndex.length
+    public getMineRatio(): f32 {
+        return f32(this.mines) / f32(this.cellsIndex.length)
     }
 
     public getCells(): i32[] {
@@ -35,16 +35,8 @@ export class Proposition {
     }
 
     public isSubSetOf(otherProposition: Proposition): bool {
-        if (this.cellsIndex.length >= otherProposition.cellsIndex.length) {
-            return false
-        }
-
-        for (let i = 0; i < this.cellsIndex.length; ++i) {
-            if (!otherProposition.cellsIndex.includes(this.cellsIndex[i])) {
-                return false
-            }
-        }
-        return true
+        return otherProposition.cellsIndex.length > this.cellsIndex.length &&
+            this.getOverlappingCells(otherProposition).length === this.cellsIndex.length
     }
 
     public getOverlappingCells(otherProposition: Proposition): i32[] {
@@ -57,8 +49,22 @@ export class Proposition {
         return overlappingCells
     }
 
-    public subtract(otherProposition: Proposition): Proposition {
+    public getCellsExcluding(cells: i32[]): i32[] {
+        const result: i32[] = []
+        for (let i = 0; i < this.cellsIndex.length; ++i) {
+            if (!cells.includes(this.cellsIndex[i])) {
+                result.push(this.cellsIndex[i])
+            }
+        }
+        return result
+
+    }
+
+    public subtractSubset(otherProposition: Proposition): Proposition {
         const minesDiff = this.mines - otherProposition.mines
+        if (minesDiff < 0) {
+            console.log(`minsDiff is negative. Is ${otherProposition} really subset of ${this}?`)
+        }
         const cellsDiff: i32[] = []
         for (let i = 0; i < this.cellsIndex.length; ++i) {
             if (!otherProposition.cellsIndex.includes(this.cellsIndex[i])) {
@@ -80,6 +86,9 @@ export class Proposition {
         for (let i = 0; i < this.cellsIndex.length; ++i) {
             if (mines.includes(this.cellsIndex[i])) {
                 --this.mines
+                if (this.mines < 0) {
+                    console.log(`minsDiff is negative. Mines (${mines}). This ${this}. Cell ${this.cellsIndex[i]}?`)
+                }
             } else {
                 remainingCells.push(this.cellsIndex[i])
             }
@@ -104,9 +113,9 @@ export class Proposition {
     }
 
     public isSatisfied(): boolean {
-        if (this.cellsIndex.length <= 0) {
-            return true;
-        }
+        // if (this.cellsIndex.length <= 0) {
+        //     return true;
+        // }
         return this.hasNoMine() || (this.mines >= this.cellsIndex.length && this.cellsIndex.length > 0)
     }
 

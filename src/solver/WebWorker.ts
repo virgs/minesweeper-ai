@@ -1,8 +1,9 @@
-import { guess, update } from '@/as/build/assembly'
+import { guess, update, tests } from '@/as/build/assembly'
 
 export enum SolverRequestAction {
     UPDATE,
-    GUESS
+    GUESS,
+    TEST
 }
 
 export type SolverRequest = {
@@ -22,12 +23,16 @@ export type SolverGuessResponse = {
 }
 
 self.onmessage = async (event: MessageEvent<SolverRequest>) => {
+
     try {
         const request = event.data
         switch (request.action) {
             case SolverRequestAction.UPDATE:
                 const assemblyScriptUpdateResult: SolverUpdateResponse = JSON.parse(update(request.board))
                 self.postMessage(assemblyScriptUpdateResult)
+                break;
+            case SolverRequestAction.TEST:
+                tests()
                 break;
             case SolverRequestAction.GUESS:
                 const assemblyScriptGuessResult: SolverGuessResponse = JSON.parse(guess(request.board))

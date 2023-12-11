@@ -1,7 +1,7 @@
 import type { BoardProperties } from '@/constants/BoardProperties';
 import type { Board } from '@/engine/Board';
+import { SolverRequestAction, type SolverGuessResponse, type SolverRequest, type SolverUpdateResponse } from './WebWorker';
 import Worker from './WebWorker?worker';
-import { SolverRequestAction, type SolverGuessResponse, type SolverUpdateResponse, type SolverRequest } from './WebWorker';
 
 type Model = {
     properties: BoardProperties,
@@ -46,12 +46,11 @@ export class Solver {
         })
     }
 
-    public makeGuess(): Promise<void> {
+    public makeGuess(): Promise<SolverGuessResponse> {
         return new Promise((resolve) => {
             this.worker.onmessage = async (event: MessageEvent<SolverGuessResponse>) => {
-                console.log('guess response', event.data)
                 this._guesses.push(event.data)
-                resolve()
+                resolve(event.data)
             }
 
             const model = this.createModel()
@@ -61,6 +60,15 @@ export class Solver {
                 board: JSON.stringify(model)
             }
 
+            this.worker.postMessage(request)
+        })
+    }
+    public runTests(): Promise<SolverGuessResponse> {
+        return new Promise(() => {
+            const request: SolverRequest = {
+                action: SolverRequestAction.TEST,
+                board: ""
+            }
             this.worker.postMessage(request)
         })
     }

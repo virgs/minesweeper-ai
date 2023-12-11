@@ -12,3 +12,7 @@ export declare function update(stringifiedBoard: string): string;
  * @returns `~lib/string/String`
  */
 export declare function guess(stringifiedBoard: string): string;
+/**
+ * src/as/assembly/index/tests
+ */
+export declare function tests(): void;

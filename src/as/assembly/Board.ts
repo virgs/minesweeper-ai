@@ -29,6 +29,16 @@ export class Board {
         return revealedCells;
     }
 
+    public getNotRevealedCells(): Cell[] {
+        const notRevealedCells: Cell[] = []
+        for (let i = 0; i < this.cells.length; ++i) {
+            if (!this.cells[i].revealed) {
+                notRevealedCells.push(this.cells[i])
+            }
+        }
+        return notRevealedCells;
+    }
+
     public getAdjacentCells(cell: Cell): Array<Cell> {
         const cellPosition: Location = {
             x: cell._id % this.properties.width,

@@ -17,6 +17,13 @@ async function instantiate(module, imports = {}) {
         text = __liftString(text >>> 0);
         console.log(text);
       },
+      seed() {
+        // ~lib/builtins/seed() => f64
+        return (() => {
+          // @external.js
+          return Date.now() * Math.random();
+        })();
+      },
     }),
   };
   const { exports } = await WebAssembly.instantiate(module, adaptedImports);
@@ -62,6 +69,7 @@ export const {
   memory,
   update,
   guess,
+  tests,
 } = await (async url => instantiate(
   await (async () => {
     try { return await globalThis.WebAssembly.compileStreaming(globalThis.fetch(url)); }
