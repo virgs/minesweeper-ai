@@ -1,16 +1,15 @@
 <template>
     <main>
-        mouseDown {{ mouseDown }}
-        <Grid :board="board as Board" :gameOver="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick"
+        <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick"
             @mousedown="mouseDown = true" @mouseup="mouseDown = false">
         </Grid>
     </main>
 </template>
 
 <script lang="ts">
+import { Board } from '@/engine/Board'
 import Grid from './components/Grid.vue'
 import { GameConfigurations } from './constants/GameConfiguration'
-import { Board } from './engine/Board'
 import type { Cell } from './engine/Cell'
 import { Solver } from './solver/Solver'
 
@@ -20,8 +19,13 @@ export default {
     components: {
         Grid,
     },
+    setup() {
+        return {
+            virgs: 13,
+        }
+    },
     data() {
-        const board = new Board(GameConfigurations.Intermediate)
+        const board = new Board(GameConfigurations.Expert)
         solver = new Solver(board)
         return {
             mouseDown: false,
@@ -30,9 +34,15 @@ export default {
             explodedBombId: undefined as number | undefined,
         }
     },
+    async mounted() {
+        await solver.waitUntilItsReady()
+        console.log('solver is ready')
+        // solver = new Solver(toRaw(this.board))
+        // await solver.waitUntilItsReady()
+    },
     methods: {
         async startAi() {
-            console.log('thinking')
+            console.log('thinking', this.virgs)
             while (true) {
                 const previouslyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
                 await solver.process()
@@ -87,8 +97,8 @@ export default {
                     cell.aiMarkedMine = true
                 }
             })
-            console.log(solver.knownMineCellsIds)
-            console.log(solver.knownSafeCellsIds)
+            // console.log(solver.knownMineCellsIds)
+            // console.log(solver.knownSafeCellsIds)
         },
         finishGame() {
             this.updateCellStates()
@@ -110,4 +120,3 @@ main {
     transform: translate(-50%, -50%);
 }
 </style>
-./solver/MineSweeperSolver./constants/BoardProperties
