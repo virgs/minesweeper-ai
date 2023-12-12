@@ -1,9 +1,5 @@
 {
     "extends": "assemblyscript/std/assembly.json",
-    "include": [
-        "./**/*.ts"
-    ],
-    "files": [
-        "./Global.d.ts"
-    ],
+    "include": ["./**/*.ts"],
+    "files": ["./Global.d.ts"]
 }

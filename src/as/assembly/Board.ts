@@ -1,10 +1,10 @@
-import { BoardProperties } from './models/BoardProperties';
-import { Cell } from './models/Cell';
+import { BoardProperties } from './models/BoardProperties'
+import { Cell } from './models/Cell'
 
 class Location {
-    x!: i32;
-    y!: i32;
-};
+    x!: i32
+    y!: i32
+}
 
 @serializable
 export class Board {
@@ -26,7 +26,7 @@ export class Board {
                 revealedCells.push(this.cells[i])
             }
         }
-        return revealedCells;
+        return revealedCells
     }
 
     public getNotRevealedCells(): Cell[] {
@@ -36,13 +36,13 @@ export class Board {
                 notRevealedCells.push(this.cells[i])
             }
         }
-        return notRevealedCells;
+        return notRevealedCells
     }
 
     public getAdjacentCells(cell: Cell): Array<Cell> {
         const cellPosition: Location = {
             x: cell._id % this.properties.width,
-            y: cell._id / this.properties.width as i32,
+            y: (cell._id / this.properties.width) as i32,
         }
         const adjacentCells: Cell[] = []
         for (let y = -1; y < 2; ++y) {
@@ -64,6 +64,4 @@ export class Board {
 
         return adjacentCells
     }
-
 }
-

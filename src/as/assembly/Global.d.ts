@@ -1,4 +1,4 @@
-import { JSON } from "json-as/assembly";
+import { JSON } from 'json-as/assembly'
 
 declare global {
     //@ts-ignore

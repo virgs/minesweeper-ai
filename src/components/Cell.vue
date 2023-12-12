@@ -1,12 +1,19 @@
 <template>
-    <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
-        :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
-        :class="classStyle">
+    <div
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mouseenter="mouseEnter"
+        @mousedown="mouseDownEvent"
+        :cell-id="cell.id"
+        @mouseup="mouseUpEvent"
+        @mouseleave="mouseLeaveEvent"
+        @dblclick="doubleClick"
+        :class="classStyle"
+    >
         <!-- remove these cell-id attributes -->
         <!-- <small style="position: absolute;color: maroon; font-size: 8px; font-weight: bold;"> {{ cell.id }}</small> -->
         <div v-if="cell.flagged" class="flag">
             <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
-            <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue;" />
+            <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue" />
             <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
         <div v-else-if="isRevealed">
@@ -46,7 +53,7 @@ export default {
     data() {
         return {
             mouseOver: false,
-            mouseButtonDown: 0
+            mouseButtonDown: 0,
         }
     },
     computed: {
@@ -57,11 +64,19 @@ export default {
             return {
                 cell: true,
                 revealed: this.isRevealed,
-                pressed: !this.isRevealed && !this.cell.flagged && this.mouseButtonDown === MouseButtons.LEFT && this.mouseOver,
-                hover: !this.isRevealed && !this.cell.flagged && !this.gameOver && this.mouseButtonDown === MouseButtons.NONE && this.mouseOver,
-                hint: !this.isRevealed && this.cell.aiMarkedSafe
+                pressed:
+                    !this.isRevealed &&
+                    !this.cell.flagged &&
+                    this.mouseButtonDown === MouseButtons.LEFT &&
+                    this.mouseOver,
+                hover:
+                    !this.isRevealed &&
+                    !this.cell.flagged &&
+                    !this.gameOver &&
+                    this.mouseButtonDown === MouseButtons.NONE &&
+                    this.mouseOver,
+                hint: !this.isRevealed && this.cell.aiMarkedSafe,
             }
-
         },
         numberStyle() {
             const style: any = {
@@ -71,7 +86,7 @@ export default {
         },
         bombStyle() {
             const style: any = {
-                color: 'black'
+                color: 'black',
             }
             if (this.explodedBombId === this.cell.id) {
                 style.color = 'red'
@@ -79,12 +94,12 @@ export default {
             return style
         },
         numberColor(): string {
-            return NumberColor(this.cell.minesAround);
+            return NumberColor(this.cell.minesAround)
         },
     },
     methods: {
         preventRightClickDefaultBehavior(event: Event) {
-            event.preventDefault();
+            event.preventDefault()
         },
         mouseEnter(event: MouseEvent) {
             if (this.gameOver) {
@@ -123,7 +138,7 @@ export default {
             if (this.isRevealed) {
                 this.$emit('chorded', { cell: this.cell })
             }
-        }
+        },
     },
 }
 </script>
@@ -155,7 +170,6 @@ export default {
     position: absolute;
     line-height: 24px;
 }
-
 
 .hover {
     background-color: #ebebeb;

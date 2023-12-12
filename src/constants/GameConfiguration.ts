@@ -1,12 +1,17 @@
-
 export const GameConfigurations = {
     Beginner: {
-        height: 9, width: 9, mines: 10
+        height: 9,
+        width: 9,
+        mines: 10,
     },
     Intermediate: {
-        height: 16, width: 16, mines: 40
+        height: 16,
+        width: 16,
+        mines: 40,
     },
     Expert: {
-        height: 16, width: 30, mines: 99
+        height: 16,
+        width: 30,
+        mines: 99,
     },
 }

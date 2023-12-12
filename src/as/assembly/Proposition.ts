@@ -35,8 +35,10 @@ export class Proposition {
     }
 
     public isSubSetOf(otherProposition: Proposition): bool {
-        return otherProposition.cellsIndex.length > this.cellsIndex.length &&
+        return (
+            otherProposition.cellsIndex.length > this.cellsIndex.length &&
             this.getOverlappingCells(otherProposition).length === this.cellsIndex.length
+        )
     }
 
     public getOverlappingCells(otherProposition: Proposition): i32[] {
@@ -57,7 +59,6 @@ export class Proposition {
             }
         }
         return result
-
     }
 
     public subtractSubset(otherProposition: Proposition): Proposition {

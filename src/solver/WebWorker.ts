@@ -1,46 +1,55 @@
-import { guess, update, tests } from '@/as/build/assembly'
+import { guess, update } from '@/as/build/assembly'
+import type { Guess } from '@/constants/Guess'
 
 export enum SolverRequestAction {
     UPDATE,
     GUESS,
-    TEST
 }
 
 export type SolverRequest = {
-    action: SolverRequestAction,
+    webworkerId: number
+    messageId: number
+    action: SolverRequestAction
     board: string
 }
 
-export type SolverUpdateResponse = {
-    knownMineCellsIds: number[],
-    knownSafeCellsIds: number[],
+export type UpdateResponse = {
+    knownMineCellsIds: number[]
+    knownSafeCellsIds: number[]
 }
 
-export type SolverGuessResponse = {
-    id: number;
-    mines: number;
-    cells: number;
+export type SolverResponse = {
+    messageId: number
+    guess?: Guess
+    update?: UpdateResponse
 }
 
-self.onmessage = async (event: MessageEvent<SolverRequest>) => {
-
+self.onmessage = (event: MessageEvent<SolverRequest>) => {
+    const request = event.data
     try {
-        const request = event.data
+        // console.log(`WW ${request.webworkerId} got message: ${request.messageId} ` + SolverRequestAction[request.action])
         switch (request.action) {
             case SolverRequestAction.UPDATE:
-                const assemblyScriptUpdateResult: SolverUpdateResponse = JSON.parse(update(request.board))
-                self.postMessage(assemblyScriptUpdateResult)
-                break;
-            case SolverRequestAction.TEST:
-                tests()
-                break;
+                const assemblyScriptUpdateResult: UpdateResponse = JSON.parse(update(request.board))
+                const updateResponse: SolverResponse = {
+                    messageId: request.messageId,
+                    update: assemblyScriptUpdateResult,
+                }
+                self.postMessage(updateResponse)
+                break
             case SolverRequestAction.GUESS:
-                const assemblyScriptGuessResult: SolverGuessResponse = JSON.parse(guess(request.board))
-                self.postMessage(assemblyScriptGuessResult)
-                break;
+                const assemblyScriptGuessResult: Guess = JSON.parse(guess(request.board))
+                const guessResponse: SolverResponse = {
+                    messageId: request.messageId,
+                    guess: assemblyScriptGuessResult,
+                }
+
+                self.postMessage(guessResponse)
+                break
         }
     } catch (exception) {
-        console.log(exception)
+        console.log(`WW ${request} got exception: ` + SolverRequestAction[request.action])
+        console.error(exception)
         self.postMessage(exception)
     }
 }

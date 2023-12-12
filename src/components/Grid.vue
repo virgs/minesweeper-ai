@@ -2,8 +2,13 @@
     <div id="grid">
         <div v-for="line in board.properties.height" style="display: inline-flex">
             <div v-for="column in board.properties.width">
-                <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
-                    :explodedBombId="explodedBombId" @chorded="cellChorded" />
+                <CellVue
+                    :cell="board.getCellByLocation(column - 1, line - 1)!"
+                    @clicked="cellClick"
+                    :gameOver="gameOver"
+                    :explodedBombId="explodedBombId"
+                    @chorded="cellChorded"
+                />
             </div>
         </div>
     </div>
@@ -31,7 +36,7 @@ export default {
         gameOver: {
             type: Boolean,
             required: true,
-        }
+        },
     },
     methods: {
         cellClick(data: { cell: Cell }) {
@@ -39,14 +44,14 @@ export default {
         },
         cellChorded(data: { cell: Cell }) {
             const adjacentCells = this.board.getAdjacentCells(data.cell)
-            const flagsAround = adjacentCells.filter(cell => cell.flagged).length
+            const flagsAround = adjacentCells.filter((cell) => cell.flagged).length
             if (flagsAround === data.cell.minesAround) {
                 adjacentCells
-                    .filter(cell => cell.isNotRevealed() && !cell.flagged)
-                    .forEach(cell => this.$emit('cellClick', { cell: cell }))
+                    .filter((cell) => cell.isNotRevealed() && !cell.flagged)
+                    .forEach((cell) => this.$emit('cellClick', { cell: cell }))
             }
-        }
-    }
+        },
+    },
 }
 </script>
 

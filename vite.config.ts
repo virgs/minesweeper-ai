@@ -6,6 +6,9 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  worker: {
+    format: 'es',
+  },
   plugins: [
     vue(),
     assemblyScriptPlugin()
@@ -17,7 +20,11 @@ export default defineConfig({
     }
   },
   build: {
+    target: 'esnext',
     rollupOptions: {
+      output: {
+      }
+
     },
     outDir: 'docs',
     assetsDir: '.'

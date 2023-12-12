@@ -2,48 +2,50 @@ import { Board } from './Board'
 import { Proposition } from './Proposition'
 
 export class Guess {
-    id!: i32;
-    mines!: i32;
-    cells!: i32;
+    id!: i32
+    mines!: i32
+    cells!: i32
 }
 const mainPropositionThreshold: f32 = 0.95
 
 export class MineSweeperSolver {
-    private readonly board: Board
-    private readonly totalCells: i32
+    private board!: Board
     private mineCellsIds: Array<i32>
     private safeCellsIds: Array<i32>
     private propositions: Proposition[]
     private addedMainProposition: boolean
 
-    public constructor(board: Board) {
-        this.board = board
+    public constructor() {
         this.safeCellsIds = []
         this.mineCellsIds = []
         this.propositions = []
         this.addedMainProposition = false
-        this.totalCells = this.board.properties.height * this.board.properties.width
+    }
+
+    public initializeIfNot(board: Board): void {
+        this.board = board
     }
 
     public getKnownMineCellsIds(): i32[] {
-        return this.mineCellsIds;
+        return this.mineCellsIds
     }
 
     public getKnownSafeCellsIds(): i32[] {
-        return this.safeCellsIds;
+        return this.safeCellsIds
     }
 
     public makeGuess(): Guess {
+        const totalCells: i32 = this.board.properties.height * this.board.properties.width
         // None was open. Click in the middle
         if (this.safeCellsIds.length === 0) {
             return {
-                id: i32(this.totalCells / 2),
+                id: totalCells / 2,
                 mines: this.board.properties.mines,
-                cells: this.totalCells
+                cells: this.board.cells.length,
             }
         }
 
-        const notFoundMines = this.board.properties.mines - this.mineCellsIds.length;
+        const notFoundMines = this.board.properties.mines - this.mineCellsIds.length
         const notRevealedCells = this.board.getNotRevealedCells()
         const independentCellsIds: i32[] = []
         for (let i = 0; i < notRevealedCells.length; ++i) {
@@ -53,7 +55,7 @@ export class MineSweeperSolver {
             }
         }
         // console.log(`notRevealedCells: ${notRevealedCellsIds}`)
-        console.log(`Independent: ${independentCellsIds}`)
+        // console.log(`Independent: ${independentCellsIds}`)
 
         // const remainingProposition = new Proposition('notRevealedCells', notRevealedCellsIds, notFoundMines)
         const independents = new Proposition('*', independentCellsIds, notFoundMines)
@@ -70,24 +72,25 @@ export class MineSweeperSolver {
                 }
             }
         }
-        //    Make sure this index isn't in any other riskier proposition
 
-        const lowestRatioProposition = propositionsPool[lowestRatioId];
-        console.log(`Lowest: ${lowestRatioProposition.origin}`)
+        const lowestRatioProposition = propositionsPool[lowestRatioId]
+        // console.log(`Lowest: ${lowestRatioProposition.origin}`)
 
         return {
-            id: lowestRatioProposition.getCells()[i32(Math.floor(Math.random() * lowestRatioProposition.getCells().length))],
+            id: lowestRatioProposition.getCells()[
+                i32(Math.floor(Math.random() * lowestRatioProposition.getCells().length))
+            ],
             mines: lowestRatioProposition.getMines(),
-            cells: lowestRatioProposition.getCells().length
+            cells: lowestRatioProposition.getCells().length,
         }
     }
 
     public updatePropositions(): void {
-        console.log(' ================ UPDATE PROPOSITIONS!! ================')
+        // console.log(' ================ UPDATE PROPOSITIONS!! ================')
 
         this.createNewPropositions()
 
-        let changed: bool = false;
+        let changed: bool = false
         while (!this.isBoardSolved()) {
             let previousKnownCells = this.safeCellsIds.length + this.mineCellsIds.length
             changed = false
@@ -103,16 +106,16 @@ export class MineSweeperSolver {
             }
         }
         console.log('current propositions: ' + this.propositions.length.toString())
-        for (let i = 0; i < this.propositions.length; ++i) {
-            const proposition = this.propositions[i]
-            console.log(proposition.toString())
-        }
+        // for (let i = 0; i < this.propositions.length; ++i) {
+        //     const proposition = this.propositions[i]
+        //     console.log(proposition.toString())
+        // }
     }
 
     private checkMainPropositionAddition(): boolean {
-        const ratio: f32 = f32(this.safeCellsIds.length + this.mineCellsIds.length) / f32(this.totalCells);
-        if (!this.addedMainProposition && this.totalCells - (this.safeCellsIds.length + this.mineCellsIds.length) <= 10) {
-            const initialPropositionCells: i32[] = new Array(this.totalCells)
+        const totalCells = this.board.properties.height * this.board.properties.width
+        if (!this.addedMainProposition && totalCells - (this.safeCellsIds.length + this.mineCellsIds.length) <= 10) {
+            const initialPropositionCells: i32[] = new Array(totalCells)
             for (let i = 0; i < this.board.cells.length; ++i) {
                 initialPropositionCells.push(this.board.cells[i]._id)
             }
@@ -156,9 +159,11 @@ export class MineSweeperSolver {
     }
 
     public isBoardSolved(): bool {
-        if (this.safeCellsIds.length >= this.totalCells - this.board.properties.mines ||
-            this.mineCellsIds.length >= this.board.properties.mines) {
-            console.log('board solved')
+        const totalCells = this.board.properties.height * this.board.properties.width
+        if (
+            this.safeCellsIds.length >= totalCells - this.board.properties.mines ||
+            this.mineCellsIds.length >= this.board.properties.mines
+        ) {
             return true
         }
         return false
@@ -174,11 +179,7 @@ export class MineSweeperSolver {
             for (let i = 0; i < adjCells.length; ++i) {
                 adjCellsIds.push(adjCells[i]._id)
             }
-            const newProposition = new Proposition(
-                `${cell._id}`,
-                adjCellsIds,
-                cell.minesCount
-            )
+            const newProposition = new Proposition(`${cell._id}`, adjCellsIds, cell.minesCount)
             this.addProposition(newProposition)
         }
     }
@@ -234,12 +235,12 @@ export class MineSweeperSolver {
         if (cellIndexes.length <= 0) {
             return false
         }
-        let changed = false;
+        let changed = false
         for (let a = 0; a < this.propositions.length; ++a) {
             changed = this.propositions[a].removeSafeCells(cellIndexes) || changed
         }
 
-        const newCells: Array<i32> = [];
+        const newCells: Array<i32> = []
         for (let i = 0; i < cellIndexes.length; ++i) {
             if (!this.safeCellsIds.includes(cellIndexes[i])) {
                 newCells.push(cellIndexes[i])
@@ -256,12 +257,12 @@ export class MineSweeperSolver {
             return false
         }
 
-        let changed = false;
+        let changed = false
         for (let a = 0; a < this.propositions.length; ++a) {
             changed = this.propositions[a].removeMineCells(cellIndexes) || changed
         }
 
-        const newCells: Array<i32> = [];
+        const newCells: Array<i32> = []
         for (let i = 0; i < cellIndexes.length; ++i) {
             if (!this.mineCellsIds.includes(cellIndexes[i])) {
                 newCells.push(cellIndexes[i])
@@ -284,22 +285,16 @@ export class MineSweeperSolver {
                     continue
                 }
                 if (second.isSubSetOf(first)) {
-                    const differenceProposition = first.subtractSubset(second)
-                    if (differenceProposition.getMines() < 0) {
-                        console.log("WARNING!!!! WEIRD BEHAVIOR: " + first.toString() + ' > ' + second.toString())
-                    }
-                    newPropositions.push(differenceProposition)
+                    newPropositions.push(first.subtractSubset(second))
                 } else {
                     if (first.getMines() > second.getMines()) {
                         const overlappingCells = first.getOverlappingCells(second)
-                        if (first.getCells().length - overlappingCells.length === first.getMines() - second.getMines()) {
-                            console.log('======')
-                            console.log(first.toString())
-                            console.log(second.toString())
+                        if (
+                            first.getCells().length - overlappingCells.length ===
+                            first.getMines() - second.getMines()
+                        ) {
                             const remainingCells: i32[] = first.getCellsExcluding(overlappingCells)
-                            console.log('Adding mines (not a subset) ' + remainingCells.toString())
                             this.addMineCells(remainingCells)
-                            console.log('======')
                         }
                     }
                 }

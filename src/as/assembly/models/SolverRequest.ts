@@ -1,4 +1,4 @@
 @serializable
 export class SolverRequest {
-    board!: string;
+    board!: string
 }
