@@ -105,7 +105,7 @@ export class MineSweeperSolver {
                 break
             }
         }
-        console.log('current propositions: ' + this.propositions.length.toString())
+        // console.log('current propositions: ' + this.propositions.length.toString())
         // for (let i = 0; i < this.propositions.length; ++i) {
         //     const proposition = this.propositions[i]
         //     console.log(proposition.toString())
@@ -120,7 +120,7 @@ export class MineSweeperSolver {
                 initialPropositionCells.push(this.board.cells[i]._id)
             }
             this.addedMainProposition = true
-            console.log('adding main proposition')
+            // console.log('adding main proposition')
             this.addProposition(new Proposition('*', initialPropositionCells, this.board.properties.mines))
             this.propositionsCompared()
             return true

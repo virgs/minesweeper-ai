@@ -1,14 +1,8 @@
 <template>
     <main>
         mouseDown {{ mouseDown }}
-        <Grid
-            :board="board as Board"
-            :gameOver="gameOver"
-            :explodedBombId="explodedBombId"
-            @cell-click="cellClick"
-            @mousedown="mouseDown = true"
-            @mouseup="mouseDown = false"
-        >
+        <Grid :board="board as Board" :gameOver="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick"
+            @mousedown="mouseDown = true" @mouseup="mouseDown = false">
         </Grid>
     </main>
 </template>
@@ -41,7 +35,7 @@ export default {
             console.log('thinking')
             while (true) {
                 const previouslyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
-                await solver.update()
+                await solver.process()
                 this.updateCellStates()
                 const currentlyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
                 if (this.isGameOver() || previouslyKnownCells === currentlyKnownCells) {

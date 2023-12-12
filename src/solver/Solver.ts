@@ -1,8 +1,8 @@
 import type { BoardProperties } from '@/constants/BoardProperties'
-import type { Board } from '@/engine/Board'
-import Worker from './WebWorker?worker'
 import type { Guess } from '@/constants/Guess'
-import { type SolverRequest, SolverRequestAction, type SolverResponse } from './WebWorker'
+import type { Board } from '@/engine/Board'
+import { SolverRequestAction, type SolverRequest, type SolverResponse } from './WebWorker'
+import Worker from './WebWorker?worker'
 
 type Model = {
     properties: BoardProperties
@@ -16,32 +16,47 @@ type Model = {
 export class Solver {
     private static solversCounter: number = 0
     private readonly solverId: number = Solver.solversCounter++
+    private readyPromiseResolve: Promise<void>
     private readonly worker: Worker
     private readonly board: Board
     private readonly promisesResolves: any[]
     private _knownSafeCellsIds: number[]
     private _knownMineCellsIds: number[]
     private _guesses: Guess[]
+    private _updates: number
 
     public constructor(board: Board) {
         this.worker = new Worker()
-
-        console.log('new solver ' + this.solverId)
+        this.readyPromiseResolve = new Promise<void>(resolve => {
+            this.worker.onmessage = (event: MessageEvent) => {
+                this.createWorkerHooks()
+                resolve()
+            }
+        })
 
         this.board = board
+        this._updates = 0
         this._knownSafeCellsIds = []
         this._knownMineCellsIds = []
         this._guesses = []
         this.promisesResolves = []
-        this.createWorkerHooks()
+    }
+
+    public async waitUntilItsReady(): Promise<void> {
+        return this.readyPromiseResolve;
+    }
+
+    public get updates(): number {
+        return this._updates
     }
 
     public terminate(): void {
         this.worker.terminate()
     }
 
-    public async update(): Promise<void> {
+    public async process(): Promise<void> {
         return new Promise(resolve => {
+            ++this._updates
             const model = this.createModel()
 
             const request: SolverRequest = {
@@ -73,10 +88,7 @@ export class Solver {
 
     private createWorkerHooks() {
         this.worker.onerror = async (event) => console.error(event)
-
         this.worker.onmessage = async (event: MessageEvent<SolverResponse>) => {
-            // console.log(`on message ${JSON.stringify(event.data)}`)
-            // console.log('event', event)
             if (event.data.update) {
                 this._knownMineCellsIds = event.data.update.knownMineCellsIds
                 this._knownSafeCellsIds = event.data.update.knownSafeCellsIds

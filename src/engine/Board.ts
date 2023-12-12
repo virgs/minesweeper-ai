@@ -37,10 +37,10 @@ export class Board {
             .map((index) => this.cells[index])
         cellsWithMines.forEach((cell, _index) => (cell.hasMine = true))
 
-        console.log(
-            'mines position',
-            cellsWithMines.map((cell) => cell.id)
-        )
+        // console.log(
+        //     'mines position',
+        //     cellsWithMines.map((cell) => cell.id)
+        // )
 
         this.cells.forEach((cell) => (cell.minesAround = this.getMinesSurrounding(cell)))
         this.initialized = true

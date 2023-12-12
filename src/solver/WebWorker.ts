@@ -24,10 +24,11 @@ export type SolverResponse = {
     update?: UpdateResponse
 }
 
+postMessage({ ready: true })
+
 self.onmessage = (event: MessageEvent<SolverRequest>) => {
     const request = event.data
     try {
-        // console.log(`WW ${request.webworkerId} got message: ${request.messageId} ` + SolverRequestAction[request.action])
         switch (request.action) {
             case SolverRequestAction.UPDATE:
                 const assemblyScriptUpdateResult: UpdateResponse = JSON.parse(update(request.board))
