@@ -23,7 +23,7 @@ export class Solver {
     private _knownSafeCellsIds: number[]
     private _knownMineCellsIds: number[]
     private _guesses: Guess[]
-    private _updates: number
+    private _AiUpdates: number
 
     public constructor(board: Board) {
         this.worker = new Worker()
@@ -35,7 +35,7 @@ export class Solver {
         })
 
         this.board = board
-        this._updates = 0
+        this._AiUpdates = 0
         this._knownSafeCellsIds = []
         this._knownMineCellsIds = []
         this._guesses = []
@@ -46,8 +46,8 @@ export class Solver {
         return this.readyPromiseResolve;
     }
 
-    public get updates(): number {
-        return this._updates
+    public get aiUpdates(): number {
+        return this._AiUpdates
     }
 
     public terminate(): void {
@@ -56,7 +56,7 @@ export class Solver {
 
     public async process(): Promise<void> {
         return new Promise(resolve => {
-            ++this._updates
+            ++this._AiUpdates
             const model = this.createModel()
 
             const request: SolverRequest = {

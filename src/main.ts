@@ -32,4 +32,9 @@ const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 
-// await new ReportGenerator(GameConfigurations.Intermediate).run()
+// await new ReportGenerator(GameConfigurations.Expert,
+//     {
+//         numberOfGames: 5000,
+//         workers: 20,
+//         filename: 'Expert'
+//     }).run()

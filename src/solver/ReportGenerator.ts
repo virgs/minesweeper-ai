@@ -1,51 +1,72 @@
 import type { BoardProperties } from "@/constants/BoardProperties";
+import type { Guess } from "@/constants/Guess";
 import { Board } from "@/engine/Board";
 import { Solver } from "./Solver";
-import type { Guess } from "@/constants/Guess";
 
 export type ReportConfiguration = {
     workers: number,
-    numberOfGames: number
+    numberOfGames: number,
+    filename: string
 }
 
-export type ReportItem = {
+type ReportItem = {
     victory: boolean,
-    mineCellsFound: number[],
-    safeCellsFound: number[],
-    updates: number,
+    // boardMines: number[],
+    // mineCellsFound: number[],
+    // safeCellsFound: number[],
+    mineCellsFoundRatio: number,
+    safeCellsFoundRatio: number,
+    aiUpdates: number,
     guesses: Guess[]
+    guessFactor: number
+}
+
+type Report = {
+    boardProperties: BoardProperties,
+    victoryRatio: number,
+    games: ReportItem[],
+    timestamp: number
 }
 
 export class ReportGenerator {
     private readonly boardConfiguration: BoardProperties;
     private readonly workers: number;
     private readonly numberOfGames: number;
+    private readonly filename?: string;
     public constructor(boardConfiguration: BoardProperties, report?: Partial<ReportConfiguration>) {
         this.boardConfiguration = boardConfiguration
         this.workers = report?.workers || 20
         this.numberOfGames = report?.numberOfGames || 1000
+        this.filename = report?.filename
     }
 
     public async run(): Promise<number> {
-        let victoriesCounter: number = 0;
-        let gamesCounter = 0;
+        const report: Report = {
+            timestamp: Date.now(),
+            boardProperties: this.boardConfiguration,
+            victoryRatio: 0,
+            games: []
+        }
         const iterations = this.numberOfGames / this.workers
         for (let iteration = 0; iteration < iterations; ++iteration) {
             const promises: Promise<ReportItem>[] = []
             for (let i = 0; i < this.workers; ++i) {
-                ++gamesCounter
-                promises.push(this.playAGame())
+                promises.push(this.playOneGame())
             }
-            victoriesCounter += (await Promise.all(promises))
-                .filter(result => result.victory)
-                .length
-            console.log('iteration ', 100 * gamesCounter / this.numberOfGames, victoriesCounter, gamesCounter)
+            report.games.push(...(await Promise.all(promises)))
+            console.log(`Generating report: ${Math.trunc(10000 * report.games.length / this.numberOfGames) / 100}%`)
         }
+        report.victoryRatio = report.games
+            .filter(result => result.victory)
+            .length / report.games.length
 
-        return victoriesCounter / gamesCounter
+        this.save(report)
+
+        return Math.trunc(10000 * report.victoryRatio) / 100
     }
 
-    private async playAGame(): Promise<ReportItem> {
+    private async playOneGame(): Promise<ReportItem> {
+        const totalCells = this.boardConfiguration.height * this.boardConfiguration.width
         const board = new Board(this.boardConfiguration)
         const solver = new Solver(board)
         await solver.waitUntilItsReady()
@@ -63,15 +84,39 @@ export class ReportGenerator {
                 board.revealCell(board.getCellById(guess.id)!)
             }
         }
+        const validGuesses = solver.guesses
+            .filter((item, index) => index > 0 && item.mines > 0)
         solver.terminate()
         const result: ReportItem = {
             victory: board.isGameWon(),
-            mineCellsFound: solver.knownMineCellsIds,
-            safeCellsFound: solver.knownSafeCellsIds,
-            updates: solver.updates,
-            guesses: solver.guesses
+            // boardMines: board.cells
+            //     .filter(cell => cell.hasMine)
+            //     .map(cell => cell.id),
+            // mineCellsFound: solver.knownMineCellsIds,
+            // safeCellsFound: solver.knownSafeCellsIds,
+            mineCellsFoundRatio: solver.knownMineCellsIds.length / this.boardConfiguration.mines,
+            safeCellsFoundRatio: solver.knownSafeCellsIds.length / totalCells,
+            aiUpdates: solver.aiUpdates,
+            guesses: validGuesses,
+            guessFactor: validGuesses
+                .reduce((acc, guess) => {
+                    return acc * (guess.mines / guess.cells)
+                }, 1)
         }
         return result
+    }
+
+    private save(report: Report) {
+        const a = document.createElement("a");
+        const file = new Blob([JSON.stringify(report)], { type: 'text/json' });
+        a.href = URL.createObjectURL(file);
+        //@ts-expect-error
+        report.url = window.location.href;
+        a.download = `${this.filename}${report.timestamp}.json`;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(a.href);
+        document.body.removeChild(a);
     }
 
 }

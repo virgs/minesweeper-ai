@@ -1,14 +1,7 @@
 <template>
-    <div
-        @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mouseenter="mouseEnter"
-        @mousedown="mouseDownEvent"
-        :cell-id="cell.id"
-        @mouseup="mouseUpEvent"
-        @mouseleave="mouseLeaveEvent"
-        @dblclick="doubleClick"
-        :class="classStyle"
-    >
+    <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
+        :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
+        :class="classStyle">
         <!-- remove these cell-id attributes -->
         <!-- <small style="position: absolute;color: maroon; font-size: 8px; font-weight: bold;"> {{ cell.id }}</small> -->
         <div v-if="cell.flagged" class="flag">
@@ -192,4 +185,3 @@ export default {
     color: #ec433c;
 }
 </style>
-@/constants/MouseButtons@/constants/NumberColor
