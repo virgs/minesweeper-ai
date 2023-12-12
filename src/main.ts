@@ -11,22 +11,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { GameConfigurations } from './constants/GameConfiguration'
-import { ReportGenerator } from './solver/ReportGenerator'
-
-// <font-awesome - icon icon = "fa-solid fa-sun" />
-// <font-awesome - icon icon = "fa-regular fa-sun" />
-// <font-awesome-icon :icon="['fat', 'burst']" beat-fade style="color: #22511f;" />
-
-// <font-awesome - icon : icon = "['far', 'face-smile']" />
-// <font-awesome - icon : icon = "['far', 'face-smile-wink']" />
-// <font-awesome-icon :icon="['far', 'face-laugh']" />
-// <font-awesome-icon :icon="['far', 'face-dizzy']" />
+import { faFaceSmile, faFaceSmileWink } from '@fortawesome/free-regular-svg-icons'
 
 // <font-awesome-icon :icon="['fas', 'dice']" />
 
 /* add icons to the library */
-library.add(faBomb, faFlag, faXmark)
+library.add(faBomb, faFlag, faXmark, faFaceSmile, faFaceSmileWink)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)

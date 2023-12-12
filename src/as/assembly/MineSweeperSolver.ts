@@ -54,13 +54,8 @@ export class MineSweeperSolver {
                 independentCellsIds.push(notRevealedCells[i]._id)
             }
         }
-        // console.log(`notRevealedCells: ${notRevealedCellsIds}`)
-        // console.log(`Independent: ${independentCellsIds}`)
-
-        // const remainingProposition = new Proposition('notRevealedCells', notRevealedCellsIds, notFoundMines)
         const independents = new Proposition('*', independentCellsIds, notFoundMines)
         const propositionsPool = this.propositions.concat([independents])
-        // const propositionsPool = this.propositions
 
         let lowestRatio = Infinity
         let lowestRatioId = -1
@@ -74,7 +69,6 @@ export class MineSweeperSolver {
         }
 
         const lowestRatioProposition = propositionsPool[lowestRatioId]
-        // console.log(`Lowest: ${lowestRatioProposition.origin}`)
 
         return {
             id: lowestRatioProposition.getCells()[
@@ -120,7 +114,6 @@ export class MineSweeperSolver {
                 initialPropositionCells.push(this.board.cells[i]._id)
             }
             this.addedMainProposition = true
-            // console.log('adding main proposition')
             this.addProposition(new Proposition('*', initialPropositionCells, this.board.properties.mines))
             this.propositionsCompared()
             return true
@@ -139,10 +132,8 @@ export class MineSweeperSolver {
             } else {
                 const cells = proposition.getCells()
                 if (proposition.hasNoMine()) {
-                    // console.log('e new safe cells discovered: ' + cells.toString())
                     this.addSafeCells(cells)
                 } else {
-                    // console.log('f new safe cells discovered: ' + cells.toString())
                     this.addMineCells(cells)
                 }
             }
@@ -164,6 +155,7 @@ export class MineSweeperSolver {
             this.safeCellsIds.length >= totalCells - this.board.properties.mines ||
             this.mineCellsIds.length >= this.board.properties.mines
         ) {
+            console.log('board is solved')
             return true
         }
         return false
@@ -192,10 +184,8 @@ export class MineSweeperSolver {
             if (proposition.isSatisfied()) {
                 const satisfiedCells = proposition.getCells()
                 if (proposition.hasNoMine()) {
-                    // console.log('a new safe cells discovered: ' + satisfiedCells.toString())
                     result = this.addSafeCells(satisfiedCells) || result
                 } else {
-                    // console.log('b new mine cells discovered: ' + satisfiedCells.toString())
                     result = this.addMineCells(satisfiedCells) || result
                 }
             }
@@ -214,19 +204,14 @@ export class MineSweeperSolver {
             }
         }
 
-        // console.log('about to create proposition: ' + newProposition.toString())
-
         if (newProposition.isSatisfied()) {
             if (newProposition.hasNoMine()) {
-                // console.log('c new safe cells discovered: ' + newProposition.getCells().toString())
                 return this.addSafeCells(newProposition.getCells())
             } else {
-                // console.log('d new mine cells discovered: ' + newProposition.getCells().toString())
                 return this.addMineCells(newProposition.getCells())
             }
         }
 
-        // console.log('created proposition: ' + newProposition.toString())
         this.propositions.push(newProposition)
         return true
     }

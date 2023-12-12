@@ -1,7 +1,8 @@
 <template>
-    <main>
-        <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick"
-            @mousedown="mouseDown = true" @mouseup="mouseDown = false">
+    <main @mousedown="mouseDown = true" @mouseup="mouseDown = false" @mouseleave="mouseDown = false">
+        <Dashboard :board="board" :game-over="gameOver" :mouse-down="mouseDown" :victory="victory" @new-game="newGame">
+        </Dashboard>
+        <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
         </Grid>
     </main>
 </template>
@@ -9,40 +10,42 @@
 <script lang="ts">
 import { Board } from '@/engine/Board'
 import Grid from './components/Grid.vue'
+import Dashboard from './components/Dashboard.vue'
 import { GameConfigurations } from './constants/GameConfiguration'
 import type { Cell } from './engine/Cell'
 import { Solver } from './solver/Solver'
+import type { BoardProperties } from './constants/BoardProperties'
 
 let solver: Solver
+
 export default {
     name: 'App',
     components: {
-        Grid,
-    },
-    setup() {
-        return {
-            virgs: 13,
-        }
+        Grid, Dashboard
     },
     data() {
-        const board = new Board(GameConfigurations.Expert)
+        const board = new Board(GameConfigurations.Intermediate)
         solver = new Solver(board)
         return {
             mouseDown: false,
-            board: board,
+            board: board as Board,
             gameOver: false,
             explodedBombId: undefined as number | undefined,
+            victory: undefined as boolean | undefined
         }
     },
-    async mounted() {
-        await solver.waitUntilItsReady()
-        console.log('solver is ready')
-        // solver = new Solver(toRaw(this.board))
-        // await solver.waitUntilItsReady()
-    },
     methods: {
+        async newGame(configuration: { board: BoardProperties }) {
+            const board = new Board(configuration.board)
+            solver = new Solver(board)
+            this.board = board
+            this.gameOver = false
+            this.explodedBombId = undefined
+            this.victory = undefined
+            await solver.waitUntilItsReady()
+        },
         async startAi() {
-            console.log('thinking', this.virgs)
+            console.log('thinking')
             while (true) {
                 const previouslyKnownCells = solver.knownSafeCellsIds.length + solver.knownMineCellsIds.length
                 await solver.process()
@@ -106,7 +109,8 @@ export default {
             console.log(solver.knownMineCellsIds)
             console.log(solver.knownSafeCellsIds)
             this.gameOver = true
-            console.log('game finished. ' + (this.board.isGameWon() ? 'You won!' : 'You lost!'))
+            this.victory = this.board.isGameWon()
+            console.log('game finished. ' + (this.victory ? 'You won!' : 'You lost!'))
         },
     },
 }
@@ -114,9 +118,14 @@ export default {
 
 <style scoped>
 main {
+    padding: 4px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: #ebebeb;
+    border-width: 3px;
+    border-style: solid;
+    border-color: white;
 }
 </style>
