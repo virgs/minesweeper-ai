@@ -1,6 +1,6 @@
 <template>
     <div id="grid">
-        <div v-for="line in board.properties.height" style="display: inline-flex">
+        <div v-for="line in board.properties.height" class="btn-group">
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
                     :explodedBombId="explodedBombId" @chorded="cellChorded" />

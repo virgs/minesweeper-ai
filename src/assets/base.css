@@ -1,17 +1,6 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
     --game-font-family: 'Exo', sans-serif;
-    --hihglighted-number-color: rgb(237, 233, 31);
-
-    --light-wooden-shade: #e2a066;
-    --wooden-shade: #6f3e1c;
-    --wooden-half-shade: #b97731;
-
-    --bottom-player-color: darkred;
-    --top-player-color: darkblue;
-
-    /* --nav-bar-color: #e2de66; */
-    --nav-bar-color: #f2f2f2;
 
     --vt-c-white: #ffffff;
     --vt-c-white-soft: #f8f8f8;

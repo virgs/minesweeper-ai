@@ -4,22 +4,6 @@
     user-select: none;
 }
 
-.number {
-    font-family: var(--game-font-family);
-    text-shadow: 2px 2px var(--vt-c-black-mute);
-    font-weight: bolder;
-    font-size: 1.5rem;
-}
-
-.text {
-    font-family: var(--game-font-family);
-    text-shadow: none;
-    font-weight: lighter;
-    font-size: 1rem;
-}
-
-@media only screen and (max-width: 1000px) {
-    .number {
-        font-size: 1.25rem;
-    }
+.btn {
+    border-radius: 2px;
 }

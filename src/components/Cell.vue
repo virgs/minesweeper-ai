@@ -1,23 +1,20 @@
 <template>
-    <div @contextmenu.prevent="preventRightClickDefaultBehavior" @mouseenter="mouseEnter" @mousedown="mouseDownEvent"
-        :cell-id="cell.id" @mouseup="mouseUpEvent" @mouseleave="mouseLeaveEvent" @dblclick="doubleClick"
-        :class="classStyle">
-        <!-- remove these cell-id attributes -->
-        <!-- <small style="position: absolute;color: maroon; font-size: 8px; font-weight: bold;"> {{ cell.id }}</small> -->
+    <button type="button" class="btn btn-light" @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="cell.flagged" class="flag">
             <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
             <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue" />
             <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
         <div v-else-if="isRevealed">
-            <i v-if="cell.hasMine" :style="bombStyle">
+            <span v-if="cell.hasMine" :style="bombStyle">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="explodedBombId === cell.id" />
-            </i>
-            <i v-else :style="numberStyle" :cell-id="cell.id">
+            </span>
+            <span v-else :style="numberStyle">
                 {{ cell.minesAround }}
-            </i>
+            </span>
         </div>
-    </div>
+    </button>
 </template>
 
 <script lang="ts">
@@ -45,7 +42,6 @@ export default {
     },
     data() {
         return {
-            mouseOver: false,
             mouseButtonDown: 0,
         }
     },
@@ -56,24 +52,15 @@ export default {
         classStyle() {
             return {
                 cell: true,
+                flagged: this.cell.flagged,
                 revealed: this.isRevealed,
-                pressed:
-                    !this.isRevealed &&
-                    !this.cell.flagged &&
-                    this.mouseButtonDown === MouseButtons.LEFT &&
-                    this.mouseOver,
-                hover:
-                    !this.isRevealed &&
-                    !this.cell.flagged &&
-                    !this.gameOver &&
-                    this.mouseButtonDown === MouseButtons.NONE &&
-                    this.mouseOver,
                 hint: !this.isRevealed && this.cell.aiMarkedSafe,
             }
         },
         numberStyle() {
             const style: any = {
                 color: this.numberColor,
+                'font-weight': 'bolder',
             }
             return style
         },
@@ -93,17 +80,6 @@ export default {
     methods: {
         preventRightClickDefaultBehavior(event: Event) {
             event.preventDefault()
-        },
-        mouseEnter(event: MouseEvent) {
-            if (this.gameOver) {
-                return
-            }
-            this.mouseOver = true
-            this.mouseButtonDown = event.buttons
-        },
-        mouseLeaveEvent(event: MouseEvent) {
-            this.mouseOver = false
-            this.mouseButtonDown = MouseButtons.NONE
         },
         mouseDownEvent(event: MouseEvent) {
             if (this.gameOver || this.cell.isRevealed()) {
@@ -128,6 +104,7 @@ export default {
             this.mouseButtonDown = event.buttons
         },
         doubleClick(event: MouseEvent) {
+            console.log('chorded')
             if (this.isRevealed) {
                 this.$emit('chorded', { cell: this.cell })
             }
@@ -137,45 +114,48 @@ export default {
 </script>
 
 <style scoped>
+.btn:hover {
+    margin: unset;
+    background-color: #f1f1f1;
+    border-color: #ddd;
+}
+
+.btn.flagged:hover,
+.btn:focus,
+.btn:active {
+    margin: unset;
+    border-color: #ddd;
+    background-color: var(--bs-btn-bg);
+}
+
+.btn.revealed,
+
+.btn:disabled {
+    background-color: #e8e8e8;
+    border-color: #ddd;
+}
+
 .cell {
-    text-align: center;
+    /* font-family: var(--bs-body-font-family); */
+    position: relative;
+    padding: 0;
     height: 26px;
     width: 26px;
-    position: relative;
-    background-color: #d1d1d1;
-    border-width: 3px;
-    border-style: solid;
-    border-color: white #9e9e9e #9e9e9e white;
 }
 
 .hint {
     background-color: lightblue;
 }
 
-.cell i {
-    left: 0;
-    bottom: 0;
-    margin: 0;
-    width: 100%;
-    font-size: 16px;
+.cell div {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-weight: 700;
     font-style: normal;
-    position: absolute;
-    line-height: 24px;
 }
 
-.hover {
-    background-color: #ebebeb;
-    cursor: pointer;
-}
-
-.cell.revealed {
-    border: 1px solid #b8b8b8;
-}
-
-.cell.pressed {
-    border: 1px solid #b8b8b8;
-}
 
 .cell.mine {
     background-color: #ec433c;
