@@ -1,4 +1,4 @@
-import { guess, update } from '@/as/build/assembly'
+import { guess, update, tests } from '@/as/build/assembly'
 import type { Guess } from '@/constants/Guess'
 
 export enum SolverRequestAction {
@@ -23,6 +23,9 @@ export type SolverResponse = {
     guess?: Guess
     update?: UpdateResponse
 }
+
+console.log('running tests')
+tests()
 
 postMessage({ ready: true })
 

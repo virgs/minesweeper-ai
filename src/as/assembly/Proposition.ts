@@ -14,6 +14,10 @@ export class Proposition {
         this.mines = mines
     }
 
+    public clone(): Proposition {
+        return new Proposition(this.origin, this.cellsIndex, this.mines)
+    }
+
     public toString(): string {
         return `|${this.origin}| {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.mines}`
     }
@@ -87,9 +91,9 @@ export class Proposition {
         for (let i = 0; i < this.cellsIndex.length; ++i) {
             if (mines.includes(this.cellsIndex[i])) {
                 --this.mines
-                if (this.mines < 0) {
-                    console.log(`minsDiff is negative. Mines (${mines}). This ${this}. Cell ${this.cellsIndex[i]}?`)
-                }
+                // if (this.mines < 0) {
+                //     console.log(`minsDiff is negative. Mines (${mines}). This ${this}. Cell ${this.cellsIndex[i]}?`)
+                // }
             } else {
                 remainingCells.push(this.cellsIndex[i])
             }
@@ -113,10 +117,12 @@ export class Proposition {
         return previousCellsLength !== this.cellsIndex.length
     }
 
+    public isContradictory(): boolean {
+        return this.mines > this.cellsIndex.length || this.mines < 0
+    }
+
+
     public isSatisfied(): boolean {
-        // if (this.cellsIndex.length <= 0) {
-        //     return true;
-        // }
         return this.hasNoMine() || (this.mines >= this.cellsIndex.length && this.cellsIndex.length > 0)
     }
 

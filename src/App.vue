@@ -1,9 +1,11 @@
 <template>
     <main @mousedown="mouseDown = true" @mouseup="mouseDown = false" @mouseleave="mouseDown = false">
-        <Dashboard :board="board" :game-over="gameOver" :mouse-down="mouseDown" :victory="victory" @new-game="newGame">
-        </Dashboard>
-        <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
-        </Grid>
+        <div class="container">
+            <Dashboard :board="board" :game-over="gameOver" :mouse-down="mouseDown" :victory="victory" @new-game="newGame">
+            </Dashboard>
+            <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
+            </Grid>
+        </div>
     </main>
 </template>
 
@@ -118,13 +120,14 @@ export default {
 
 <style scoped>
 main {
-    padding: 4px;
+    border-radius: 2px;
+    padding: 5px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #ebebeb;
-    border-width: 3px;
+    border-width: 4px;
     border-style: solid;
     border-color: white;
 }

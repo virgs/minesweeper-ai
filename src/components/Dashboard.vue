@@ -1,42 +1,36 @@
 <template>
-    <div id="dashboard">
-        <div class="btn-group">
-            <button type="button" class="btn btn-light" @click="newGameClicked">
-                <!-- https://www.w3schools.com/charsets/ref_emoji_smileys.asp-->
-                <template v-if="gameOver">
-                    <div v-if="victory">&#128526;</div>
-                    <div v-else>&#128565;</div>
-                </template>
-                <template v-else>
-                    <div v-if="mouseDown">&#128535;</div>
-                    <div v-else>&#128566;</div>
-                </template>
-            </button>
-            <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">Beginner</button></li>
-                <li><button class="dropdown-item" type="button">Intermediate</button></li>
-                <li><button class="dropdown-item" type="button">Expert</button></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><button class="dropdown-item" type="button">Custom</button></li>
-            </ul>
+    <div id="dashboard" class="row text">
+        <div class="col">
+            <Pannel label="Mines" :value="remainingMines"></Pannel>
         </div>
-        <!-- 
-        <button id="newGameButton" class="p-0" @click="newGameClicked">
-            <template v-if="gameOver">
-                <div v-if="victory">&#128526;</div>
-                <div v-else>&#128565;</div>
-            </template>
-            <template v-else>
-                <div v-if="mouseDown">&#128535;</div>
-                <div v-else>&#128566;</div>
-            </template>
-        </button> -->
+        <div class="col">
+            <div class="btn-group">
+                <button type="button" class="btn btn-light" @click="newGameClicked">
+                    <!-- https://www.w3schools.com/charsets/ref_emoji_smileys.asp-->
+                    <template v-if="gameOver">
+                        <div v-if="victory">&#128526;</div>
+                        <div v-else>&#128565;</div>
+                    </template>
+                    <template v-else>
+                        <div v-if="mouseDown">&#128535;</div>
+                        <div v-else>&#128566;</div>
+                    </template>
+                </button>
+                <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="button">BEGINNER</button></li>
+                    <li><button class="dropdown-item" type="button">INTERMEDIATE</button></li>
+                    <li><button class="dropdown-item" type="button">EXPERT</button></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><button class="dropdown-item" type="button">CUSTOM</button></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,11 +39,12 @@ import type { BoardProperties } from '@/constants/BoardProperties';
 import { GameConfigurations } from '@/constants/GameConfiguration';
 import type { Board } from '@/engine/Board';
 import type { PropType } from 'vue';
+import Pannel from './Pannel.vue';
 
 
 export default {
     name: 'Dashboard',
-    components: {},
+    components: { Pannel },
     emits: {
         newGame: (configuration: { board: BoardProperties }) => true,
         update: (aiAction: string) => true,
@@ -78,10 +73,16 @@ export default {
             this.$emit('newGame', { board: GameConfigurations.Intermediate })
         }
     },
+    computed: {
+        remainingMines() {
+            return Math.max(this.board.cells
+                .filter(cell => cell.flagged).length, 0)
+        }
+    }
 }
 </script>
 
-<style>
+<style scoped>
 @charset "UTF-8";
 
 #dashboard {

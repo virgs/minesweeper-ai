@@ -10,7 +10,7 @@
             <span v-if="cell.hasMine" :style="bombStyle">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="explodedBombId === cell.id" />
             </span>
-            <span v-else :style="numberStyle">
+            <span v-else class="text" :style="numberStyle">
                 {{ cell.minesAround }}
             </span>
         </div>
@@ -136,7 +136,6 @@ export default {
 }
 
 .cell {
-    /* font-family: var(--bs-body-font-family); */
     position: relative;
     padding: 0;
     height: 26px;

@@ -1,5 +1,5 @@
 <template>
-    <div id="grid">
+    <div id="grid" class="p-1">
         <div v-for="line in board.properties.height" class="btn-group">
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @charset "UTF-8";
 
 #grid {
