@@ -1,18 +1,17 @@
 import "bootswatch/dist/lumen/bootstrap.min.css";
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowsLeftRight, faArrowsUpDown, faBomb, faDice, faFlag, faLandMineOn, faPlay, faRobot, faWandSparkles, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { ReportGenerator } from "./solver/ReportGenerator";
-import { GameConfigurations } from "./constants/GameConfiguration";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faArrowsLeftRight, faArrowsUpDown, faBomb, faDice, faFlag, faHourglass, faLandMineOn, faPercent, faPlay, faRobot, faWandSparkles, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* add icons to the library */
-library.add(faBomb, faFlag, faXmark, faDice, faWandSparkles, faPlay, faRobot, faLandMineOn, faArrowsLeftRight, faArrowsUpDown)
+library.add(faBomb, faFlag, faXmark, faDice, faWandSparkles, faPlay,
+    faRobot, faLandMineOn, faArrowsLeftRight, faArrowsUpDown, faPercent, faHourglass, faRobot)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)

@@ -1,18 +1,18 @@
 <template>
-    <button type="button" class="btn btn-light" @contextmenu.prevent="preventRightClickDefaultBehavior"
+    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
         @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
-        <div v-if="cell.flagged" class="flag">
-            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" />
-            <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" style="color: dodgerblue" />
-            <font-awesome-icon v-else icon="fa-solid fa-flag" />
-        </div>
-        <div v-else-if="isRevealed">
+        <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="explodedBombId === cell.id" />
             </span>
             <span v-else class="text" :style="numberStyle">
                 {{ cell.minesAround }}
             </span>
+        </div>
+        <div v-else-if="cell.flagged" class="flag">
+            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" shake />
+            <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" class="aiFlag" />
+            <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
     </button>
 </template>
@@ -69,7 +69,7 @@ export default {
                 color: 'black',
             }
             if (this.explodedBombId === this.cell.id) {
-                style.color = 'red'
+                style.color = '#ff4136'
             }
             return style
         },
@@ -113,18 +113,20 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+    background-color: #75caeb;
+}
+
 .btn:hover {
-    margin: unset;
-    background-color: #f1f1f1;
-    border-color: #ddd;
+    margin: 0;
+    background-color: #a2dbf1;
 }
 
 .btn.flagged:hover,
 .btn:focus,
 .btn:active {
-    margin: unset;
-    border-color: #ddd;
-    background-color: var(--bs-btn-bg);
+    margin: 0;
+    background-color: #75caeb;
 }
 
 .btn.revealed,
@@ -156,10 +158,14 @@ export default {
 
 
 .cell.mine {
-    background-color: #ec433c;
+    background-color: #ff4136;
 }
 
 .flag {
-    color: #ec433c;
+    color: #ff4136;
+}
+
+.aiFlag {
+    color: #e67818;
 }
 </style>

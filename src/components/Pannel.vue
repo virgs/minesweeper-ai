@@ -1,8 +1,8 @@
 <template>
-    <div class="mb-1">
-        <!-- <font-awesome-icon icon="fa-solid fa-land-mine-on" /> -->
-        <!-- <font-awesome-icon icon="fa-solid fa-hourglass" /> -->
-        <label :for="id" class="form-label label"> {{ label }}</label>
+    <div>
+        <label :for="id" class="form-label label">
+            <font-awesome-icon v-if="labelIcon" :icon="labelIcon" />
+        </label>
         <input type="text" class="form-control text p-0 px-2 m-0" :id="id" readonly :value="value">
     </div>
 </template>
@@ -14,6 +14,10 @@ let counter = 0;
 export default {
     name: 'Pannel',
     props: {
+        labelIcon: {
+            type: String,
+            required: false,
+        },
         label: {
             type: String,
             required: true,
@@ -32,23 +36,20 @@ export default {
 </script>
 
 <style scoped>
-.form-label {
+label {
     margin: 0;
-}
-
-div label {
+    margin-bottom: 2px;
     color: #444;
     letter-spacing: 1px;
     font-weight: lighter;
 }
 
 div input {
-    width: 100px;
+    width: 80px;
     font-family: "F7-Segment";
     height: max-content;
     font-size: x-large;
     background-color: var(--background-color);
-    ;
     border-radius: 3px;
     letter-spacing: 2px;
     border: 2px solid #ddd;

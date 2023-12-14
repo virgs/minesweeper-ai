@@ -86,9 +86,6 @@ export default {
         updateCellStates() {
             solver.knownSafeCellsIds.forEach((cellId) => {
                 const cell = this.board.getCellById(cellId)!
-                if (cell.hasMine) {
-                    console.log('AI made a mistake. Cell had mine', cell)
-                }
                 cell.aiMarkedSafe = true
                 this.board.revealCell(cell)
                 if (this.board.isGameLost()) {
@@ -97,9 +94,6 @@ export default {
             })
             solver.knownMineCellsIds.forEach((cellId) => {
                 const cell = this.board.getCellById(cellId)!
-                if (!cell.hasMine) {
-                    console.log('AI made a mistake. Cell had no mine', cell, solver.knownMineCellsIds)
-                }
                 if (!cell.flagged) {
                     cell.flagged = true
                     cell.aiMarkedMine = true
@@ -112,8 +106,8 @@ export default {
             this.gameIsRunning = false
             this.updateCellStates()
 
-            console.log(solver.knownMineCellsIds)
-            console.log(solver.knownSafeCellsIds)
+            // console.log(solver.knownMineCellsIds)
+            // console.log(solver.knownSafeCellsIds)
             this.gameOver = true
             this.victory = this.board.isGameWon()
             console.log('game finished. ' + (this.victory ? 'You won!' : 'You lost!'))

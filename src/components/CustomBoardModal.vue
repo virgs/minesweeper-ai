@@ -1,50 +1,66 @@
 <template>
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalLabel">Custom board properties</h1>
             </div>
             <div class="modal-body">
                 <div class="input-group my-3 has-validation">
-                    <div class="form-floating">
-                        <input type="number" class="form-control text" aria-label="widthInput" id="widthInput"
-                            v-model="width">
-                        <label for="widthInput">
-                            <font-awesome-icon icon="fa-solid fa-arrows-left-right" />
-                            Width</label>
-                        <div class="invalid-feedback">
-                            Please set a number between 10 and 100
+                    <div class="row g-1">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control text" aria-label="widthInput" id="widthInput"
+                                    v-model="width">
+                                <label for="widthInput">
+                                    <font-awesome-icon icon="fa-solid fa-arrows-left-right" />
+                                    Width</label>
+                                <div class="invalid-feedback">
+                                    Please set a number between 10 and 100
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="form-floating mx-2">
-                        <input type="number" class="form-control text" aria-label="heightInput" id="heightInput"
-                            v-model="height">
-                        <label for="heightInput">
-                            <font-awesome-icon icon="fa-solid fa-arrows-up-down" />
-                            Height</label>
-                        <div class="invalid-feedback">
-                            Please set a number between 10 and 100
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control text" aria-label="heightInput" id="heightInput"
+                                    v-model="height">
+                                <label for="heightInput">
+                                    <font-awesome-icon icon="fa-solid fa-arrows-up-down" />
+                                    Height</label>
+                                <div class="invalid-feedback">
+                                    Please set a number between 10 and 100
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="form-floating">
-                        <input type="number" class="form-control text" aria-label="minesInput" id="minesInput"
-                            v-model="mines">
-                        <label for="minesInput">
-                            <font-awesome-icon icon="fa-solid fa-land-mine-on" />
-                            Mines
-                        </label>
-                        <div class="valid-tooltip">
-                            Looks good!
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control text" aria-label="minesInput" id="minesInput"
+                                    v-model="mines">
+                                <label for="minesInput">
+                                    <font-awesome-icon icon="fa-solid fa-land-mine-on" />
+                                    Mines
+                                </label>
+                                <div class="valid-tooltip">
+                                    Looks good!
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control text" aria-label="minesDensity" id="minesDensity"
+                                    v-model="density" readonly style="border: none; box-shadow: none;">
+                                <label for="minesDensity">
+                                    <font-awesome-icon icon="fa-solid fa-percent" />
+                                    Density
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="form-floating">
-                        <input type="number" class="form-control text" aria-label="minesDensity" id="minesDensity"
-                            v-model="density" readonly>
-                        <label for="minesDensity">
-                            <font-awesome-icon icon="fa-solid fa-land-mine-on" />
-                            Mines density
-                        </label>
-                    </div>
+
+
+
                 </div>
             </div>
             <div class="modal-footer py-2">
@@ -71,11 +87,11 @@ export default {
         }
     },
     data() {
-        const html = document.getElementsByTagName('html')[0]
+        const html = document.getElementsByTagName('body')[0]
         const htmlWidth = html.offsetWidth;
         const htmlHeight = html.offsetHeight;
         console.log('cell size: ' + getComputedStyle(document.documentElement)
-            .getPropertyValue('--cell-size)'));
+            .getPropertyValue('--cell-size'));
         console.log('htmlWidth: ' + htmlWidth)
         console.log('htmlHeight: ' + htmlHeight)
 

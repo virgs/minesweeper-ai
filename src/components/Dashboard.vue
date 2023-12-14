@@ -1,14 +1,16 @@
 <template>
-    <div id="dashboard" class="row g-0 my-2 m-0 align-items-end">
+    <div id="dashboard" class="row gx-3 mb-3 m-0 align-items-end">
         <div class="col-auto">
-            <Pannel label="Mines" :value="remainingMines.toString()"></Pannel>
+            <Pannel labelIcon="fa-solid fa-land-mine-on" label="Mines" :value="remainingMines.toString()">
+            </Pannel>
         </div>
         <div class="col" style="text-align: center;">
             <NewGameButton :victory="victory" :mouseDown="mouseDown" :gameOver="gameOver"
                 @newGameButtonClick="startNewGame"></NewGameButton>
         </div>
         <div class="col-auto">
-            <Pannel label="Time" :value="(timer / 10).toString().padEnd(3, '.0')"></Pannel>
+            <Pannel labelIcon="fa-solid fa-hourglass" label="Time" :value="(timer / 10).toString().padEnd(3, '.0')">
+            </Pannel>
         </div>
         <div class="w-100 divider my-2"></div>
         <div class="col-auto ms-auto">
@@ -95,7 +97,6 @@ export default {
 @charset "UTF-8";
 
 #dashboard {
-    width: 100%;
     padding: 5px 0;
 }
 
