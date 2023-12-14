@@ -1,6 +1,6 @@
 export class Proposition {
     private cellsIndex: i32[]
-    private mines: i32
+    private numberOfMines: i32
     readonly origin: string
 
     public constructor(origin: string, cells: i32[], mines: i32) {
@@ -11,23 +11,23 @@ export class Proposition {
         }
 
         this.cellsIndex = set.values()
-        this.mines = mines
+        this.numberOfMines = mines
     }
 
     public clone(): Proposition {
-        return new Proposition(this.origin, this.cellsIndex, this.mines)
+        return new Proposition(this.origin, this.cellsIndex, this.numberOfMines)
     }
 
     public toString(): string {
-        return `|${this.origin}| {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.mines}`
+        return `|${this.origin}| {${this.cellsIndex.sort((a, b) => a - b)}} = -> ${this.numberOfMines}`
     }
 
     public hash(): string {
-        return `${this.cellsIndex.sort((a, b) => a - b)}:${this.mines}`
+        return `${this.cellsIndex.sort((a, b) => a - b)}:${this.numberOfMines}`
     }
 
     public getMineRatio(): f32 {
-        return f32(this.mines) / f32(this.cellsIndex.length)
+        return f32(this.numberOfMines) / f32(this.cellsIndex.length)
     }
 
     public getCells(): i32[] {
@@ -35,7 +35,7 @@ export class Proposition {
     }
 
     public getMines(): i32 {
-        return this.mines
+        return this.numberOfMines
     }
 
     public isSubSetOf(otherProposition: Proposition): bool {
@@ -66,7 +66,7 @@ export class Proposition {
     }
 
     public subtractSubset(otherProposition: Proposition): Proposition {
-        const minesDiff = this.mines - otherProposition.mines
+        const minesDiff = this.numberOfMines - otherProposition.numberOfMines
         if (minesDiff < 0) {
             console.log(`minsDiff is negative. Is ${otherProposition} really subset of ${this}?`)
         }
@@ -84,31 +84,28 @@ export class Proposition {
     }
 
     // returns true if this method changed the proposition
-    public removeMineCells(mines: i32[]): boolean {
+    public removeMineCells(mineCells: i32[]): boolean {
         let previousCellsLength = this.cellsIndex.length
 
         const remainingCells: i32[] = []
         for (let i = 0; i < this.cellsIndex.length; ++i) {
-            if (mines.includes(this.cellsIndex[i])) {
-                --this.mines
-                // if (this.mines < 0) {
-                //     console.log(`minsDiff is negative. Mines (${mines}). This ${this}. Cell ${this.cellsIndex[i]}?`)
-                // }
+            if (mineCells.includes(this.cellsIndex[i])) {
+                --this.numberOfMines
             } else {
                 remainingCells.push(this.cellsIndex[i])
             }
         }
 
         this.cellsIndex = remainingCells
-        return previousCellsLength !== this.cellsIndex.length
+        return (previousCellsLength !== this.cellsIndex.length)
     }
 
-    public removeSafeCells(safes: i32[]): boolean {
+    public removeSafeCells(safeCells: i32[]): boolean {
         let previousCellsLength = this.cellsIndex.length
 
         const remainingCells: i32[] = []
         for (let i = 0; i < this.cellsIndex.length; ++i) {
-            if (!safes.includes(this.cellsIndex[i])) {
+            if (!safeCells.includes(this.cellsIndex[i])) {
                 remainingCells.push(this.cellsIndex[i])
             }
         }
@@ -118,20 +115,22 @@ export class Proposition {
     }
 
     public isContradictory(): boolean {
-        return this.mines > this.cellsIndex.length || this.mines < 0
+        if (this.numberOfMines > this.cellsIndex.length || this.numberOfMines < 0) {
+            return true
+        }
+        return false
     }
 
-
     public isSatisfied(): boolean {
-        return this.hasNoMine() || (this.mines >= this.cellsIndex.length && this.cellsIndex.length > 0)
+        return this.hasNoMine() || (this.numberOfMines >= this.cellsIndex.length && this.cellsIndex.length > 0)
     }
 
     public hasNoMine(): boolean {
-        return this.mines === 0
+        return this.numberOfMines === 0
     }
 
     public isEqual(other: Proposition): bool {
-        if (this.mines != other.mines) {
+        if (this.numberOfMines != other.numberOfMines) {
             return false
         }
         if (this.cellsIndex.length != other.cellsIndex.length) {

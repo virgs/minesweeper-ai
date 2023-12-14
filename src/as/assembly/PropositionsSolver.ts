@@ -71,6 +71,10 @@ export class PropositionsSolver {
     }
 
 
+    public getPropositions(): Proposition[] {
+        return this.propositions
+    }
+
     public getKnownMineCellsIds(): i32[] {
         return this.mineCellsIds
     }
@@ -79,7 +83,7 @@ export class PropositionsSolver {
         return this.safeCellsIds
     }
 
-    public solve(): void {
+    public run(): void {
         let changed: bool = false
         while (true) {
             let previousKnownCells = this.safeCellsIds.length + this.mineCellsIds.length
@@ -145,7 +149,7 @@ export class PropositionsSolver {
     public addPropositions(newPropositions: Proposition[]): boolean {
         let changed = false
         for (let i = 0; i < newPropositions.length; ++i) {
-            const newProposition = newPropositions[i]
+            const newProposition = newPropositions[i].clone()
             newProposition.removeMineCells(this.mineCellsIds)
             newProposition.removeSafeCells(this.safeCellsIds)
 
@@ -162,7 +166,6 @@ export class PropositionsSolver {
                 continue
             }
 
-            console.log(newProposition.toString())
             this.propositions.push(newProposition)
             changed = true
         }

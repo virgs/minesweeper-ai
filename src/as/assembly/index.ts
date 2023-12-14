@@ -1,18 +1,19 @@
 // The entry file of your WebAssembly module.
 import { JSON } from 'json-as/assembly'
 import { Board } from './Board'
-import { MineSweeperSolver } from './MineSweeperSolver'
-import { PropositionsSolver } from './PropositionsSolver'
+import { GuessMaker } from './GuessMaker'
+import { Solver } from './Solver'
+import { HypothesisRunner } from './HypothesisRunner'
 import { Proposition } from './Proposition'
 import { SolverGuessResponse, SolverUpdateResponse } from './models/SolverResponse'
 
-const ai = new MineSweeperSolver()
+const ai = new Solver()
 
 export function update(stringifiedBoard: string): string {
     const board = JSON.parse<Board>(stringifiedBoard)
-    ai.initializeIfNot(board)
+    ai.setBoard(board)
 
-    ai.updatePropositions()
+    ai.run()
     const safeCells: i32[] = ai.getKnownSafeCellsIds()
     const mineCells: i32[] = ai.getKnownMineCellsIds()
 
@@ -25,8 +26,10 @@ export function update(stringifiedBoard: string): string {
 
 export function guess(stringifiedBoard: string): string {
     const board = JSON.parse<Board>(stringifiedBoard)
-    ai.initializeIfNot(board)
-    const guess = ai.makeGuess()
+    ai.setBoard(board)
+    ai.run()
+    const guessMaker = new GuessMaker(ai)
+    const guess = guessMaker.makeGuess()
 
     const response: SolverGuessResponse = {
         id: guess.id,
@@ -39,31 +42,22 @@ export function guess(stringifiedBoard: string): string {
 export function tests(): void {
     console.log('running tests')
     const a = new Proposition('a', [1, 2, 3], 1)
-    const b = new Proposition('b', [2, 3, 4, 5], 2)
-    const c = new Proposition('c', [2, 3], 1)
+    const b = new Proposition('b', [2, 3, 4, 5, 6], 3)
+    const c = new Proposition('c', [5, 6, 7], 1)
     console.log(a.toString())
     console.log(b.toString())
     console.log(c.toString())
-    console.log('overlapping: (a,b)' + a.getOverlappingCells(b).toString())
-    console.log('overlapping: (a,c)' + a.getOverlappingCells(c).toString())
-    console.log('overlapping: (b,c)' + b.getOverlappingCells(c).toString())
-    console.log('subset: (a isso b)' + a.isSubSetOf(b).toString())
-    console.log('subset: (a isso c)' + a.isSubSetOf(c).toString())
-    console.log('subset: (b isso c)' + b.isSubSetOf(c).toString())
-    console.log('subset: (c isso b)' + c.isSubSetOf(b).toString())
-    console.log('subtractSubset: (b - c)' + b.subtractSubset(c).toString())
+    // console.log('overlapping: (a,b)' + a.getOverlappingCells(b).toString())
+    // console.log('overlapping: (a,c)' + a.getOverlappingCells(c).toString())
+    // console.log('overlapping: (b,c)' + b.getOverlappingCells(c).toString())
+    // console.log('subset: (a isso b)' + a.isSubSetOf(b).toString())
+    // console.log('subset: (a isso c)' + a.isSubSetOf(c).toString())
+    // console.log('subset: (b isso c)' + b.isSubSetOf(c).toString())
+    // console.log('subset: (c isso b)' + c.isSubSetOf(b).toString())
+    // console.log('subtractSubset: (b - c)' + b.subtractSubset(c).toString())
 
-    const d = new Proposition('d', [4], 1)
-    const e = new Proposition('e', [3], 0)
-    console.log(d.toString())
-    console.log(e.toString())
-    console.log('d is contradictory: ' + d.isContradictory().toString())
-    console.log('e is contradictory: ' + e.isContradictory().toString())
-
-    const ps = new PropositionsSolver()
-    ps.addPropositions([a, b, c, d, e])
-    ps.solve()
-    console.log('ps is contradictory: ' + ps.hasContradictions().toString())
+    const ps = new HypothesisRunner([a, b, c])
+    ps.findContradictions()
     console.log('ps findings')
     console.log('mines ' + ps.getKnownMineCellsIds().toString())
     console.log('safes ' + ps.getKnownSafeCellsIds().toString())
