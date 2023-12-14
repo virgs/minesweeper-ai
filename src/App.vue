@@ -1,7 +1,8 @@
 <template>
     <main @mousedown="mouseDown = true" @mouseup="mouseDown = false" @mouseleave="mouseDown = false">
         <div class="container">
-            <Dashboard :board="board" :game-over="gameOver" :mouse-down="mouseDown" :victory="victory" @new-game="newGame">
+            <Dashboard :board="board" :game-over="gameOver" :mouse-down="mouseDown" :victory="victory"
+                :game-is-running="gameIsRunning" @new-game="newGame">
             </Dashboard>
             <Grid :board="board" :game-over="gameOver" :explodedBombId="explodedBombId" @cell-click="cellClick">
             </Grid>
@@ -27,11 +28,11 @@ export default {
     },
     data() {
         const board = new Board(GameConfigurations.Expert)
-        solver = new Solver(board)
         return {
             mouseDown: false,
             board: board as Board,
             gameOver: false,
+            gameIsRunning: false,
             explodedBombId: undefined as number | undefined,
             victory: undefined as boolean | undefined
         }
@@ -41,6 +42,7 @@ export default {
             const board = new Board(configuration.board)
             solver = new Solver(board)
             this.board = board
+            this.gameIsRunning = false
             this.gameOver = false
             this.explodedBombId = undefined
             this.victory = undefined
@@ -60,6 +62,7 @@ export default {
             console.log('done thinking')
         },
         async cellClick(data: { cell: Cell }) {
+            this.gameIsRunning = true
             if (this.board.isInitialized()) {
                 this.board.revealCell(data.cell)
             } else {
@@ -106,6 +109,7 @@ export default {
             // console.log(solver.knownSafeCellsIds)
         },
         finishGame() {
+            this.gameIsRunning = false
             this.updateCellStates()
 
             console.log(solver.knownMineCellsIds)

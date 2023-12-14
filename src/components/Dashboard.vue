@@ -1,5 +1,5 @@
 <template>
-    <div id="dashboard" class="row g-0 m-0 align-items-center justify-content-md-center">
+    <div id="dashboard" class="row g-0 m-0 align-items-end justify-content-center">
         <div class="col-auto">
             <Pannel label="Mines" :value="remainingMines.toString()"></Pannel>
         </div>
@@ -10,6 +10,11 @@
         <div class="col-auto">
             <Pannel label="Time" :value="(timer / 10).toString().padEnd(3, '.0')"></Pannel>
         </div>
+        <div class="w-100 divider my-3"></div>
+        <div class="col-auto">
+            <Pannel label="Mines" :value="remainingMines.toString()"></Pannel>
+        </div>
+
     </div>
 </template>
 
@@ -34,6 +39,10 @@ export default {
             type: Object as PropType<Board>,
             required: true,
         },
+        gameIsRunning: {
+            type: Boolean,
+            required: false,
+        },
         victory: {
             type: Boolean,
             required: false,
@@ -48,7 +57,7 @@ export default {
         },
     },
     mounted() {
-        this.$emit('newGame', { board: this.currentGameConfiguration })
+        this.startNewGame({ board: this.currentGameConfiguration })
         document.onkeyup = (key: KeyboardEvent) => {
             switch (key.code) {
                 case 'F2': {
@@ -57,20 +66,30 @@ export default {
                 }
             }
         };
-        setInterval(() => {
-            if (!this.gameOver) {
-                this.timer += 1
-            }
-        }, 100)
     },
     data() {
         return {
             timer: 0,
+            timerInterval: undefined as number | undefined,
             currentGameConfiguration: GameConfigurations.Intermediate
         }
     },
+    watch: {
+        gameIsRunning() {
+            if (this.gameIsRunning) {
+                clearInterval(this.timerInterval)
+                this.timerInterval = setInterval(() => {
+                    if (!this.gameOver) {
+                        this.timer += 1
+                    }
+                }, 100)
+                this.timer = 0
+            }
+        },
+    },
     methods: {
         startNewGame(configuration: { board: BoardProperties }) {
+            clearInterval(this.timerInterval)
             this.timer = 0
             this.currentGameConfiguration = configuration.board
             this.$emit('newGame', configuration)
@@ -91,6 +110,13 @@ export default {
 #dashboard {
     width: 100%;
     padding: 5px 0;
-    /* text-align: center; */
+}
+
+.divider {
+    height: 0;
+    margin: var(--bs-dropdown-divider-margin-y) 0;
+    overflow: hidden;
+    border-top: 1px solid #ddd;
+    opacity: 1;
 }
 </style>

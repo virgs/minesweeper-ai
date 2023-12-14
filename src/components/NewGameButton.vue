@@ -1,15 +1,7 @@
 <template>
     <div class="btn-group">
         <button id="newGameButton" type="button" class="btn btn-light p-1 px-3" @click="clicked">
-            <!-- https://www.w3schools.com/charsets/ref_emoji_smileys.asp-->
-            <template v-if="gameOver">
-                <div v-if="victory">&#128526;</div>
-                <div v-else>&#128565;</div>
-            </template>
-            <template v-else>
-                <div v-if="mouseDown">&#128535;</div>
-                <div v-else>&#128566;</div>
-            </template>
+            <div v-html="smiley"></div>
         </button>
         <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
             aria-expanded="false">
@@ -26,9 +18,9 @@
             </li>
             <li><button class="dropdown-item" type="button"
                     @click="$emit('newGameButtonClick', { board: GameConfigurations.Expert })">EXPERT</button></li>
-            <!-- <li>
+            <li>
                 <hr class="dropdown-divider">
-            </li> -->
+            </li>
         </ul>
     </div>
 </template>
@@ -63,6 +55,24 @@ export default {
             type: Boolean,
             required: true,
         },
+    },
+    computed: {
+        smiley() {
+            // https://www.w3schools.com/charsets/ref_emoji_smileys.asp
+            if (this.gameOver) {
+                if (this.victory) {
+                    return "&#128526;" //SMILING FACE WITH SUNGLASSES
+                } else {
+                    return "&#128565;" //DIZZY FACE
+                }
+            } else {
+                if (this.mouseDown) {
+                    return "&#128535;" //KISSING FACE
+                } else {
+                    return "&#128566;" //FACE WITHOUT MOUTH
+                }
+            }
+        }
     },
     methods: {
         clicked() {
