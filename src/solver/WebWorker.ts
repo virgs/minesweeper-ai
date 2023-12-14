@@ -24,8 +24,8 @@ export type SolverResponse = {
     update?: UpdateResponse
 }
 
-console.log('running tests')
-tests()
+// console.log('running tests')
+// tests()
 
 postMessage({ ready: true })
 

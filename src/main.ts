@@ -14,9 +14,9 @@ import { faBomb, faFlag, faXmark } from '@fortawesome/free-solid-svg-icons'
 /* add icons to the library */
 library.add(faBomb, faFlag, faXmark)
 
-// const app = createApp(App)
-// app.component('font-awesome-icon', FontAwesomeIcon)
-// app.mount('#app')
+const app = createApp(App)
+app.component('font-awesome-icon', FontAwesomeIcon)
+app.mount('#app')
 
 // await new ReportGenerator(GameConfigurations.Expert,
 //     {

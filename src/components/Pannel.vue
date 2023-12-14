@@ -1,11 +1,14 @@
 <template>
     <div class="mb-3">
-        <label for="formGroupExampleInput" class="form-label text"> {{ label }}</label>
-        <input type="text" class="form-control text" id="formGroupExampleInput" readonly :value="value">
+        <label :for="id" class="form-label label"> {{ label }}</label>
+        <input type="text" class="form-control text p-0 px-2 m-0" :id="id" readonly :value="value">
     </div>
 </template>
 
 <script lang="ts">
+
+let counter = 0;
+
 export default {
     name: 'Pannel',
     props: {
@@ -14,19 +17,40 @@ export default {
             required: true,
         },
         value: {
-            type: Number,
+            type: String,
             required: true,
         },
     },
+    data() {
+        return {
+            id: 'pannel-input-' + counter++
+        }
+    }
 }
 </script>
 
 <style scoped>
+.form-label {
+    margin: 0;
+}
+
+div label {
+    color: #444;
+    letter-spacing: 1px;
+    font-weight: lighter;
+}
+
 div input {
-    width: 100px;
+    width: 75px;
+    font-family: "F7-Segment";
     height: max-content;
+    font-size: x-large;
     background-color: black;
+    border-radius: 3px;
+    letter-spacing: 2px;
+    border: 2px solid #ddd;
     color: red;
     text-align: right;
+    pointer-events: none
 }
 </style>

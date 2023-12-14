@@ -104,7 +104,6 @@ export default {
             this.mouseButtonDown = event.buttons
         },
         doubleClick(event: MouseEvent) {
-            console.log('chorded')
             if (this.isRevealed) {
                 this.$emit('chorded', { cell: this.cell })
             }

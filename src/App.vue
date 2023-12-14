@@ -26,7 +26,7 @@ export default {
         Grid, Dashboard
     },
     data() {
-        const board = new Board(GameConfigurations.Intermediate)
+        const board = new Board(GameConfigurations.Expert)
         solver = new Solver(board)
         return {
             mouseDown: false,
@@ -120,12 +120,13 @@ export default {
 
 <style scoped>
 main {
-    border-radius: 2px;
-    padding: 5px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -75%);
+    min-width: 400px;
+    border-radius: 2px;
+    padding: 5px;
     background-color: #ebebeb;
     border-width: 4px;
     border-style: solid;

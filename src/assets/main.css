@@ -11,3 +11,11 @@
 .text {
     font-family: 'Exo', sans-serif;
 }
+
+label {
+    font-family: 'Exo', sans-serif;
+    color: #444;
+    letter-spacing: 1px;
+    font-weight: lighter;
+    text-align: left;
+}

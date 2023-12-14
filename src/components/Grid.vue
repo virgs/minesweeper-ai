@@ -1,6 +1,6 @@
 <template>
-    <div id="grid" class="p-1">
-        <div v-for="line in board.properties.height" class="btn-group">
+    <div id="grid" class="p-0">
+        <div v-for="line in board.properties.height" class="btn-group mx-auto">
             <div v-for="column in board.properties.width">
                 <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
                     :explodedBombId="explodedBombId" @chorded="cellChorded" />
@@ -54,7 +54,6 @@ export default {
 @charset "UTF-8";
 
 #grid {
-    position: relative;
     display: grid;
 }
 
