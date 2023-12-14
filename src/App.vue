@@ -123,11 +123,9 @@ export default {
 </script>
 
 <style scoped>
-main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -75%);
+.container {
+    margin-top: 75px;
+    width: fit-content;
     min-width: 400px;
     border-radius: 2px;
     padding: 5px;

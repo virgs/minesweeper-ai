@@ -1,5 +1,7 @@
 <template>
     <div class="mb-1">
+        <!-- <font-awesome-icon icon="fa-solid fa-land-mine-on" /> -->
+        <!-- <font-awesome-icon icon="fa-solid fa-hourglass" /> -->
         <label :for="id" class="form-label label"> {{ label }}</label>
         <input type="text" class="form-control text p-0 px-2 m-0" :id="id" readonly :value="value">
     </div>

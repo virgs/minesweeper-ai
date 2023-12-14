@@ -1,5 +1,5 @@
 <template>
-    <div id="dashboard" class="row g-0 m-0 align-items-end justify-content-center">
+    <div id="dashboard" class="row g-0 my-2 m-0 align-items-end">
         <div class="col-auto">
             <Pannel label="Mines" :value="remainingMines.toString()"></Pannel>
         </div>
@@ -10,11 +10,10 @@
         <div class="col-auto">
             <Pannel label="Time" :value="(timer / 10).toString().padEnd(3, '.0')"></Pannel>
         </div>
-        <div class="w-100 divider my-3"></div>
-        <div class="col-auto">
-            <Pannel label="Mines" :value="remainingMines.toString()"></Pannel>
+        <div class="w-100 divider my-2"></div>
+        <div class="col-auto ms-auto">
+            <AiControlPannel></AiControlPannel>
         </div>
-
     </div>
 </template>
 
@@ -24,12 +23,13 @@ import type { Board } from '@/engine/Board';
 import type { PropType } from 'vue';
 import NewGameButton from './NewGameButton.vue';
 import Pannel from './Pannel.vue';
+import AiControlPannel from './AiControlPannel.vue';
 import { GameConfigurations } from '@/constants/GameConfiguration';
 
 
 export default {
     name: 'Dashboard',
-    components: { Pannel, NewGameButton },
+    components: { Pannel, NewGameButton, AiControlPannel },
     emits: {
         newGame: (configuration: { board: BoardProperties }) => true,
         update: (aiAction: string) => true,

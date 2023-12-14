@@ -67,9 +67,6 @@ export class Proposition {
 
     public subtractSubset(otherProposition: Proposition): Proposition {
         const minesDiff = this.numberOfMines - otherProposition.numberOfMines
-        if (minesDiff < 0) {
-            console.log(`minsDiff is negative. Is ${otherProposition} really subset of ${this}?`)
-        }
         const cellsDiff: i32[] = []
         for (let i = 0; i < this.cellsIndex.length; ++i) {
             if (!otherProposition.cellsIndex.includes(this.cellsIndex[i])) {

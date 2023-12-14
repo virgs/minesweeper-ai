@@ -42,9 +42,9 @@ export class Solver {
 
             const ps = new HypothesisRunner(this.propositionsSolver.getPropositions())
             if (ps.findContradictions()) {
-                console.log('ps findings')
-                console.log('mines ' + ps.getKnownMineCellsIds().toString())
-                console.log('safes ' + ps.getKnownSafeCellsIds().toString())
+                // console.log('ps findings')
+                // console.log('mines ' + ps.getKnownMineCellsIds().toString())
+                // console.log('safes ' + ps.getKnownSafeCellsIds().toString())
                 this.propositionsSolver.addMineCells(ps.getKnownMineCellsIds())
                 this.propositionsSolver.addSafeCells(ps.getKnownSafeCellsIds())
             } else {

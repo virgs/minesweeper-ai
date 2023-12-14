@@ -11,9 +11,6 @@ export type ReportConfiguration = {
 
 type ReportItem = {
     victory: boolean,
-    // boardMines: number[],
-    // mineCellsFound: number[],
-    // safeCellsFound: number[],
     mineCellsFoundRatio: number,
     safeCellsFoundRatio: number,
     aiUpdates: number,
@@ -24,7 +21,12 @@ type ReportItem = {
 type Report = {
     boardProperties: BoardProperties,
     victoryRatio: number,
+    totalGames: number,
     games: ReportItem[],
+    victoryGuessFactorAverage: number,
+    lossesMinesCellsFoundRatioAverage: number,
+    lossesSafeCellsFoundRatioAverage: number,
+    lossesAiUpdatesAverage: number,
     timestamp: number
 }
 
@@ -41,25 +43,18 @@ export class ReportGenerator {
     }
 
     public async run(): Promise<number> {
-        const report: Report = {
-            timestamp: Date.now(),
-            boardProperties: this.boardConfiguration,
-            victoryRatio: 0,
-            games: []
-        }
+        const games = []
         const iterations = this.numberOfGames / this.workers
         for (let iteration = 0; iteration < iterations; ++iteration) {
             const promises: Promise<ReportItem>[] = []
             for (let i = 0; i < this.workers; ++i) {
                 promises.push(this.playOneGame())
             }
-            report.games.push(...(await Promise.all(promises)))
-            console.log(`Generating report: ${Math.trunc(10000 * report.games.length / this.numberOfGames) / 100}%`)
+            games.push(...(await Promise.all(promises)))
+            console.log(`Generating report: ${Math.trunc(10000 * games.length / this.numberOfGames) / 100}%`)
         }
-        report.victoryRatio = report.games
-            .filter(result => result.victory)
-            .length / report.games.length
 
+        const report: Report = this.generateReport(games)
         this.save(report)
 
         return Math.trunc(10000 * report.victoryRatio) / 100
@@ -87,13 +82,9 @@ export class ReportGenerator {
         const validGuesses = solver.guesses
             .filter((item, index) => index > 0 && item.mines > 0)
         solver.terminate()
+
         const result: ReportItem = {
             victory: board.isGameWon(),
-            // boardMines: board.cells
-            //     .filter(cell => cell.hasMine)
-            //     .map(cell => cell.id),
-            // mineCellsFound: solver.knownMineCellsIds,
-            // safeCellsFound: solver.knownSafeCellsIds,
             mineCellsFoundRatio: solver.knownMineCellsIds.length / this.boardConfiguration.mines,
             safeCellsFoundRatio: solver.knownSafeCellsIds.length / totalCells,
             aiUpdates: solver.aiUpdates,
@@ -104,6 +95,27 @@ export class ReportGenerator {
                 }, 1)
         }
         return result
+    }
+
+    private generateReport(games: ReportItem[]): Report {
+        return {
+            timestamp: Date.now(),
+            boardProperties: this.boardConfiguration,
+            games: games,
+            victoryRatio: games
+                .filter(result => result.victory)
+                .length / games.length,
+            totalGames: games.length,
+            victoryGuessFactorAverage: games
+                .reduce((acc, game) => game.victory ? game.guessFactor + acc : acc, 0) / games.length,
+            lossesMinesCellsFoundRatioAverage: games
+                .reduce((acc, game) => !game.victory ? game.mineCellsFoundRatio + acc : acc, 0) / games.length,
+            lossesSafeCellsFoundRatioAverage: games
+                .reduce((acc, game) => !game.victory ? game.safeCellsFoundRatio + acc : acc, 0) / games.length,
+            lossesAiUpdatesAverage: games
+                .reduce((acc, game) => !game.victory ? game.aiUpdates + acc : acc, 0) / games.length,
+        }
+
     }
 
     private save(report: Report) {

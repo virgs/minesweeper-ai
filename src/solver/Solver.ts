@@ -16,10 +16,10 @@ type Model = {
 export class Solver {
     private static solversCounter: number = 0
     private readonly solverId: number = Solver.solversCounter++
-    private readyPromiseResolve: Promise<void>
     private readonly worker: Worker
     private readonly board: Board
     private readonly promisesResolves: any[]
+    private readyPromiseResolve: Promise<void>
     private _knownSafeCellsIds: number[]
     private _knownMineCellsIds: number[]
     private _guesses: Guess[]

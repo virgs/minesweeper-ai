@@ -16,12 +16,21 @@
                 <button class="dropdown-item" type="button"
                     @click="$emit('newGameButtonClick', { board: GameConfigurations.Intermediate })">INTERMEDIATE</button>
             </li>
-            <li><button class="dropdown-item" type="button"
-                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Expert })">EXPERT</button></li>
+            <li>
+                <button class="dropdown-item" type="button"
+                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Expert })">EXPERT</button>
+            </li>
             <li>
                 <hr class="dropdown-divider">
             </li>
+            <li>
+                <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#customBoardModal">CUSTOM
+                </button>
+            </li>
         </ul>
+    </div>
+    <div class="modal" id="customBoardModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <CustomBoardModal></CustomBoardModal>
     </div>
 </template>
 
@@ -29,11 +38,12 @@
 import type { BoardProperties } from '@/constants/BoardProperties';
 import { GameConfigurations } from '@/constants/GameConfiguration';
 import Pannel from './Pannel.vue';
+import CustomBoardModal from './CustomBoardModal.vue';
 
 
 export default {
     name: 'Dashboard',
-    components: { Pannel },
+    components: { Pannel, CustomBoardModal },
     emits: {
         newGameButtonClick: (configuration: { board: BoardProperties }) => true,
     },
@@ -87,5 +97,9 @@ export default {
 
 #newGameButton {
     font-size: x-large;
+}
+
+.modal {
+    color: #444;
 }
 </style>
