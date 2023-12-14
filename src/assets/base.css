@@ -1,6 +1,8 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
     --game-font-family: 'Exo', sans-serif;
+    --background-color: #222222;
+    --cell-size: 26px;
 
     --vt-c-white: #ffffff;
     --vt-c-white-soft: #f8f8f8;

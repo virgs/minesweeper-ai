@@ -56,22 +56,10 @@ export default {
             required: true,
         },
     },
-    mounted() {
-        this.startNewGame({ board: this.currentGameConfiguration })
-        document.onkeyup = (key: KeyboardEvent) => {
-            switch (key.code) {
-                case 'F2': {
-                    this.startNewGame({ board: this.currentGameConfiguration })
-                    break
-                }
-            }
-        };
-    },
     data() {
         return {
             timer: 0,
             timerInterval: undefined as number | undefined,
-            currentGameConfiguration: GameConfigurations.Intermediate
         }
     },
     watch: {
@@ -91,7 +79,6 @@ export default {
         startNewGame(configuration: { board: BoardProperties }) {
             clearInterval(this.timerInterval)
             this.timer = 0
-            this.currentGameConfiguration = configuration.board
             this.$emit('newGame', configuration)
         }
     },

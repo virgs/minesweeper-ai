@@ -43,15 +43,16 @@ div label {
 }
 
 div input {
-    width: 75px;
+    width: 100px;
     font-family: "F7-Segment";
     height: max-content;
     font-size: x-large;
-    background-color: black;
+    background-color: var(--background-color);
+    ;
     border-radius: 3px;
     letter-spacing: 2px;
     border: 2px solid #ddd;
-    color: red;
+    color: #FF4136;
     text-align: right;
     pointer-events: none
 }

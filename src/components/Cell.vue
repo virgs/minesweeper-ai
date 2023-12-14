@@ -137,8 +137,8 @@ export default {
 .cell {
     position: relative;
     padding: 0;
-    height: 26px;
-    width: 26px;
+    height: var(--cell-size);
+    width: var(--cell-size);
 }
 
 .hint {

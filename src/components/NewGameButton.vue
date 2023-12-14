@@ -1,6 +1,6 @@
 <template>
     <div class="btn-group">
-        <button id="newGameButton" type="button" class="btn btn-light p-1 px-3" @click="clicked">
+        <button id="newGameButton" type="button" class="btn btn-light p-1 px-3" @click="clicked(currentGameConfiguration)">
             <div v-html="smiley"></div>
         </button>
         <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
@@ -9,16 +9,14 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <button class="dropdown-item" type="button"
-                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Beginner })">BEGINNER</button>
+                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Beginner)">BEGINNER</button>
             </li>
             <li>
                 <button class="dropdown-item" type="button"
-                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Intermediate })">INTERMEDIATE</button>
+                    @click="clicked(GameConfigurations.Intermediate)">INTERMEDIATE</button>
             </li>
             <li>
-                <button class="dropdown-item" type="button"
-                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Expert })">EXPERT</button>
+                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Expert)">EXPERT</button>
             </li>
             <li>
                 <hr class="dropdown-divider">
@@ -30,7 +28,7 @@
         </ul>
     </div>
     <div class="modal" id="customBoardModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <CustomBoardModal></CustomBoardModal>
+        <CustomBoardModal @start="clicked"></CustomBoardModal>
     </div>
 </template>
 
@@ -84,9 +82,27 @@ export default {
             }
         }
     },
+    data() {
+        return {
+            currentGameConfiguration: GameConfigurations.Intermediate
+        }
+    },
+    mounted() {
+        this.clicked(this.currentGameConfiguration)
+        document.onkeyup = (key: KeyboardEvent) => {
+            switch (key.code) {
+                case 'F2': {
+                    this.clicked(this.currentGameConfiguration)
+                    break
+                }
+            }
+        };
+    },
+
     methods: {
-        clicked() {
-            this.$emit('newGameButtonClick', { board: GameConfigurations.Intermediate })
+        clicked(board: BoardProperties) {
+            this.currentGameConfiguration = board
+            this.$emit('newGameButtonClick', { board: this.currentGameConfiguration })
         }
     }
 }

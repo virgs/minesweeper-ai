@@ -37,11 +37,19 @@
                             Looks good!
                         </div>
                     </div>
+                    <div class="form-floating">
+                        <input type="number" class="form-control text" aria-label="minesDensity" id="minesDensity"
+                            v-model="density" readonly>
+                        <label for="minesDensity">
+                            <font-awesome-icon icon="fa-solid fa-land-mine-on" />
+                            Mines density
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer py-2">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                    @click="$emit('newGameButtonClick', { board: GameConfigurations.Expert })">Start</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" :disabled="!validBoard"
+                    @click="start">Start</button>
             </div>
         </div>
     </div>
@@ -55,7 +63,7 @@ import { GameConfigurations } from '@/constants/GameConfiguration';
 export default {
     name: 'CustomBoardModal',
     emits: {
-        newGameButtonClick: (configuration: { board: BoardProperties }) => true,
+        start: (board: BoardProperties) => true,
     },
     setup() {
         return {
@@ -63,6 +71,15 @@ export default {
         }
     },
     data() {
+        const html = document.getElementsByTagName('html')[0]
+        const htmlWidth = html.offsetWidth;
+        const htmlHeight = html.offsetHeight;
+        console.log('cell size: ' + getComputedStyle(document.documentElement)
+            .getPropertyValue('--cell-size)'));
+        console.log('htmlWidth: ' + htmlWidth)
+        console.log('htmlHeight: ' + htmlHeight)
+
+        //mines density can't be higher than 90%
         return {
             height: 16,
             width: 16,
@@ -71,13 +88,32 @@ export default {
     },
     watch: {
         height() {
-            this.height = Math.min(50, Math.min(10, this.height))
+            this.height = Math.min(50, Math.max(10, this.height))
         },
         width() {
-            this.width = Math.min(50, Math.min(10, this.width))
+            this.width = Math.min(50, Math.max(10, this.width))
         },
         mines() {
-            this.mines = Math.min(200, Math.min(10, this.mines))
+            this.mines = Math.min(200, Math.max(10, this.mines))
+        }
+    },
+    computed: {
+        density() {
+            return this.mines / (this.width * this.height)
+        },
+        maxWidth() {
+
+        },
+        maxHeight() {
+
+        },
+        validBoard() {
+            return true
+        }
+    },
+    methods: {
+        start() {
+            this.$emit('start', ({ width: this.width, height: this.height, mines: this.mines }))
         }
     }
 }
