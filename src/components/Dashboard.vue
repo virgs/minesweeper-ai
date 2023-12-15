@@ -1,5 +1,5 @@
 <template>
-    <div id="dashboard" class="row gx-3 mb-3 m-0 align-items-end">
+    <div id="dashboard" class="row gx-0 mb-3 m-0 align-items-end justify-content-between">
         <div class="col-auto">
             <Pannel labelIcon="fa-solid fa-land-mine-on" label="Mines" :value="remainingMines.toString()">
             </Pannel>
@@ -12,21 +12,20 @@
             <Pannel labelIcon="fa-solid fa-hourglass" label="Time" :value="(timer / 10).toString().padEnd(3, '.0')">
             </Pannel>
         </div>
-        <div class="w-100 divider my-2"></div>
-        <div class="col-auto ms-auto">
-            <AiControlPannel></AiControlPannel>
+        <div class="col-12 mt-2">
+            <AiControlPannel :game-is-running="gameIsRunning" @aiAction="aiAction"></AiControlPannel>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import type { AiAction } from '@/constants/AiAction';
 import type { BoardProperties } from '@/constants/BoardProperties';
 import type { Board } from '@/engine/Board';
 import type { PropType } from 'vue';
+import AiControlPannel from './AiControlPannel.vue';
 import NewGameButton from './NewGameButton.vue';
 import Pannel from './Pannel.vue';
-import AiControlPannel from './AiControlPannel.vue';
-import { GameConfigurations } from '@/constants/GameConfiguration';
 
 
 export default {
@@ -34,7 +33,7 @@ export default {
     components: { Pannel, NewGameButton, AiControlPannel },
     emits: {
         newGame: (configuration: { board: BoardProperties }) => true,
-        update: (aiAction: string) => true,
+        aiAction: (aiAction: AiAction) => true
     },
     props: {
         board: {
@@ -78,14 +77,17 @@ export default {
         },
     },
     methods: {
-        startNewGame(configuration: { board: BoardProperties }) {
+        aiAction(action: AiAction): void {
+            this.$emit('aiAction', action)
+        },
+        startNewGame(configuration: { board: BoardProperties }): void {
             clearInterval(this.timerInterval)
             this.timer = 0
             this.$emit('newGame', configuration)
         }
     },
     computed: {
-        remainingMines() {
+        remainingMines(): number {
             return this.board.properties.mines - Math.max(this.board.cells
                 .filter(cell => cell.flagged).length, 0)
         }
@@ -98,13 +100,5 @@ export default {
 
 #dashboard {
     padding: 5px 0;
-}
-
-.divider {
-    height: 0;
-    margin: var(--bs-dropdown-divider-margin-y) 0;
-    overflow: hidden;
-    border-top: 1px solid #ddd;
-    opacity: 1;
 }
 </style>

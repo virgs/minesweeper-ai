@@ -1,30 +1,56 @@
 <template>
-    <div>
-        <label for="ai-control-pannel" class="form-label label">
-            <font-awesome-icon icon="fa-solid fa-robot" />
-        </label>
+    <div class="collapse-button" data-bs-toggle="collapse" data-bs-target="#aiControlCollapse" aria-expanded="false"
+        aria-controls="aiControlCollapse">
+        <font-awesome-icon class="collapse-icon" icon="fa-solid fa-robot" />
+        <div class="divider">
+        </div>
     </div>
-    <div id="ai-control-pannel" class="btn-group text" role="group" aria-label="AI options">
-        <!-- <label class="form-label label"> <font-awesome-icon icon="fa-solid fa-robot" /> </label> -->
-        <button type="button" class="btn btn-info">
-            <!-- Hint -->
-            <font-awesome-icon icon="fa-solid fa-wand-sparkles" />
-        </button>
-        <button type="button" class="btn btn-success">
-            <!-- Play safe -->
-            <font-awesome-icon icon="fa-solid fa-play" />
-        </button>
-        <button type="button" class="btn btn-danger">
-            <!-- Guess -->
-            <font-awesome-icon icon="fa-solid fa-dice" />
-        </button>
+    <div class="collapse" id="aiControlCollapse">
+        <div class="card card-body p-0 pt-1" style="background-color: transparent; border: none;">
+            <div class="btn-group text" role="group" aria-label="AI options">
+                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT_SAFE)" type="button"
+                    class="btn btn-info">
+                    <font-awesome-icon icon="fa-solid fa-wand-sparkles" />
+                </button>
+                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT_MINE)" type="button"
+                    class="btn btn-info">
+                    <font-awesome-icon icon="fa-solid fa-bullseye" />
+                </button>
+                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.PLAY)" type="button"
+                    class="btn btn-success">
+                    <!-- Play safe -->
+                    <font-awesome-icon icon="fa-solid fa-play" />
+                </button>
+                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.GUESS)" type="button"
+                    class="btn btn-danger">
+                    <!-- Guess -->
+                    <font-awesome-icon icon="fa-solid fa-dice" />
+                </button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
+import { AiAction } from '@/constants/AiAction';
+
 
 export default {
     name: 'AiControlPannel',
+    setup() {
+        return {
+            AiAction
+        }
+    },
+    props: {
+        gameIsRunning: {
+            type: Boolean,
+            required: false,
+        }
+    },
+    emits: {
+        aiAction: (aiAction: AiAction) => true,
+    },
     data() {
         return {
         }
@@ -33,11 +59,21 @@ export default {
 </script>
 
 <style scoped>
-label {
-    margin: 0;
-    margin-bottom: 2px;
+.divider {
+    border-bottom: 1px solid #aaa;
+    height: 15px;
+    min-width: calc(100% - 30px);
+    float: right;
+}
+
+.collapse-icon {
     color: #444;
-    letter-spacing: 1px;
-    font-weight: lighter;
+    width: 20px;
+    transition: all ease 200ms;
+}
+
+.collapse-button:hover>.collapse-icon {
+    transform: scale(1.25);
+    filter: brightness(1.1);
 }
 </style>

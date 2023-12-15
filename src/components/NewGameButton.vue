@@ -9,14 +9,22 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Beginner)">BEGINNER</button>
+                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Beginner)">
+                    <font-awesome-icon icon="fa-regular fa-star" />
+                    BEGINNER
+                </button>
             </li>
             <li>
-                <button class="dropdown-item" type="button"
-                    @click="clicked(GameConfigurations.Intermediate)">INTERMEDIATE</button>
+                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Intermediate)">
+                    <font-awesome-icon icon="fa-regular fa-star-half-stroke" />
+                    INTERMEDIATE
+                </button>
             </li>
             <li>
-                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Expert)">EXPERT</button>
+                <button class="dropdown-item" type="button" @click="clicked(GameConfigurations.Expert)">
+                    <font-awesome-icon icon="fa-solid fa-star" />
+                    EXPERT
+                </button>
             </li>
             <li>
                 <hr class="dropdown-divider">

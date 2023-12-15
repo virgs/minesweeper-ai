@@ -143,10 +143,6 @@ export default {
     width: var(--cell-size);
 }
 
-.hint {
-    background-color: lightblue;
-}
-
 .cell div {
     position: relative;
     left: 50%;
@@ -159,6 +155,10 @@ export default {
 
 .cell.mine {
     background-color: #ff4136;
+}
+
+.hint {
+    background-color: #24a428;
 }
 
 .flag {
