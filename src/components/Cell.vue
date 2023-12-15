@@ -3,14 +3,14 @@
         @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle">
-                <font-awesome-icon icon="fa-solid fa-bomb" :shake="explodedBombId === cell.id" />
+                <font-awesome-icon icon="fa-solid fa-bomb" :shake="minesweeperStore.explodedBombId === cell.id" />
             </span>
             <span v-else class="text" :style="numberStyle">
                 {{ cell.minesAround }}
             </span>
         </div>
         <div v-else-if="cell.flagged" class="flag">
-            <font-awesome-icon v-if="gameOver && !cell.hasMine" icon="fa-solid fa-xmark" shake />
+            <font-awesome-icon v-if="minesweeperStore.gameOver && !cell.hasMine" icon="fa-solid fa-xmark" shake />
             <font-awesome-icon v-else-if="cell.aiMarkedMine" icon="fa-solid fa-flag" class="aiFlag" />
             <font-awesome-icon v-else icon="fa-solid fa-flag" />
         </div>
@@ -21,24 +21,22 @@
 import { MouseButtons } from '@/constants/MouseButtons'
 import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
-import { type PropType } from 'vue'
+import { useMinesweeperStore } from '@/store/store'
+import { mapActions } from 'pinia'
 
 export default {
     name: 'Cell',
-    emits: ['clicked', 'chorded'],
+    setup() {
+        const minesweeperStore = useMinesweeperStore()
+        return {
+            minesweeperStore
+        }
+    },
     props: {
-        cell: {
-            type: Object as PropType<Cell>,
-            required: true,
-        },
-        explodedBombId: {
+        cellId: {
             type: Number,
-            required: false,
-        },
-        gameOver: {
-            type: Boolean,
             required: true,
-        },
+        }
     },
     data() {
         return {
@@ -46,6 +44,11 @@ export default {
         }
     },
     computed: {
+        ...mapActions(useMinesweeperStore, ['getCellById']),
+        cell(): Cell {
+            const it = this.minesweeperStore.getCellById(this.cellId)
+            return it
+        },
         isRevealed() {
             return this.cell.isRevealed()
         },
@@ -68,7 +71,7 @@ export default {
             const style: any = {
                 color: 'black',
             }
-            if (this.explodedBombId === this.cell.id) {
+            if (this.minesweeperStore.explodedBombId === this.cell.id) {
                 style.color = '#ff4136'
             }
             return style
@@ -78,18 +81,19 @@ export default {
         },
     },
     methods: {
+        ...mapActions(useMinesweeperStore, ['unflagCell', 'flagCell', 'cellClick']),
         preventRightClickDefaultBehavior(event: Event) {
             event.preventDefault()
         },
         mouseDownEvent(event: MouseEvent) {
-            if (this.gameOver || this.cell.isRevealed()) {
+            if (this.minesweeperStore.gameOver || this.cell.isRevealed()) {
                 return
             }
             this.mouseButtonDown = event.buttons
             if (this.mouseButtonDown === MouseButtons.RIGHT) {
                 this.cell.flagged = !this.cell.flagged
                 if (!this.cell.flagged) {
-                    this.cell.aiMarkedMine = false
+                    this.unflagCell(this.cellId)
                 }
             }
         },
@@ -97,7 +101,7 @@ export default {
             if (this.cell.isNotRevealed() && !this.cell.flagged) {
                 if (this.mouseButtonDown === MouseButtons.LEFT) {
                     if (this.cell.isNotRevealed() && !this.cell.flagged) {
-                        this.$emit('clicked', { cell: this.cell })
+                        this.minesweeperStore.cellClick(this.cell)
                     }
                 }
             }
@@ -105,7 +109,7 @@ export default {
         },
         doubleClick(event: MouseEvent) {
             if (this.isRevealed) {
-                this.$emit('chorded', { cell: this.cell })
+                this.minesweeperStore.cellChorded(this.cell)
             }
         },
     },
@@ -115,6 +119,7 @@ export default {
 <style scoped>
 .btn {
     background-color: #75caeb;
+    transition: all ease 200ms;
 }
 
 .btn:hover {
@@ -130,7 +135,6 @@ export default {
 }
 
 .btn.revealed,
-
 .btn:disabled {
     background-color: #e8e8e8;
     border-color: #ddd;
@@ -158,6 +162,7 @@ export default {
 }
 
 .hint {
+    transition: all ease 200ms;
     background-color: #24a428;
 }
 

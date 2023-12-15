@@ -1,9 +1,8 @@
 <template>
     <div id="grid" class="p-0">
-        <div v-for="line in board.properties.height" class="btn-group mx-auto">
-            <div v-for="column in board.properties.width">
-                <CellVue :cell="board.getCellByLocation(column - 1, line - 1)!" @clicked="cellClick" :gameOver="gameOver"
-                    :explodedBombId="explodedBombId" @chorded="cellChorded" />
+        <div v-for="line in minesweeperStore.boardProperties.height" class="btn-group mx-auto">
+            <div v-for="column in minesweeperStore.boardProperties.width">
+                <CellVue :cell-id="minesweeperStore.getCellByLocation(column - 1, line - 1)!.id" />
             </div>
         </div>
     </div>
@@ -11,42 +10,17 @@
 
 <script lang="ts">
 import CellVue from '@/components/Cell.vue'
-import { Board } from '@/engine/Board'
-import type { Cell } from '@/engine/Cell'
-import { type PropType } from 'vue'
+import { useMinesweeperStore } from '@/store/store'
 
 export default {
     name: 'Grid',
     components: { CellVue },
-    emits: ['cellClick'],
-    props: {
-        board: {
-            type: Object as PropType<Board>,
-            required: true,
-        },
-        explodedBombId: {
-            type: Number,
-            required: false,
-        },
-        gameOver: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    methods: {
-        cellClick(data: { cell: Cell }) {
-            this.$emit('cellClick', { cell: data.cell })
-        },
-        cellChorded(data: { cell: Cell }) {
-            const adjacentCells = this.board.getAdjacentCells(data.cell)
-            const flagsAround = adjacentCells.filter((cell) => cell.flagged).length
-            if (flagsAround === data.cell.minesAround) {
-                adjacentCells
-                    .filter((cell) => cell.isNotRevealed() && !cell.flagged)
-                    .forEach((cell) => this.$emit('cellClick', { cell: cell }))
-            }
-        },
-    },
+    setup() {
+        const minesweeperStore = useMinesweeperStore()
+        return {
+            minesweeperStore
+        }
+    }
 }
 </script>
 

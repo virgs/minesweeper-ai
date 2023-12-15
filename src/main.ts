@@ -3,8 +3,7 @@ import './assets/main.css';
 
 import { createApp } from 'vue';
 import App from './App.vue';
-
-
+import { createPinia } from 'pinia'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faArrowsLeftRight, faArrowsUpDown, faBomb, faDice, faFlag, faHourglass, faLandMineOn, faPercent,
@@ -21,6 +20,8 @@ library.add(faRegularStar, faStarHalfStroke)
 
 
 const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 

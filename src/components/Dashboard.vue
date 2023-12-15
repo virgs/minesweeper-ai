@@ -5,15 +5,14 @@
             </Pannel>
         </div>
         <div class="col" style="text-align: center;">
-            <NewGameButton :victory="victory" :mouseDown="mouseDown" :gameOver="gameOver"
-                @newGameButtonClick="startNewGame"></NewGameButton>
+            <NewGameButton :mouseDown="mouseDown"></NewGameButton>
         </div>
         <div class="col-auto">
             <Pannel labelIcon="fa-solid fa-hourglass" label="Time" :value="(timer / 10).toString().padEnd(3, '.0')">
             </Pannel>
         </div>
         <div class="col-12 mt-2">
-            <AiControlPannel :game-is-running="gameIsRunning" @aiAction="aiAction"></AiControlPannel>
+            <AiControlPannel></AiControlPannel>
         </div>
     </div>
 </template>
@@ -21,8 +20,7 @@
 <script lang="ts">
 import type { AiAction } from '@/constants/AiAction';
 import type { BoardProperties } from '@/constants/BoardProperties';
-import type { Board } from '@/engine/Board';
-import type { PropType } from 'vue';
+import { mineSweeperStoreId, useMinesweeperStore } from '@/store/store';
 import AiControlPannel from './AiControlPannel.vue';
 import NewGameButton from './NewGameButton.vue';
 import Pannel from './Pannel.vue';
@@ -31,31 +29,18 @@ import Pannel from './Pannel.vue';
 export default {
     name: 'Dashboard',
     components: { Pannel, NewGameButton, AiControlPannel },
-    emits: {
-        newGame: (configuration: { board: BoardProperties }) => true,
-        aiAction: (aiAction: AiAction) => true
-    },
     props: {
-        board: {
-            type: Object as PropType<Board>,
-            required: true,
-        },
-        gameIsRunning: {
-            type: Boolean,
-            required: false,
-        },
-        victory: {
-            type: Boolean,
-            required: false,
-        },
         mouseDown: {
             type: Boolean,
             required: true,
-        },
-        gameOver: {
-            type: Boolean,
-            required: true,
-        },
+        }
+    },
+
+    setup() {
+        const minesweeperStore = useMinesweeperStore()
+        return {
+            minesweeperStore
+        }
     },
     data() {
         return {
@@ -63,32 +48,48 @@ export default {
             timerInterval: undefined as number | undefined,
         }
     },
-    watch: {
-        gameIsRunning() {
-            if (this.gameIsRunning) {
+    mounted() {
+        this.minesweeperStore.$subscribe((mutation, state) => {
+            // console.log(state)
+            // mutation.storeId === mineSweeperStoreId
+            if (state.gameIsRunning) {
                 clearInterval(this.timerInterval)
                 this.timerInterval = setInterval(() => {
-                    if (!this.gameOver) {
+                    if (!this.minesweeperStore.gameOver) {
                         this.timer += 1
                     }
                 }, 100)
                 this.timer = 0
             }
-        },
+
+        })
+    },
+    watch: {
+        // gameIsRunning() {
+        //     if (this.gameIsRunning) {
+        //         clearInterval(this.timerInterval)
+        //         this.timerInterval = setInterval(() => {
+        //             if (!this.gameOver) {
+        //                 this.timer += 1
+        //             }
+        //         }, 100)
+        //         this.timer = 0
+        //     }
+        // },
     },
     methods: {
         aiAction(action: AiAction): void {
-            this.$emit('aiAction', action)
+            // this.$emit('aiAction', action)
         },
         startNewGame(configuration: { board: BoardProperties }): void {
             clearInterval(this.timerInterval)
             this.timer = 0
-            this.$emit('newGame', configuration)
+            this.minesweeperStore.createNewBoard(configuration.board)
         }
     },
     computed: {
         remainingMines(): number {
-            return this.board.properties.mines - Math.max(this.board.cells
+            return this.minesweeperStore.board.properties.mines - Math.max(this.minesweeperStore.board.cells
                 .filter(cell => cell.flagged).length, 0)
         }
     }

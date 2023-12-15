@@ -2,19 +2,14 @@
     <div class="collapse-button" data-bs-toggle="collapse" data-bs-target="#aiControlCollapse" aria-expanded="false"
         aria-controls="aiControlCollapse">
         <font-awesome-icon class="collapse-icon" icon="fa-solid fa-robot" />
-        <div class="divider">
-        </div>
+        <div class="divider"></div>
     </div>
     <div class="collapse" id="aiControlCollapse">
         <div class="card card-body p-0 pt-1" style="background-color: transparent; border: none;">
             <div class="btn-group text" role="group" aria-label="AI options">
-                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT_SAFE)" type="button"
+                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT)" type="button"
                     class="btn btn-info">
                     <font-awesome-icon icon="fa-solid fa-wand-sparkles" />
-                </button>
-                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT_MINE)" type="button"
-                    class="btn btn-info">
-                    <font-awesome-icon icon="fa-solid fa-bullseye" />
                 </button>
                 <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.PLAY)" type="button"
                     class="btn btn-success">

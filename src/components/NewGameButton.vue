@@ -45,38 +45,31 @@ import type { BoardProperties } from '@/constants/BoardProperties';
 import { GameConfigurations } from '@/constants/GameConfiguration';
 import Pannel from './Pannel.vue';
 import CustomBoardModal from './CustomBoardModal.vue';
-
+import { useMinesweeperStore } from '@/store/store';
 
 export default {
     name: 'Dashboard',
     components: { Pannel, CustomBoardModal },
     emits: {
-        newGameButtonClick: (configuration: { board: BoardProperties }) => true,
+        // newGameButtonClick: (configuration: { board: BoardProperties }) => true,
     },
     setup() {
+        const minesweeperStore = useMinesweeperStore()
         return {
-            GameConfigurations
+            minesweeperStore, GameConfigurations
         }
     },
     props: {
-        victory: {
-            type: Boolean,
-            required: false,
-        },
         mouseDown: {
             type: Boolean,
             required: true,
-        },
-        gameOver: {
-            type: Boolean,
-            required: true,
-        },
+        }
     },
     computed: {
         smiley() {
             // https://www.w3schools.com/charsets/ref_emoji_smileys.asp
-            if (this.gameOver) {
-                if (this.victory) {
+            if (this.minesweeperStore.gameOver) {
+                if (this.minesweeperStore.victory) {
                     return "&#128526;" //SMILING FACE WITH SUNGLASSES
                 } else {
                     return "&#128565;" //DIZZY FACE
@@ -106,11 +99,10 @@ export default {
             }
         };
     },
-
     methods: {
         clicked(board: BoardProperties) {
             this.currentGameConfiguration = board
-            this.$emit('newGameButtonClick', { board: this.currentGameConfiguration })
+            this.minesweeperStore.createNewBoard(this.currentGameConfiguration)
         }
     }
 }

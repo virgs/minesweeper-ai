@@ -78,9 +78,9 @@ import { GameConfigurations } from '@/constants/GameConfiguration';
 
 export default {
     name: 'CustomBoardModal',
-    emits: {
-        start: (board: BoardProperties) => true,
-    },
+    // emits: {
+    //     start: (board: BoardProperties) => true,
+    // },
     setup() {
         return {
             GameConfigurations
