@@ -40,11 +40,15 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             await this.solver.waitUntilItsReady()
         },
         unflagCell(id: number) {
-            this.board.getCellById(id)!.aiMarkedMine = false
-            this.board.getCellById(id)!.flagged = false
+            const cell = this.board.getCellById(id)!
+            if (!cell.aiMarkedMine) {
+                cell.aiMarkedMine = false
+                cell.flagged = false
+            }
         },
         flagCell(id: number) {
-            this.board.getCellById(id)!.flagged = true
+            const cell = this.board.getCellById(id)!
+            cell.flagged = true
         },
         checkGameOver() {
             return this.board.isGameLost() || this.board.isGameWon()
@@ -85,6 +89,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             }
         },
         finishGame() {
+            this.solver.terminate()
             this.gameIsRunning = false
             this.gameOver = true
             this.victory = this.board.isGameWon()
@@ -95,19 +100,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             switch (aiAction) {
                 case AiAction.HINT:
                     await this.solver.process()
-                    this.solver.knownMineCellsIds.concat(this.solver.knownSafeCellsIds)
-                        .sort(() => Math.random() - .5)
-                        .map(cellId => this.board.getCellById(cellId)!)
-                        .filter(cell => cell.isNotRevealed())
-                        .filter(cell => !cell.flagged)
-                        .forEach(cell => {
-                            if (this.solver.knownMineCellsIds.includes(cell?.id)) {
-                                cell!.flagged = true
-                                cell!.aiMarkedMine = true
-                            } else {
-                                cell!.aiMarkedSafe = true
-                            }
-                        })
+                    this.putAiStamp()
                     break;
                 case AiAction.PLAY:
                     this.startAi()
@@ -117,7 +110,6 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                         await this.createNewBoard(this.boardProperties)
                     }
                     const guess = await this.solver.makeGuess()
-                    console.log(guess)
                     this.cellClick(this.board.getCellById(guess.id)!)
                     break;
             }
@@ -136,21 +128,31 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             }
         },
         updateCellStates(): boolean {
-            this.solver.knownMineCellsIds
-                .map(cellId => this.board.getCellById(cellId)!)
-                .filter(cell => !cell.flagged)
-                .forEach(cell => {
-                    cell.flagged = true
-                    cell.aiMarkedMine = true
-                })
-
+            this.putAiStamp()
             const revealedAnyCell = this.solver.knownSafeCellsIds
                 .filter((cell) => this.board.cells[cell].isNotRevealed())
                 .map(cell => this.board.getCellById(cell)!)
                 .filter(cell => !cell.flagged)
-                .map(cell => this.board.revealCell(cell))
+                .map(cell => {
+                    return this.board.revealCell(cell)
+                })
                 .length > 0
             return revealedAnyCell
+        },
+        putAiStamp() {
+            this.solver.knownMineCellsIds.concat(this.solver.knownSafeCellsIds)
+                .map(cellId => this.board.getCellById(cellId)!)
+                .filter(cell => cell.isNotRevealed())
+                .filter(cell => !cell.flagged)
+                .forEach(cell => {
+                    if (this.solver.knownMineCellsIds.includes(cell?.id)) {
+                        cell!.flagged = true
+                        cell!.aiMarkedMine = true
+                    } else {
+                        cell!.aiMarkedSafe = true
+                    }
+                })
+
         }
     }
 })

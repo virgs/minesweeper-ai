@@ -2,7 +2,7 @@
     <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
         @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
-            <span v-if="cell.hasMine" :style="bombStyle">
+            <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
             </span>
             <span v-else class="text" :style="numberStyle">
@@ -58,8 +58,7 @@ export default {
                 cell: true,
                 flagged: this.cell.flagged,
                 revealed: this.isRevealed,
-                exploded: this.exploded,
-                hint: !this.isRevealed && this.cell.aiMarkedSafe,
+                hint: this.cell.aiMarkedSafe,
             }
         },
         numberStyle() {
@@ -93,9 +92,10 @@ export default {
             }
             this.mouseButtonDown = event.buttons
             if (this.mouseButtonDown === MouseButtons.RIGHT) {
-                this.cell.flagged = !this.cell.flagged
-                if (!this.cell.flagged) {
+                if (this.cell.flagged) {
                     this.unflagCell(this.cellId)
+                } else {
+                    this.flagCell(this.cellId)
                 }
             }
         },
@@ -160,12 +160,13 @@ export default {
 
 
 .exploded {
-    transform: scale(1.25);
+    font-size: 1.25rem;
 }
 
 .hint {
     transition: all ease 200ms;
-    background-color: #66d269;
+    background-color: #84ea87 !important;
+    border-color: rgb(100, 195, 102) !important;
 }
 
 .flag {

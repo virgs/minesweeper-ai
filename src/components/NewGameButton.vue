@@ -128,6 +128,10 @@ export default {
     font-size: x-large;
 }
 
+button {
+    color: #444;
+}
+
 .modal {
     color: #444;
 }

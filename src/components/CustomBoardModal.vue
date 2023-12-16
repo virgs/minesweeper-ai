@@ -1,66 +1,56 @@
 <template>
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalLabel">Custom board properties</h1>
             </div>
             <div class="modal-body">
                 <div class="input-group my-3 has-validation">
-                    <div class="row g-1">
-                        <div class="col-3">
+                    <div class="row justify-content-between">
+                        <div class="col">
                             <div class="form-floating">
-                                <input type="number" class="form-control text" aria-label="widthInput" id="widthInput"
-                                    v-model="width">
+                                <input type="number" :class="['form-control text', !validWidth ? 'is-invalid' : '']"
+                                    aria-label="widthInput" id="widthInput" v-model="width">
                                 <label for="widthInput">
                                     <font-awesome-icon icon="fa-solid fa-arrows-left-right" />
-                                    Width</label>
-                                <div class="invalid-feedback">
-                                    Please set a number between 10 and 100
-                                </div>
+                                    Width
+                                </label>
+                                <div v-show="!validWidth" class="invalid-feedback">Must be between 5 and 30</div>
                             </div>
-
                         </div>
-                        <div class="col-3">
+                        <div class="col">
                             <div class="form-floating">
-                                <input type="number" class="form-control text" aria-label="heightInput" id="heightInput"
-                                    v-model="height">
+                                <input type="number" :class="['form-control text', !validHeight ? 'is-invalid' : '']"
+                                    aria-label="heightInput" id="heightInput" v-model="height">
                                 <label for="heightInput">
                                     <font-awesome-icon icon="fa-solid fa-arrows-up-down" />
                                     Height</label>
-                                <div class="invalid-feedback">
-                                    Please set a number between 10 and 100
-                                </div>
+                                <div v-show="!validHeight" class="invalid-feedback">Must be between 5 and 20</div>
                             </div>
-
                         </div>
-                        <div class="col-3">
+                        <div class="col">
                             <div class="form-floating">
-                                <input type="number" class="form-control text" aria-label="minesInput" id="minesInput"
-                                    v-model="mines">
+                                <input type="number" :class="['form-control text', !validDensity ? 'is-invalid' : '']"
+                                    aria-label="minesInput" id="minesInput" v-model="mines">
                                 <label for="minesInput">
                                     <font-awesome-icon icon="fa-solid fa-land-mine-on" />
                                     Mines
                                 </label>
-                                <div class="valid-tooltip">
-                                    Looks good!
+                                <div v-show="!validDensity" class="invalid-feedback">Must keep density between 1% and 20%
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="form-floating">
-                                <input type="number" class="form-control text" aria-label="minesDensity" id="minesDensity"
-                                    v-model="density" readonly style="border: none; box-shadow: none;">
-                                <label for="minesDensity">
-                                    <font-awesome-icon icon="fa-solid fa-percent" />
-                                    Density
-                                </label>
+                        <div class="col-12">
+                            <div class="form-floating my-1" style="text-align: right;">
+                                <legend class="m-0"><font-awesome-icon class="mx-2" icon="fa-solid fa-percent" />Mines
+                                    density</legend>
+                                <div type="number"
+                                    :class="['text', validDensity ? 'var(--bs-form-valid-color);' : 'var(--bs-form-invalid-color);']"
+                                    aria-label="minesDensity" id="minesDensity">{{ density.toString().padEnd(5, '.00') }} %
+                                </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
             <div class="modal-footer py-2">
@@ -72,59 +62,38 @@
 </template>
 
 <script lang="ts">
-import type { BoardProperties } from '@/constants/BoardProperties';
 import { GameConfigurations } from '@/constants/GameConfiguration';
 
 
 export default {
     name: 'CustomBoardModal',
-    // emits: {
-    //     start: (board: BoardProperties) => true,
-    // },
     setup() {
         return {
             GameConfigurations
         }
     },
     data() {
-        const html = document.getElementsByTagName('body')[0]
-        const htmlWidth = html.offsetWidth;
-        const htmlHeight = html.offsetHeight;
-        console.log('cell size: ' + getComputedStyle(document.documentElement)
-            .getPropertyValue('--cell-size'));
-        console.log('htmlWidth: ' + htmlWidth)
-        console.log('htmlHeight: ' + htmlHeight)
-
-        //mines density can't be higher than 90%
         return {
             height: 16,
             width: 16,
             mines: 40,
         }
     },
-    watch: {
-        height() {
-            this.height = Math.min(50, Math.max(10, this.height))
-        },
-        width() {
-            this.width = Math.min(50, Math.max(10, this.width))
-        },
-        mines() {
-            this.mines = Math.min(200, Math.max(10, this.mines))
-        }
-    },
     computed: {
         density() {
-            return this.mines / (this.width * this.height)
+            return Math.trunc(10000 * this.mines / (this.width * this.height)) / 100
         },
-        maxWidth() {
-
+        validWidth() {
+            return this.width >= 5 && this.width <= 30
         },
-        maxHeight() {
-
+        validHeight() {
+            return this.height >= 5 && this.height <= 20
+        },
+        validDensity() {
+            return this.density >= 1 && this.density <= 25
         },
         validBoard() {
-            return true
+            return this.validHeight && this.validWidth && this.validDensity;
         }
     },
     methods: {

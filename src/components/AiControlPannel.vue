@@ -1,5 +1,5 @@
 <template>
-    <div class="collapse-button" data-bs-toggle="collapse" data-bs-target="#aiControlCollapse" aria-expanded="false"
+    <div class="collapse-button mb-1" data-bs-toggle="collapse" data-bs-target="#aiControlCollapse" aria-expanded="false"
         aria-controls="aiControlCollapse">
         <font-awesome-icon class="collapse-icon" icon="fa-solid fa-robot" />
         <div class="divider"></div>
@@ -83,6 +83,6 @@ export default {
 }
 
 .card-body {
-    max-width: 400px;
+    max-width: 450px;
 }
 </style>
