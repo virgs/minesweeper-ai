@@ -1,32 +1,31 @@
 import 'bootswatch/dist/lumen/bootstrap.min.css'
 import './assets/main.css'
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createPinia } from 'pinia'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
 import {
     faArrowsLeftRight,
     faArrowsUpDown,
     faBomb,
+    faBullseye,
     faDice,
     faFlag,
+    faForward,
+    faForwardStep,
     faHourglass,
     faLandMineOn,
     faPercent,
-    faPlay,
     faRobot,
+    faStar as faSolidStar,
     faWandSparkles,
     faXmark,
-    faStar as faSolidStar,
-    faBullseye,
-    faForwardStep,
-    faForward,
 } from '@fortawesome/free-solid-svg-icons'
-import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ReportGenerator } from './solver/ReportGenerator'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
+import App from './App.vue'
 import { GameConfigurations } from './constants/GameConfiguration'
+import { ReportGenerator } from './solver/ReportGenerator'
 
 //solid
 library.add(
@@ -49,24 +48,26 @@ library.add(
 )
 library.add(faRegularStar, faStarHalfStroke)
 
-// const app = createApp(App)
-// const pinia = createPinia()
-// app.use(pinia)
-// app.component('font-awesome-icon', FontAwesomeIcon)
-// app.mount('#app')
+const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
+app.component('font-awesome-icon', FontAwesomeIcon)
+app.mount('#app')
 
-await new ReportGenerator(GameConfigurations.Beginner, {
-    numberOfGames: 1000,
-    workers: 20,
-    filename: 'Beginner',
-}).run()
-await new ReportGenerator(GameConfigurations.Intermediate, {
-    numberOfGames: 1000,
-    workers: 20,
-    filename: 'Intermediate',
-}).run()
-await new ReportGenerator(GameConfigurations.Expert, {
-    numberOfGames: 1000,
-    workers: 20,
-    filename: 'Expert',
-}).run()
+const generateReports = async (preffix: string) => {
+    await new ReportGenerator(GameConfigurations.Beginner, {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: preffix + 'Beginner',
+    }).run()
+    await new ReportGenerator(GameConfigurations.Intermediate, {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: preffix + 'Intermediate',
+    }).run()
+    await new ReportGenerator(GameConfigurations.Expert, {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: preffix + 'Expert',
+    }).run()
+}
