@@ -43,17 +43,20 @@ export class GuessMaker {
         const propositionsPool = this.solver.getPropositions().concat([independents])
 
         let lowestRatio = Infinity
-        let lowestRatioId = -1
+        let lowestRatioIndex = -1
         for (let i = 0; i < propositionsPool.length; ++i) {
             if (propositionsPool[i].getCells().length > 0) {
                 if (propositionsPool[i].getMineRatio() < lowestRatio) {
                     lowestRatio = propositionsPool[i].getMineRatio()
-                    lowestRatioId = i
+                    lowestRatioIndex = i
                 }
             }
         }
 
-        const lowestRatioProposition = propositionsPool[lowestRatioId]
+        if (lowestRatioIndex < 0 || lowestRatioIndex >= propositionsPool.length) {
+            console.log(`lowestRatioIndex out of range: ${lowestRatioIndex} (${propositionsPool.length})`)
+        }
+        const lowestRatioProposition = propositionsPool[lowestRatioIndex]
 
         return {
             id: lowestRatioProposition.getCells()[

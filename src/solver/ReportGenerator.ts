@@ -23,7 +23,8 @@ type Report = {
     victoryRatio: number
     totalGames: number
     games: ReportItem[]
-    numOfGuessesAvg: number
+    victoryGuessesAvg: number
+    lossGuessesAvg: number
     victoryGuessFactorAverage: number
     lossesMinesCellsFoundRatioAverage: number
     lossesSafeCellsFoundRatioAverage: number
@@ -97,21 +98,27 @@ export class ReportGenerator {
     }
 
     private generateReport(games: ReportItem[]): Report {
+        const victories = games
+            .filter((result) => result.victory)
+        const losses = games
+            .filter((result) => !result.victory)
         return {
             timestamp: Date.now(),
             boardProperties: this.boardConfiguration,
             victoryRatio: games.filter((result) => result.victory).length / games.length,
             totalGames: games.length,
-            numOfGuessesAvg:
-                games.reduce((acc, game) => (game.victory ? game.guesses.length + acc : acc), 0) / games.length,
+            victoryGuessesAvg:
+                victories.reduce((acc, game) => (game.guesses.length + acc), 0) / victories.length,
             victoryGuessFactorAverage:
-                games.reduce((acc, game) => (game.victory ? game.guessFactor + acc : acc), 0) / games.length,
+                victories.reduce((acc, game) => (game.guessFactor + acc), 0) / victories.length,
+            lossGuessesAvg:
+                losses.reduce((acc, game) => (game.guesses.length + acc), 0) / losses.length,
             lossesMinesCellsFoundRatioAverage:
-                games.reduce((acc, game) => (!game.victory ? game.mineCellsFoundRatio + acc : acc), 0) / games.length,
+                losses.reduce((acc, game) => (game.mineCellsFoundRatio + acc), 0) / losses.length,
             lossesSafeCellsFoundRatioAverage:
-                games.reduce((acc, game) => (!game.victory ? game.safeCellsFoundRatio + acc : acc), 0) / games.length,
+                losses.reduce((acc, game) => (game.safeCellsFoundRatio + acc), 0) / losses.length,
             lossesAiUpdatesAverage:
-                games.reduce((acc, game) => (!game.victory ? game.aiUpdates + acc : acc), 0) / games.length,
+                losses.reduce((acc, game) => (game.aiUpdates + acc), 0) / losses.length,
             games: games,
         }
     }
