@@ -27,7 +27,7 @@ export class Solver {
 
     public constructor(board: Board) {
         this.worker = new Worker()
-        this.readyPromiseResolve = new Promise<void>(resolve => {
+        this.readyPromiseResolve = new Promise<void>((resolve) => {
             this.worker.onmessage = (event: MessageEvent) => {
                 this.createWorkerHooks()
                 resolve()
@@ -43,7 +43,7 @@ export class Solver {
     }
 
     public async waitUntilItsReady(): Promise<void> {
-        return this.readyPromiseResolve;
+        return this.readyPromiseResolve
     }
 
     public get aiUpdates(): number {
@@ -55,7 +55,7 @@ export class Solver {
     }
 
     public async process(): Promise<void> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             ++this._AiUpdates
             const model = this.createModel()
 

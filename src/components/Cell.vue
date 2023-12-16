@@ -1,6 +1,13 @@
 <template>
-    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
+    <button
+        type="button"
+        class="btn btn-primary"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent"
+        @mouseup="mouseUpEvent"
+        @dblclick="doubleClick"
+        :class="classStyle"
+    >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -29,14 +36,14 @@ export default {
     setup() {
         const minesweeperStore = useMinesweeperStore()
         return {
-            minesweeperStore
+            minesweeperStore,
         }
     },
     props: {
         cellId: {
             type: Number,
             required: true,
-        }
+        },
     },
     data() {
         return {
@@ -59,6 +66,7 @@ export default {
                 flagged: this.cell.flagged,
                 revealed: this.isRevealed,
                 hint: this.cell.aiMarkedSafe,
+                guess: this.cell.aiGuessed,
             }
         },
         numberStyle() {
@@ -158,19 +166,25 @@ export default {
     font-style: normal;
 }
 
-
 .exploded {
     font-size: 1.25rem;
 }
 
-.hint {
+.btn.hint {
     transition: all ease 200ms;
-    background-color: #84ea87 !important;
-    border-color: rgb(100, 195, 102) !important;
+    background-color: #84ea87;
+    border-width: 0 1px 4px 1px;
+    border-color: rgb(100, 195, 102);
 }
 
 .flag {
     color: #ff4136;
+}
+
+.btn.guess {
+    background-color: #e67818;
+    border-width: 2px;
+    border-color: #eba161;
 }
 
 .aiFlag {

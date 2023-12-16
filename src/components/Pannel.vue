@@ -3,13 +3,12 @@
         <label :for="id" class="form-label label">
             <font-awesome-icon v-if="labelIcon" :icon="labelIcon" />
         </label>
-        <input type="text" class="form-control text p-0 px-2 m-0" :id="id" readonly :value="value">
+        <input type="text" class="form-control text p-0 px-2 m-0" :id="id" readonly :value="value" />
     </div>
 </template>
 
 <script lang="ts">
-
-let counter = 0;
+let counter = 0
 
 export default {
     name: 'Pannel',
@@ -25,9 +24,9 @@ export default {
     },
     data() {
         return {
-            id: 'pannel-input-' + counter++
+            id: 'pannel-input-' + counter++,
         }
-    }
+    },
 }
 </script>
 
@@ -42,15 +41,15 @@ label {
 
 div input {
     width: 80px;
-    font-family: "F7-Segment";
+    font-family: 'F7-Segment';
     height: max-content;
     font-size: x-large;
     background-color: var(--background-color);
     border-radius: 3px;
     letter-spacing: 2px;
     border: 2px solid #ddd;
-    color: #FF4136;
+    color: #ff4136;
     text-align: right;
-    pointer-events: none
+    pointer-events: none;
 }
 </style>

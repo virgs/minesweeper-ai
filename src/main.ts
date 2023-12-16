@@ -1,23 +1,48 @@
-import "bootswatch/dist/lumen/bootstrap.min.css";
-import './assets/main.css';
+import 'bootswatch/dist/lumen/bootstrap.min.css'
+import './assets/main.css'
 
-import { createApp } from 'vue';
-import App from './App.vue';
+import { createApp } from 'vue'
+import App from './App.vue'
 import { createPinia } from 'pinia'
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-    faArrowsLeftRight, faArrowsUpDown, faBomb, faDice, faFlag, faHourglass, faLandMineOn, faPercent,
-    faPlay, faRobot, faWandSparkles, faXmark, faStar as faSolidStar, faBullseye
-} from '@fortawesome/free-solid-svg-icons';
-import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    faArrowsLeftRight,
+    faArrowsUpDown,
+    faBomb,
+    faDice,
+    faFlag,
+    faHourglass,
+    faLandMineOn,
+    faPercent,
+    faPlay,
+    faRobot,
+    faWandSparkles,
+    faXmark,
+    faStar as faSolidStar,
+    faBullseye,
+} from '@fortawesome/free-solid-svg-icons'
+import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 //solid
-library.add(faBomb, faFlag, faXmark, faDice, faWandSparkles, faPlay,
-    faRobot, faLandMineOn, faArrowsLeftRight, faArrowsUpDown, faPercent,
-    faHourglass, faRobot, faSolidStar, faBullseye)
+library.add(
+    faBomb,
+    faFlag,
+    faXmark,
+    faDice,
+    faWandSparkles,
+    faPlay,
+    faRobot,
+    faLandMineOn,
+    faArrowsLeftRight,
+    faArrowsUpDown,
+    faPercent,
+    faHourglass,
+    faRobot,
+    faSolidStar,
+    faBullseye
+)
 library.add(faRegularStar, faStarHalfStroke)
-
 
 const app = createApp(App)
 const pinia = createPinia()

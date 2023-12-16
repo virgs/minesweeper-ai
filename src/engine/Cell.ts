@@ -6,6 +6,7 @@ export class Cell {
     private _flagged: boolean
     private _aiMarkedMine: boolean
     private _aiMarkedSafe: boolean
+    private _aiGuessed: boolean
 
     public constructor(id: number) {
         this.mine = false
@@ -14,6 +15,7 @@ export class Cell {
         this._aiMarkedMine = false
         this._aiMarkedSafe = false
         this._flagged = false
+        this._aiGuessed = false
         this._id = id
     }
 
@@ -26,6 +28,12 @@ export class Cell {
     }
     public set flagged(value: boolean) {
         this._flagged = value
+    }
+    public get aiGuessed(): boolean {
+        return this._aiGuessed
+    }
+    public set aiGuessed(value: boolean) {
+        this._aiGuessed = value
     }
 
     public get hasMine(): boolean {

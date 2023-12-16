@@ -14,7 +14,7 @@ export class Solver {
     }
 
     public setBoard(board: Board): void {
-        this.board = board;
+        this.board = board
     }
 
     public getBoard(): Board {
@@ -36,7 +36,6 @@ export class Solver {
     public run(): void {
         this.createNewPropositions()
         while (true) {
-
             this.checkMainPropositionAddition()
             this.propositionsSolver.run()
 
@@ -55,14 +54,21 @@ export class Solver {
 
     private checkMainPropositionAddition(): boolean {
         const totalCells = this.board.properties.height * this.board.properties.width
-        if (!this.addedMainProposition &&
-            totalCells - (this.propositionsSolver.getKnownSafeCellsIds().length + this.propositionsSolver.getKnownMineCellsIds().length) <= 10) {
+        if (
+            !this.addedMainProposition &&
+            totalCells -
+                (this.propositionsSolver.getKnownSafeCellsIds().length +
+                    this.propositionsSolver.getKnownMineCellsIds().length) <=
+                10
+        ) {
             const initialPropositionCells: i32[] = new Array(totalCells)
             for (let i = 0; i < this.board.cells.length; ++i) {
                 initialPropositionCells.push(this.board.cells[i]._id)
             }
             this.addedMainProposition = true
-            this.propositionsSolver.addPropositions([new Proposition('*', initialPropositionCells, this.board.properties.mines)])
+            this.propositionsSolver.addPropositions([
+                new Proposition('*', initialPropositionCells, this.board.properties.mines),
+            ])
             return true
         }
         return false
@@ -82,5 +88,4 @@ export class Solver {
             this.propositionsSolver.addPropositions([newProposition])
         }
     }
-
 }

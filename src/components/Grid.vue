@@ -18,9 +18,9 @@ export default {
     setup() {
         const minesweeperStore = useMinesweeperStore()
         return {
-            minesweeperStore
+            minesweeperStore,
         }
-    }
+    },
 }
 </script>
 

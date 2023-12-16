@@ -46,7 +46,6 @@ export class HypothesisRunner {
             if (ps.hasContradictions()) {
                 this.knownMines.push(currentCell)
             }
-
         }
         return this.knownMines.length + this.knownSafes.length > 0
     }
@@ -57,5 +56,4 @@ export class HypothesisRunner {
     public getKnownMineCellsIds(): i32[] {
         return this.knownMines
     }
-
 }

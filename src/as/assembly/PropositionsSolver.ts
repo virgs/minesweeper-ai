@@ -70,7 +70,6 @@ export class PropositionsSolver {
         return changed || newCells.length > 0
     }
 
-
     public getPropositions(): Proposition[] {
         return this.propositions
     }
@@ -154,7 +153,7 @@ export class PropositionsSolver {
             newProposition.removeSafeCells(this.safeCellsIds)
 
             if (this.hasProposition(newProposition)) {
-                continue;
+                continue
             }
 
             if (newProposition.isSatisfied()) {

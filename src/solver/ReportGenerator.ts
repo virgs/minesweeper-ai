@@ -1,40 +1,41 @@
-import type { BoardProperties } from "@/constants/BoardProperties";
-import type { Guess } from "@/constants/Guess";
-import { Board } from "@/engine/Board";
-import { Solver } from "./Solver";
+import type { BoardProperties } from '@/constants/BoardProperties'
+import type { Guess } from '@/constants/Guess'
+import { Board } from '@/engine/Board'
+import { Solver } from './Solver'
 
 export type ReportConfiguration = {
-    workers: number,
-    numberOfGames: number,
+    workers: number
+    numberOfGames: number
     filename: string
 }
 
 type ReportItem = {
-    victory: boolean,
-    mineCellsFoundRatio: number,
-    safeCellsFoundRatio: number,
-    aiUpdates: number,
+    victory: boolean
+    mineCellsFoundRatio: number
+    safeCellsFoundRatio: number
+    aiUpdates: number
     guesses: Guess[]
     guessFactor: number
 }
 
 type Report = {
-    boardProperties: BoardProperties,
-    victoryRatio: number,
-    totalGames: number,
-    games: ReportItem[],
-    victoryGuessFactorAverage: number,
-    lossesMinesCellsFoundRatioAverage: number,
-    lossesSafeCellsFoundRatioAverage: number,
-    lossesAiUpdatesAverage: number,
+    boardProperties: BoardProperties
+    victoryRatio: number
+    totalGames: number
+    games: ReportItem[]
+    numOfGuessesAvg: number
+    victoryGuessFactorAverage: number
+    lossesMinesCellsFoundRatioAverage: number
+    lossesSafeCellsFoundRatioAverage: number
+    lossesAiUpdatesAverage: number
     timestamp: number
 }
 
 export class ReportGenerator {
-    private readonly boardConfiguration: BoardProperties;
-    private readonly workers: number;
-    private readonly numberOfGames: number;
-    private readonly filename?: string;
+    private readonly boardConfiguration: BoardProperties
+    private readonly workers: number
+    private readonly numberOfGames: number
+    private readonly filename?: string
     public constructor(boardConfiguration: BoardProperties, report?: Partial<ReportConfiguration>) {
         this.boardConfiguration = boardConfiguration
         this.workers = report?.workers || 20
@@ -51,7 +52,7 @@ export class ReportGenerator {
                 promises.push(this.playOneGame())
             }
             games.push(...(await Promise.all(promises)))
-            console.log(`Generating report: ${Math.trunc(10000 * games.length / this.numberOfGames) / 100}%`)
+            console.log(`Generating report: ${Math.trunc((10000 * games.length) / this.numberOfGames) / 100}%`)
         }
 
         const report: Report = this.generateReport(games)
@@ -79,8 +80,7 @@ export class ReportGenerator {
                 board.revealCell(board.getCellById(guess.id)!)
             }
         }
-        const validGuesses = solver.guesses
-            .filter((item, index) => index > 0 && item.mines > 0)
+        const validGuesses = solver.guesses.filter((item, index) => index > 0 && item.mines > 0)
         solver.terminate()
 
         const result: ReportItem = {
@@ -89,10 +89,9 @@ export class ReportGenerator {
             safeCellsFoundRatio: solver.knownSafeCellsIds.length / totalCells,
             aiUpdates: solver.aiUpdates,
             guesses: validGuesses,
-            guessFactor: validGuesses
-                .reduce((acc, guess) => {
-                    return acc * (guess.mines / guess.cells)
-                }, 1)
+            guessFactor: validGuesses.reduce((acc, guess) => {
+                return acc * (guess.mines / guess.cells)
+            }, 1),
         }
         return result
     }
@@ -101,34 +100,32 @@ export class ReportGenerator {
         return {
             timestamp: Date.now(),
             boardProperties: this.boardConfiguration,
-            games: games,
-            victoryRatio: games
-                .filter(result => result.victory)
-                .length / games.length,
+            victoryRatio: games.filter((result) => result.victory).length / games.length,
             totalGames: games.length,
-            victoryGuessFactorAverage: games
-                .reduce((acc, game) => game.victory ? game.guessFactor + acc : acc, 0) / games.length,
-            lossesMinesCellsFoundRatioAverage: games
-                .reduce((acc, game) => !game.victory ? game.mineCellsFoundRatio + acc : acc, 0) / games.length,
-            lossesSafeCellsFoundRatioAverage: games
-                .reduce((acc, game) => !game.victory ? game.safeCellsFoundRatio + acc : acc, 0) / games.length,
-            lossesAiUpdatesAverage: games
-                .reduce((acc, game) => !game.victory ? game.aiUpdates + acc : acc, 0) / games.length,
+            numOfGuessesAvg:
+                games.reduce((acc, game) => (game.victory ? game.guesses.length + acc : acc), 0) / games.length,
+            victoryGuessFactorAverage:
+                games.reduce((acc, game) => (game.victory ? game.guessFactor + acc : acc), 0) / games.length,
+            lossesMinesCellsFoundRatioAverage:
+                games.reduce((acc, game) => (!game.victory ? game.mineCellsFoundRatio + acc : acc), 0) / games.length,
+            lossesSafeCellsFoundRatioAverage:
+                games.reduce((acc, game) => (!game.victory ? game.safeCellsFoundRatio + acc : acc), 0) / games.length,
+            lossesAiUpdatesAverage:
+                games.reduce((acc, game) => (!game.victory ? game.aiUpdates + acc : acc), 0) / games.length,
+            games: games,
         }
-
     }
 
     private save(report: Report) {
-        const a = document.createElement("a");
-        const file = new Blob([JSON.stringify(report)], { type: 'text/json' });
-        a.href = URL.createObjectURL(file);
+        const a = document.createElement('a')
+        const file = new Blob([JSON.stringify(report)], { type: 'text/json' })
+        a.href = URL.createObjectURL(file)
         //@ts-expect-error
-        report.url = window.location.href;
-        a.download = `${this.filename}${report.timestamp}.json`;
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(a.href);
-        document.body.removeChild(a);
+        report.url = window.location.href
+        a.download = `${this.filename}${report.timestamp}.json`
+        document.body.appendChild(a)
+        a.click()
+        URL.revokeObjectURL(a.href)
+        document.body.removeChild(a)
     }
-
 }

@@ -1,10 +1,8 @@
 <template>
     <main @mousedown="mouseDown = true" @mouseup="mouseDown = false" @mouseleave="mouseDown = false">
         <div class="container p-2">
-            <Dashboard :mouse-down="mouseDown">
-            </Dashboard>
-            <Grid>
-            </Grid>
+            <Dashboard :mouse-down="mouseDown"> </Dashboard>
+            <Grid> </Grid>
         </div>
     </main>
 </template>
@@ -16,19 +14,20 @@ import Grid from './components/Grid.vue'
 export default {
     name: 'App',
     components: {
-        Grid, Dashboard
+        Grid,
+        Dashboard,
     },
     data() {
         return {
-            mouseDown: false
+            mouseDown: false,
         }
-    }
+    },
 }
 </script>
 
 <style scoped>
 .container {
-    margin-top: 5px;
+    margin-top: 1px;
     width: min-content;
     min-width: 300px;
     border-radius: 2px;

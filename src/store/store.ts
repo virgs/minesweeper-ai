@@ -80,8 +80,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         },
         cellChorded(cell: Cell) {
             const adjacentCells = this.board.getAdjacentCells(cell)
-            const flagsAround = adjacentCells
-                .filter((cell) => cell.flagged).length
+            const flagsAround = adjacentCells.filter((cell) => cell.flagged).length
             if (flagsAround === cell.minesAround) {
                 adjacentCells
                     .filter((cell) => cell.isNotRevealed() && !cell.flagged)
@@ -101,17 +100,20 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                 case AiAction.HINT:
                     await this.solver.process()
                     this.putAiStamp()
-                    break;
+                    break
                 case AiAction.PLAY:
                     this.startAi()
-                    break;
+                    break
                 case AiAction.GUESS:
                     if (!this.gameIsRunning) {
                         await this.createNewBoard(this.boardProperties)
                     }
                     const guess = await this.solver.makeGuess()
-                    this.cellClick(this.board.getCellById(guess.id)!)
-                    break;
+                    const cell = this.board.getCellById(guess.id)!
+                    console.log('marking as ai guess: ' + guess.id)
+                    cell!.aiGuessed = true
+                    this.cellClick(cell)
+                    break
             }
         },
         async startAi() {
@@ -129,22 +131,23 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         },
         updateCellStates(): boolean {
             this.putAiStamp()
-            const revealedAnyCell = this.solver.knownSafeCellsIds
-                .filter((cell) => this.board.cells[cell].isNotRevealed())
-                .map(cell => this.board.getCellById(cell)!)
-                .filter(cell => !cell.flagged)
-                .map(cell => {
-                    return this.board.revealCell(cell)
-                })
-                .length > 0
+            const revealedAnyCell =
+                this.solver.knownSafeCellsIds
+                    .filter((cell) => this.board.cells[cell].isNotRevealed())
+                    .map((cell) => this.board.getCellById(cell)!)
+                    .filter((cell) => !cell.flagged)
+                    .map((cell) => {
+                        return this.board.revealCell(cell)
+                    }).length > 0
             return revealedAnyCell
         },
         putAiStamp() {
-            this.solver.knownMineCellsIds.concat(this.solver.knownSafeCellsIds)
-                .map(cellId => this.board.getCellById(cellId)!)
-                .filter(cell => cell.isNotRevealed())
-                .filter(cell => !cell.flagged)
-                .forEach(cell => {
+            this.solver.knownMineCellsIds
+                .concat(this.solver.knownSafeCellsIds)
+                .map((cellId) => this.board.getCellById(cellId)!)
+                .filter((cell) => cell.isNotRevealed())
+                .filter((cell) => !cell.flagged)
+                .forEach((cell) => {
                     if (this.solver.knownMineCellsIds.includes(cell?.id)) {
                         cell!.flagged = true
                         cell!.aiMarkedMine = true
@@ -152,7 +155,6 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                         cell!.aiMarkedSafe = true
                     }
                 })
-
-        }
-    }
+        },
+    },
 })

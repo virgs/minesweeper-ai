@@ -94,7 +94,7 @@ export class Proposition {
         }
 
         this.cellsIndex = remainingCells
-        return (previousCellsLength !== this.cellsIndex.length)
+        return previousCellsLength !== this.cellsIndex.length
     }
 
     public removeSafeCells(safeCells: i32[]): boolean {

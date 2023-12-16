@@ -11,7 +11,7 @@ export class GuessMaker {
     private solver: Solver
 
     public constructor(solver: Solver) {
-        this.solver = solver;
+        this.solver = solver
     }
 
     public makeGuess(): Guess {
@@ -31,7 +31,10 @@ export class GuessMaker {
         const independentCellsIds: i32[] = []
         for (let i = 0; i < notRevealedCells.length; ++i) {
             const cell = notRevealedCells[i]._id
-            if (!this.solver.getKnownMineCellsIds().includes(cell) && !this.solver.getKnownSafeCellsIds().includes(cell)) {
+            if (
+                !this.solver.getKnownMineCellsIds().includes(cell) &&
+                !this.solver.getKnownSafeCellsIds().includes(cell)
+            ) {
                 independentCellsIds.push(notRevealedCells[i]._id)
             }
         }
