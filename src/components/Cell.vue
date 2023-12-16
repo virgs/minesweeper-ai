@@ -3,7 +3,7 @@
         @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle">
-                <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" :class="{ exploded: exploded }" />
+                <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
             </span>
             <span v-else class="text" :style="numberStyle">
                 {{ cell.minesAround }}
@@ -58,6 +58,7 @@ export default {
                 cell: true,
                 flagged: this.cell.flagged,
                 revealed: this.isRevealed,
+                exploded: this.exploded,
                 hint: !this.isRevealed && this.cell.aiMarkedSafe,
             }
         },
@@ -159,7 +160,7 @@ export default {
 
 
 .exploded {
-    transform: scale(1.1);
+    transform: scale(1.25);
 }
 
 .hint {

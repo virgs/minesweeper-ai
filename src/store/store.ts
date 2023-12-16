@@ -24,11 +24,6 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             gameIsRunning: false,
         }
     },
-    getters: {
-        //    doubleCount: (state) => state.count * 2,
-        //is is hint available?
-        //is is play available?
-    },
     actions: {
         async createNewBoard(properties: BoardProperties) {
             this.boardProperties = properties
@@ -97,15 +92,14 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             console.log('game finished. ' + (this.victory ? 'You won!' : 'You lost!'))
         },
         async aiAction(aiAction: AiAction): Promise<void> {
-            console.log(aiAction)
             switch (aiAction) {
                 case AiAction.HINT:
                     await this.solver.process()
                     this.solver.knownMineCellsIds.concat(this.solver.knownSafeCellsIds)
                         .sort(() => Math.random() - .5)
-                        .map(cellId => this.board.getCellById(cellId))
-                        .filter(cell => cell?.isNotRevealed())
-                        .filter(cell => !cell?.flagged)
+                        .map(cellId => this.board.getCellById(cellId)!)
+                        .filter(cell => cell.isNotRevealed())
+                        .filter(cell => !cell.flagged)
                         .forEach(cell => {
                             if (this.solver.knownMineCellsIds.includes(cell?.id)) {
                                 cell!.flagged = true
@@ -119,6 +113,9 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                     this.startAi()
                     break;
                 case AiAction.GUESS:
+                    if (!this.gameIsRunning) {
+                        await this.createNewBoard(this.boardProperties)
+                    }
                     const guess = await this.solver.makeGuess()
                     console.log(guess)
                     this.cellClick(this.board.getCellById(guess.id)!)
@@ -128,40 +125,32 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         async startAi() {
             console.log('thinking')
             this.aiIsThinking = true
-            while (true) {
-                const previouslyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
+            do {
                 await this.solver.process()
-                this.updateCellStates()
-                const currentlyKnownCells = this.solver.knownSafeCellsIds.length + this.solver.knownMineCellsIds.length
-                if (this.checkGameOver() || previouslyKnownCells === currentlyKnownCells) {
-                    console.log(this.checkGameOver(), previouslyKnownCells, currentlyKnownCells)
-                    break
-                }
-            }
-            // this.updateCellStates()
+            } while (this.updateCellStates())
+
             this.aiIsThinking = false
             console.log('done thinking')
             if (this.checkGameOver()) {
                 this.finishGame()
             }
         },
-        updateCellStates(): void {
-            this.solver.knownSafeCellsIds
-                .forEach((cellId) => {
-                    const cell = this.board.getCellById(cellId)!
-                    cell.aiMarkedSafe = true
-                    if (!cell.flagged) {
-                        this.cellClick(cell)
-                    }
-                })
+        updateCellStates(): boolean {
             this.solver.knownMineCellsIds
-                .forEach((cellId) => {
-                    const cell = this.board.getCellById(cellId)!
-                    if (!cell.flagged) {
-                        cell.flagged = true
-                        cell.aiMarkedMine = true
-                    }
+                .map(cellId => this.board.getCellById(cellId)!)
+                .filter(cell => !cell.flagged)
+                .forEach(cell => {
+                    cell.flagged = true
+                    cell.aiMarkedMine = true
                 })
-        },
+
+            const revealedAnyCell = this.solver.knownSafeCellsIds
+                .filter((cell) => this.board.cells[cell].isNotRevealed())
+                .map(cell => this.board.getCellById(cell)!)
+                .filter(cell => !cell.flagged)
+                .map(cell => this.board.revealCell(cell))
+                .length > 0
+            return revealedAnyCell
+        }
     }
 })

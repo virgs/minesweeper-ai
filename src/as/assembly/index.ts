@@ -10,7 +10,6 @@ import { SolverGuessResponse, SolverUpdateResponse } from './models/SolverRespon
 const ai = new Solver()
 
 export function update(stringifiedBoard: string): string {
-    console.log('playing safe')
     const board = JSON.parse<Board>(stringifiedBoard)
     ai.setBoard(board)
 
@@ -26,7 +25,6 @@ export function update(stringifiedBoard: string): string {
 }
 
 export function guess(stringifiedBoard: string): string {
-    console.log('making guess')
     const board = JSON.parse<Board>(stringifiedBoard)
     ai.setBoard(board)
     ai.run()

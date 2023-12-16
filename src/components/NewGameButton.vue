@@ -92,8 +92,21 @@ export default {
         this.clicked(this.currentGameConfiguration)
         document.onkeyup = (key: KeyboardEvent) => {
             switch (key.code) {
+                case 'KeyR':
                 case 'F2': {
                     this.clicked(this.currentGameConfiguration)
+                    break
+                }
+                case 'Digit1': {
+                    this.clicked(GameConfigurations.Beginner)
+                    break
+                }
+                case 'Digit2': {
+                    this.clicked(GameConfigurations.Intermediate)
+                    break
+                }
+                case 'Digit3': {
+                    this.clicked(GameConfigurations.Expert)
                     break
                 }
             }
