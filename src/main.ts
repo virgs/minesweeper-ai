@@ -20,6 +20,8 @@ import {
     faXmark,
     faStar as faSolidStar,
     faBullseye,
+    faForwardStep,
+    faForward,
 } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -31,7 +33,7 @@ library.add(
     faXmark,
     faDice,
     faWandSparkles,
-    faPlay,
+    faForward,
     faRobot,
     faLandMineOn,
     faArrowsLeftRight,
@@ -40,7 +42,8 @@ library.add(
     faHourglass,
     faRobot,
     faSolidStar,
-    faBullseye
+    faBullseye,
+    faForwardStep
 )
 library.add(faRegularStar, faStarHalfStroke)
 

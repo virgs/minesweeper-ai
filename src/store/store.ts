@@ -99,10 +99,13 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             switch (aiAction) {
                 case AiAction.HINT:
                     await this.solver.process()
-                    this.putAiStamp()
+                    await this.putAiStamp()
+                    break
+                case AiAction.FORWARD_STEP:
+                    await this.aiPlayOneStep()
                     break
                 case AiAction.PLAY:
-                    this.startAi()
+                    await this.aiPlay()
                     break
                 case AiAction.GUESS:
                     if (!this.gameIsRunning) {
@@ -116,12 +119,12 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                     break
             }
         },
-        async startAi() {
+        async aiPlay() {
             console.log('thinking')
             this.aiIsThinking = true
             do {
                 await this.solver.process()
-            } while (this.updateCellStates())
+            } while (await this.updateCellStates())
 
             this.aiIsThinking = false
             console.log('done thinking')
@@ -129,20 +132,31 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                 this.finishGame()
             }
         },
-        updateCellStates(): boolean {
+        async aiPlayOneStep() {
+            console.log('thinking')
+            this.aiIsThinking = true
+
+            await this.solver.process()
+            await this.updateCellStates()
+
+            this.aiIsThinking = false
+            console.log('done thinking')
+            if (this.checkGameOver()) {
+                this.finishGame()
+            }
+        },
+        async updateCellStates(): Promise<boolean> {
             this.putAiStamp()
             const revealedAnyCell =
                 this.solver.knownSafeCellsIds
                     .filter((cell) => this.board.cells[cell].isNotRevealed())
                     .map((cell) => this.board.getCellById(cell)!)
                     .filter((cell) => !cell.flagged)
-                    .map((cell) => {
-                        return this.board.revealCell(cell)
-                    }).length > 0
+                    .map((cell) => this.board.revealCell(cell)).length > 0
             return revealedAnyCell
         },
-        putAiStamp() {
-            this.solver.knownMineCellsIds
+        async putAiStamp(): Promise<void> {
+            return this.solver.knownMineCellsIds
                 .concat(this.solver.knownSafeCellsIds)
                 .map((cellId) => this.board.getCellById(cellId)!)
                 .filter((cell) => cell.isNotRevealed())
