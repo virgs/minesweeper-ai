@@ -1,6 +1,13 @@
 <template>
-    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
+    <button
+        type="button"
+        class="btn btn-primary"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent"
+        @mouseup="mouseUpEvent"
+        @dblclick="doubleClick"
+        :class="classStyle"
+    >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -166,7 +173,6 @@ export default {
 .flag {
     color: #ff4136;
 }
-
 
 .aiFlag {
     color: #e67818;

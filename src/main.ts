@@ -55,21 +55,18 @@ library.add(faRegularStar, faStarHalfStroke)
 // app.component('font-awesome-icon', FontAwesomeIcon)
 // app.mount('#app')
 
-await new ReportGenerator(GameConfigurations.Beginner,
-    {
-        numberOfGames: 1000,
-        workers: 20,
-        filename: 'Beginner'
-    }).run()
-await new ReportGenerator(GameConfigurations.Intermediate,
-    {
-        numberOfGames: 1000,
-        workers: 20,
-        filename: 'Intermediate'
-    }).run()
-await new ReportGenerator(GameConfigurations.Expert,
-    {
-        numberOfGames: 1000,
-        workers: 20,
-        filename: 'Expert'
-    }).run()
+await new ReportGenerator(GameConfigurations.Beginner, {
+    numberOfGames: 1000,
+    workers: 20,
+    filename: 'Beginner',
+}).run()
+await new ReportGenerator(GameConfigurations.Intermediate, {
+    numberOfGames: 1000,
+    workers: 20,
+    filename: 'Intermediate',
+}).run()
+await new ReportGenerator(GameConfigurations.Expert, {
+    numberOfGames: 1000,
+    workers: 20,
+    filename: 'Expert',
+}).run()

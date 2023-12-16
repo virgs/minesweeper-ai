@@ -19,7 +19,10 @@ export class GuessMaker {
         const totalCells: i32 = board.properties.height * board.properties.width
         // None was open. Click in the middle
         if (this.solver.getKnownSafeCellsIds().length === 0) {
-            const middleCellId = board.getCellByLocation((board.properties.width - 1) / 2, (board.properties.height - 1) / 2)._id
+            const middleCellId = board.getCellByLocation(
+                (board.properties.width - 1) / 2,
+                (board.properties.height - 1) / 2
+            )._id
             return {
                 id: middleCellId,
                 mines: board.properties.mines,

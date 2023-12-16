@@ -98,27 +98,21 @@ export class ReportGenerator {
     }
 
     private generateReport(games: ReportItem[]): Report {
-        const victories = games
-            .filter((result) => result.victory)
-        const losses = games
-            .filter((result) => !result.victory)
+        const victories = games.filter((result) => result.victory)
+        const losses = games.filter((result) => !result.victory)
         return {
             timestamp: Date.now(),
             boardProperties: this.boardConfiguration,
             victoryRatio: games.filter((result) => result.victory).length / games.length,
             totalGames: games.length,
-            victoryGuessesAvg:
-                victories.reduce((acc, game) => (game.guesses.length + acc), 0) / victories.length,
-            victoryGuessFactorAverage:
-                victories.reduce((acc, game) => (game.guessFactor + acc), 0) / victories.length,
-            lossGuessesAvg:
-                losses.reduce((acc, game) => (game.guesses.length + acc), 0) / losses.length,
+            victoryGuessesAvg: victories.reduce((acc, game) => game.guesses.length + acc, 0) / victories.length,
+            victoryGuessFactorAverage: victories.reduce((acc, game) => game.guessFactor + acc, 0) / victories.length,
+            lossGuessesAvg: losses.reduce((acc, game) => game.guesses.length + acc, 0) / losses.length,
             lossesMinesCellsFoundRatioAverage:
-                losses.reduce((acc, game) => (game.mineCellsFoundRatio + acc), 0) / losses.length,
+                losses.reduce((acc, game) => game.mineCellsFoundRatio + acc, 0) / losses.length,
             lossesSafeCellsFoundRatioAverage:
-                losses.reduce((acc, game) => (game.safeCellsFoundRatio + acc), 0) / losses.length,
-            lossesAiUpdatesAverage:
-                losses.reduce((acc, game) => (game.aiUpdates + acc), 0) / losses.length,
+                losses.reduce((acc, game) => game.safeCellsFoundRatio + acc, 0) / losses.length,
+            lossesAiUpdatesAverage: losses.reduce((acc, game) => game.aiUpdates + acc, 0) / losses.length,
             games: games,
         }
     }
