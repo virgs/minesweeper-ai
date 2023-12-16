@@ -25,6 +25,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faRegularStar, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ReportGenerator } from './solver/ReportGenerator'
+import { GameConfigurations } from './constants/GameConfiguration'
 
 //solid
 library.add(
@@ -47,15 +49,27 @@ library.add(
 )
 library.add(faRegularStar, faStarHalfStroke)
 
-const app = createApp(App)
-const pinia = createPinia()
-app.use(pinia)
-app.component('font-awesome-icon', FontAwesomeIcon)
-app.mount('#app')
+// const app = createApp(App)
+// const pinia = createPinia()
+// app.use(pinia)
+// app.component('font-awesome-icon', FontAwesomeIcon)
+// app.mount('#app')
 
-// new ReportGenerator(GameConfigurations.Intermediate,
-//     {
-//         numberOfGames: 1000,
-//         workers: 20,
-//         filename: 'Intermediate'
-//     }).run()
+await new ReportGenerator(GameConfigurations.Beginner,
+    {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: 'Beginner'
+    }).run()
+await new ReportGenerator(GameConfigurations.Intermediate,
+    {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: 'Intermediate'
+    }).run()
+await new ReportGenerator(GameConfigurations.Expert,
+    {
+        numberOfGames: 1000,
+        workers: 20,
+        filename: 'Expert'
+    }).run()

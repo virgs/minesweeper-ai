@@ -5095,7 +5095,7 @@
     select
     local.set $1
    end
-   block $__inlined_func$~lib/rt/itcms/__renew$686
+   block $__inlined_func$~lib/rt/itcms/__renew$689
     local.get $3
     i32.const 20
     i32.sub
@@ -5113,7 +5113,7 @@
      i32.store offset=16
      local.get $3
      local.set $2
-     br $__inlined_func$~lib/rt/itcms/__renew$686
+     br $__inlined_func$~lib/rt/itcms/__renew$689
     end
     local.get $1
     local.get $4
@@ -7228,7 +7228,7 @@
    local.get $3
    local.get $0
    i32.store
-   block $__inlined_func$~lib/array/Array<i32>#indexOf$698
+   block $__inlined_func$~lib/array/Array<i32>#indexOf$701
     local.get $0
     i32.load offset=12
     local.tee $4
@@ -7244,7 +7244,7 @@
      global.set $~lib/memory/__stack_pointer
      i32.const -1
      local.set $2
-     br $__inlined_func$~lib/array/Array<i32>#indexOf$698
+     br $__inlined_func$~lib/array/Array<i32>#indexOf$701
     end
     global.get $~lib/memory/__stack_pointer
     local.get $0
@@ -7270,7 +7270,7 @@
        i32.const 4
        i32.add
        global.set $~lib/memory/__stack_pointer
-       br $__inlined_func$~lib/array/Array<i32>#indexOf$698
+       br $__inlined_func$~lib/array/Array<i32>#indexOf$701
       end
       local.get $2
       i32.const 1
@@ -8260,6 +8260,63 @@
   global.set $~lib/memory/__stack_pointer
   local.get $0
  )
+ (func $src/as/assembly/Board/Board#getCellByLocation (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.sub
+  global.set $~lib/memory/__stack_pointer
+  global.get $~lib/memory/__stack_pointer
+  i32.const 7128
+  i32.lt_s
+  if
+   i32.const 39920
+   i32.const 39968
+   i32.const 1
+   i32.const 1
+   call $~lib/builtins/abort
+   unreachable
+  end
+  global.get $~lib/memory/__stack_pointer
+  local.tee $3
+  i64.const 0
+  i64.store
+  local.get $3
+  i32.const 0
+  i32.store offset=8
+  local.get $3
+  local.get $0
+  i32.store offset=4
+  local.get $0
+  call $src/as/assembly/Board/Board#get:cells
+  local.set $3
+  global.get $~lib/memory/__stack_pointer
+  local.get $3
+  i32.store
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store offset=8
+  local.get $0
+  call $src/as/assembly/Board/Board#get:properties
+  local.set $0
+  global.get $~lib/memory/__stack_pointer
+  local.get $0
+  i32.store offset=4
+  local.get $3
+  local.get $2
+  local.get $0
+  i32.load offset=4
+  i32.mul
+  local.get $1
+  i32.add
+  call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
+  local.set $0
+  global.get $~lib/memory/__stack_pointer
+  i32.const 12
+  i32.add
+  global.set $~lib/memory/__stack_pointer
+  local.get $0
+ )
  (func $src/as/assembly/Board/Board#getAdjacentCells (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
@@ -8267,7 +8324,6 @@
   (local $5 i32)
   (local $6 i32)
   (local $7 i32)
-  (local $8 i32)
   global.get $~lib/memory/__stack_pointer
   i32.const 24
   i32.sub
@@ -8307,18 +8363,18 @@
    local.get $4
    local.get $3
    call $~lib/object/Object#constructor
-   local.tee $6
+   local.tee $4
    i32.store
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $4
    i32.store offset=4
-   local.get $6
+   local.get $4
    i32.const 0
    i32.store
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $4
    i32.store offset=4
-   local.get $6
+   local.get $4
    i32.const 0
    i32.store offset=4
    global.get $~lib/memory/__stack_pointer
@@ -8326,10 +8382,10 @@
    i32.add
    global.set $~lib/memory/__stack_pointer
    local.get $2
-   local.get $6
+   local.get $4
    i32.store
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $4
    i32.store offset=4
    global.get $~lib/memory/__stack_pointer
    local.get $1
@@ -8342,18 +8398,18 @@
    i32.store offset=12
    local.get $0
    call $src/as/assembly/Board/Board#get:properties
-   local.set $4
+   local.set $5
    global.get $~lib/memory/__stack_pointer
-   local.get $4
+   local.get $5
    i32.store offset=8
-   local.get $6
-   local.get $3
    local.get $4
+   local.get $3
+   local.get $5
    i32.load offset=4
    i32.rem_s
    i32.store
    global.get $~lib/memory/__stack_pointer
-   local.get $6
+   local.get $4
    i32.store offset=4
    global.get $~lib/memory/__stack_pointer
    local.get $1
@@ -8370,21 +8426,21 @@
    global.get $~lib/memory/__stack_pointer
    local.get $3
    i32.store offset=8
-   local.get $6
+   local.get $4
    local.get $1
    local.get $3
    i32.load offset=4
    i32.div_s
    i32.store offset=4
    local.get $2
-   local.get $6
+   local.get $4
    i32.store offset=16
    global.get $~lib/memory/__stack_pointer
    i32.const 0
    i32.const 8
    i32.const 3264
    call $~lib/rt/__newArray
-   local.tee $7
+   local.tee $5
    i32.store offset=20
    i32.const -1
    local.set $1
@@ -8401,22 +8457,22 @@
       i32.lt_s
       if
        global.get $~lib/memory/__stack_pointer
-       local.tee $4
-       local.get $6
+       local.tee $6
+       local.get $4
        i32.store offset=4
        local.get $2
-       local.get $6
+       local.get $4
        i32.load
        i32.add
        local.set $3
-       local.get $4
        local.get $6
+       local.get $4
        i32.store offset=4
        local.get $1
-       local.get $6
+       local.get $4
        i32.load offset=4
        i32.add
-       local.set $4
+       local.set $6
        block $for-continue|1
         local.get $3
         i32.const 0
@@ -8429,19 +8485,19 @@
          i32.store offset=8
          local.get $0
          call $src/as/assembly/Board/Board#get:properties
-         local.set $5
+         local.set $7
          global.get $~lib/memory/__stack_pointer
-         local.get $5
+         local.get $7
          i32.store offset=4
          local.get $3
-         local.get $5
+         local.get $7
          i32.load offset=4
          i32.const 1
          i32.sub
          i32.gt_s
         end
         br_if $for-continue|1
-        local.get $4
+        local.get $6
         i32.const 0
         i32.lt_s
         if (result i32)
@@ -8452,12 +8508,12 @@
          i32.store offset=8
          local.get $0
          call $src/as/assembly/Board/Board#get:properties
-         local.set $5
+         local.set $7
          global.get $~lib/memory/__stack_pointer
-         local.get $5
+         local.get $7
          i32.store offset=4
-         local.get $4
-         local.get $5
+         local.get $6
+         local.get $7
          i32.load
          i32.const 1
          i32.sub
@@ -8470,62 +8526,21 @@
         i32.eqz
         br_if $for-continue|1
         global.get $~lib/memory/__stack_pointer
-        local.tee $5
-        local.get $7
-        i32.store offset=4
+        local.tee $7
         local.get $5
+        i32.store offset=4
+        local.get $7
         local.get $0
         i32.store offset=12
-        local.get $5
-        i32.const 12
-        i32.sub
-        global.set $~lib/memory/__stack_pointer
-        global.get $~lib/memory/__stack_pointer
-        i32.const 7128
-        i32.lt_s
-        br_if $folding-inner0
-        global.get $~lib/memory/__stack_pointer
-        local.tee $5
-        i64.const 0
-        i64.store
-        local.get $5
-        i32.const 0
-        i32.store offset=8
-        local.get $5
         local.get $0
-        i32.store offset=4
-        local.get $0
-        call $src/as/assembly/Board/Board#get:cells
-        local.set $5
-        global.get $~lib/memory/__stack_pointer
-        local.get $5
-        i32.store
-        global.get $~lib/memory/__stack_pointer
-        local.get $0
-        i32.store offset=8
-        local.get $0
-        call $src/as/assembly/Board/Board#get:properties
-        local.set $8
-        global.get $~lib/memory/__stack_pointer
-        local.get $8
-        i32.store offset=4
-        local.get $5
-        local.get $4
-        local.get $8
-        i32.load offset=4
-        i32.mul
         local.get $3
-        i32.add
-        call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#__get
+        local.get $6
+        call $src/as/assembly/Board/Board#getCellByLocation
         local.set $3
         global.get $~lib/memory/__stack_pointer
-        i32.const 12
-        i32.add
-        global.set $~lib/memory/__stack_pointer
-        global.get $~lib/memory/__stack_pointer
         local.get $3
         i32.store offset=8
-        local.get $7
+        local.get $5
         local.get $3
         call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#push
        end
@@ -8547,7 +8562,7 @@
    i32.const 24
    i32.add
    global.set $~lib/memory/__stack_pointer
-   local.get $7
+   local.get $5
    return
   end
   i32.const 39920
@@ -8737,7 +8752,7 @@
    i32.add
    i32.load
    local.set $2
-   block $__inlined_func$~lib/set/Set<i32>#find$701
+   block $__inlined_func$~lib/set/Set<i32>#find$703
     loop $while-continue|0
      local.get $2
      if
@@ -8759,7 +8774,7 @@
        i32.const 4
        i32.add
        global.set $~lib/memory/__stack_pointer
-       br $__inlined_func$~lib/set/Set<i32>#find$701
+       br $__inlined_func$~lib/set/Set<i32>#find$703
       end
       local.get $3
       i32.const -2
@@ -10167,7 +10182,7 @@
      call $src/as/assembly/Proposition/Proposition#removeSafeCells
      drop
      block $for-continue|0
-      block $__inlined_func$src/as/assembly/PropositionsSolver/PropositionsSolver#hasProposition$702 (result i32)
+      block $__inlined_func$src/as/assembly/PropositionsSolver/PropositionsSolver#hasProposition$704 (result i32)
        global.get $~lib/memory/__stack_pointer
        local.get $0
        i32.store
@@ -10345,7 +10360,7 @@
           i32.add
           global.set $~lib/memory/__stack_pointer
           i32.const 1
-          br $__inlined_func$src/as/assembly/PropositionsSolver/PropositionsSolver#hasProposition$702
+          br $__inlined_func$src/as/assembly/PropositionsSolver/PropositionsSolver#hasProposition$704
          end
          local.get $2
          i32.const 1
@@ -11457,7 +11472,7 @@
      i32.const 1
      i32.shl
      local.set $4
-     block $__inlined_func$~lib/string/String#substring$749
+     block $__inlined_func$~lib/string/String#substring$751
       local.get $2
       i32.const 0
       local.get $2
@@ -11478,7 +11493,7 @@
        global.set $~lib/memory/__stack_pointer
        i32.const 1776
        local.set $0
-       br $__inlined_func$~lib/string/String#substring$749
+       br $__inlined_func$~lib/string/String#substring$751
       end
       local.get $4
       i32.eqz
@@ -11493,7 +11508,7 @@
        i32.const 8
        i32.add
        global.set $~lib/memory/__stack_pointer
-       br $__inlined_func$~lib/string/String#substring$749
+       br $__inlined_func$~lib/string/String#substring$751
       end
       global.get $~lib/memory/__stack_pointer
       local.get $5
@@ -11914,7 +11929,7 @@
    i32.add
    i32.load
    local.set $7
-   block $__inlined_func$~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#find$709
+   block $__inlined_func$~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#find$711
     loop $while-continue|0
      local.get $7
      if
@@ -11927,7 +11942,7 @@
        i32.const 0
        local.set $3
       else
-       block $__inlined_func$~lib/string/String.__eq$750
+       block $__inlined_func$~lib/string/String.__eq$752
         global.get $~lib/memory/__stack_pointer
         local.tee $3
         local.get $7
@@ -11959,7 +11974,7 @@
          global.set $~lib/memory/__stack_pointer
          i32.const 1
          local.set $3
-         br $__inlined_func$~lib/string/String.__eq$750
+         br $__inlined_func$~lib/string/String.__eq$752
         end
         local.get $1
         i32.eqz
@@ -11973,7 +11988,7 @@
          global.set $~lib/memory/__stack_pointer
          i32.const 0
          local.set $3
-         br $__inlined_func$~lib/string/String.__eq$750
+         br $__inlined_func$~lib/string/String.__eq$752
         end
         global.get $~lib/memory/__stack_pointer
         local.tee $3
@@ -12004,7 +12019,7 @@
          global.set $~lib/memory/__stack_pointer
          i32.const 0
          local.set $3
-         br $__inlined_func$~lib/string/String.__eq$750
+         br $__inlined_func$~lib/string/String.__eq$752
         end
         global.get $~lib/memory/__stack_pointer
         local.tee $3
@@ -12105,7 +12120,7 @@
        i32.const 8
        i32.add
        global.set $~lib/memory/__stack_pointer
-       br $__inlined_func$~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#find$709
+       br $__inlined_func$~lib/map/Map<~lib/string/String,src/as/assembly/Proposition/Proposition>#find$711
       end
       local.get $9
       i32.const -2
@@ -14140,7 +14155,7 @@
     local.get $1
     i32.gt_s
     if
-     block $__inlined_func$src/as/assembly/Proposition/Proposition#isContradictory$715 (result i32)
+     block $__inlined_func$src/as/assembly/Proposition/Proposition#isContradictory$717 (result i32)
       global.get $~lib/memory/__stack_pointer
       local.get $0
       i32.store offset=8
@@ -14203,7 +14218,7 @@
        i32.add
        global.set $~lib/memory/__stack_pointer
        i32.const 1
-       br $__inlined_func$src/as/assembly/Proposition/Proposition#isContradictory$715
+       br $__inlined_func$src/as/assembly/Proposition/Proposition#isContradictory$717
       end
       global.get $~lib/memory/__stack_pointer
       i32.const 8
@@ -14752,7 +14767,7 @@
    local.tee $2
    i64.const 0
    i64.store
-   block $__inlined_func$~lib/string/String#concat$751 (result i32)
+   block $__inlined_func$~lib/string/String#concat$753 (result i32)
     local.get $2
     local.get $0
     i32.store
@@ -14801,7 +14816,7 @@
      i32.add
      global.set $~lib/memory/__stack_pointer
      i32.const 1776
-     br $__inlined_func$~lib/string/String#concat$751
+     br $__inlined_func$~lib/string/String#concat$753
     end
     global.get $~lib/memory/__stack_pointer
     local.get $4
@@ -16086,88 +16101,128 @@
    i32.store
    local.get $5
    i32.load
-   local.set $5
+   drop
    global.get $~lib/memory/__stack_pointer
    local.get $6
    i32.store offset=4
    local.get $6
    call $src/as/assembly/Board/Board#get:properties
-   local.set $7
+   local.set $5
    global.get $~lib/memory/__stack_pointer
-   local.get $7
+   local.get $5
    i32.store
    local.get $5
-   local.get $7
    i32.load offset=4
-   i32.mul
-   local.set $5
+   drop
    global.get $~lib/memory/__stack_pointer
    local.get $0
    i32.store offset=12
    global.get $~lib/memory/__stack_pointer
    local.get $0
    i32.load
-   local.tee $7
+   local.tee $5
    i32.store offset=4
-   local.get $7
+   local.get $5
    call $src/as/assembly/Solver/Solver#getKnownSafeCellsIds
-   local.set $7
+   local.set $5
    global.get $~lib/memory/__stack_pointer
-   local.get $7
+   local.get $5
    i32.store
-   local.get $7
+   local.get $5
    call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
    i32.eqz
    if
     global.get $~lib/memory/__stack_pointer
-    call $src/as/assembly/GuessMaker/Guess#constructor
-    local.tee $0
+    local.get $6
+    i32.store offset=4
+    global.get $~lib/memory/__stack_pointer
+    local.get $6
     i32.store offset=16
+    local.get $6
+    call $src/as/assembly/Board/Board#get:properties
+    local.set $0
     global.get $~lib/memory/__stack_pointer
     local.get $0
-    i32.store
+    i32.store offset=12
     local.get $0
-    local.get $5
+    i32.load offset=4
+    i32.const 1
+    i32.sub
     i32.const 2
     i32.div_s
-    i32.store
+    local.set $0
+    global.get $~lib/memory/__stack_pointer
+    local.get $6
+    i32.store offset=16
+    local.get $6
+    call $src/as/assembly/Board/Board#get:properties
+    local.set $2
+    global.get $~lib/memory/__stack_pointer
+    local.get $2
+    i32.store offset=12
+    local.get $6
+    local.get $0
+    local.get $2
+    i32.load
+    i32.const 1
+    i32.sub
+    i32.const 2
+    i32.div_s
+    call $src/as/assembly/Board/Board#getCellByLocation
+    local.set $0
     global.get $~lib/memory/__stack_pointer
     local.get $0
+    i32.store
+    local.get $0
+    i32.load
+    local.set $0
+    global.get $~lib/memory/__stack_pointer
+    call $src/as/assembly/GuessMaker/Guess#constructor
+    local.tee $2
+    i32.store offset=20
+    global.get $~lib/memory/__stack_pointer
+    local.get $2
+    i32.store
+    local.get $2
+    local.get $0
+    i32.store
+    global.get $~lib/memory/__stack_pointer
+    local.get $2
     i32.store
     global.get $~lib/memory/__stack_pointer
     local.get $6
     i32.store offset=12
     local.get $6
     call $src/as/assembly/Board/Board#get:properties
-    local.set $2
+    local.set $0
     global.get $~lib/memory/__stack_pointer
-    local.get $2
-    i32.store offset=4
     local.get $0
+    i32.store offset=4
     local.get $2
+    local.get $0
     i32.load offset=8
     i32.store offset=4
     global.get $~lib/memory/__stack_pointer
-    local.get $0
+    local.get $2
     i32.store
     global.get $~lib/memory/__stack_pointer
     local.get $6
     i32.store offset=12
     local.get $6
     call $src/as/assembly/Board/Board#get:cells
-    local.set $2
+    local.set $0
     global.get $~lib/memory/__stack_pointer
-    local.get $2
-    i32.store offset=4
     local.get $0
+    i32.store offset=4
     local.get $2
+    local.get $0
     call $~lib/array/Array<src/as/assembly/models/Cell/Cell>#get:length
     i32.store offset=8
     global.get $~lib/memory/__stack_pointer
     i32.const 56
     i32.add
     global.set $~lib/memory/__stack_pointer
-    local.get $0
+    local.get $2
     return
    end
    global.get $~lib/memory/__stack_pointer
@@ -16297,14 +16352,14 @@
    global.set $~lib/memory/__stack_pointer
    local.get $7
    local.get $8
-   i32.store offset=20
+   i32.store offset=24
    global.get $~lib/memory/__stack_pointer
    i32.const 0
    i32.const 10
    i32.const 6176
    call $~lib/rt/__newArray
    local.tee $6
-   i32.store offset=24
+   i32.store offset=28
    i32.const 0
    local.set $3
    loop $for-loop|00
@@ -16409,12 +16464,12 @@
    local.get $5
    call $src/as/assembly/Proposition/Proposition#constructor
    local.tee $3
-   i32.store offset=28
+   i32.store offset=32
    global.get $~lib/memory/__stack_pointer
    local.set $6
    global.get $~lib/memory/__stack_pointer
    local.get $0
-   i32.store offset=32
+   i32.store offset=16
    global.get $~lib/memory/__stack_pointer
    local.get $0
    i32.load
@@ -16785,7 +16840,7 @@
    global.set $~lib/math/random_state1_64
    global.get $~lib/memory/__stack_pointer
    local.get $0
-   i32.store offset=32
+   i32.store offset=16
    local.get $0
    call $src/as/assembly/Proposition/Proposition#getCells
    local.set $5

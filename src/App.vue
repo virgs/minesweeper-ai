@@ -29,6 +29,7 @@ export default {
 .container {
     margin-top: 1px;
     width: min-content;
+    max-width: min-content;
     min-width: 300px;
     border-radius: 2px;
     padding: 5px;
@@ -36,14 +37,5 @@ export default {
     border-width: 4px;
     border-style: solid;
     border-color: white;
-}
-
-.spinner-border {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    border-width: thick;
-    width: 3rem;
-    height: 3rem;
 }
 </style>

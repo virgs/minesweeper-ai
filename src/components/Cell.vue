@@ -1,13 +1,6 @@
 <template>
-    <button
-        type="button"
-        class="btn btn-primary"
-        @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent"
-        @mouseup="mouseUpEvent"
-        @dblclick="doubleClick"
-        :class="classStyle"
-    >
+    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -90,7 +83,6 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useMinesweeperStore, ['unflagCell', 'flagCell', 'cellClick']),
         preventRightClickDefaultBehavior(event: Event) {
             event.preventDefault()
         },
@@ -101,9 +93,9 @@ export default {
             this.mouseButtonDown = event.buttons
             if (this.mouseButtonDown === MouseButtons.RIGHT) {
                 if (this.cell.flagged) {
-                    this.unflagCell(this.cellId)
+                    this.minesweeperStore.unflagCell(this.cellId)
                 } else {
-                    this.flagCell(this.cellId)
+                    this.minesweeperStore.flagCell(this.cellId)
                 }
             }
         },
@@ -128,6 +120,12 @@ export default {
 
 <style scoped>
 .btn {
+    padding: 0;
+    height: var(--cell-size);
+    width: var(--cell-size);
+    font-weight: 700;
+    font-style: normal;
+    line-height: 0;
     background-color: #75caeb;
     transition: all ease 200ms;
 }
@@ -148,44 +146,27 @@ export default {
 .btn:disabled {
     background-color: #e8e8e8;
     border-color: #ddd;
-}
-
-.cell {
-    position: relative;
-    padding: 0;
-    height: var(--cell-size);
-    width: var(--cell-size);
-}
-
-.cell div {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    font-style: normal;
+    border-width: 2px;
+    transition: all ease 200ms;
 }
 
 .exploded {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: bolder;
 }
 
 .btn.hint {
-    transition: all ease 200ms;
-    background-color: #84ea87;
-    border-width: 0 1px 4px 1px;
-    border-color: rgb(100, 195, 102);
+    border-color: #4ba84e;
+}
+
+.btn.guess {
+    border-color: #eba161;
 }
 
 .flag {
     color: #ff4136;
 }
 
-.btn.guess {
-    background-color: #e67818;
-    border-width: 2px;
-    border-color: #eba161;
-}
 
 .aiFlag {
     color: #e67818;

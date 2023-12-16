@@ -6,6 +6,7 @@ import type { Cell } from '@/engine/Cell'
 import { Solver } from '@/solver/Solver'
 import { defineStore } from 'pinia'
 
+let solver: Solver | undefined
 export const mineSweeperStoreId = 'mineSweeper'
 export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
     state: () => {
@@ -17,7 +18,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             boardProperties: boarProperties,
             board: board,
             aiIsThinking: false,
-            solver: new Solver(board),
+            // solver: new Solver(board),
             explodedBombId: undefined as number | undefined,
             gameOver: false,
             victory: undefined as boolean | undefined,
@@ -29,15 +30,15 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             this.boardProperties = properties
             const board = new Board(properties)
             this.board = board
-            this.solver.terminate()
-            this.solver = new Solver(board)
+            solver?.terminate()
+            solver = new Solver(board)
             this.gameIsRunning = false
             this.gameOver = false
             this.explodedBombId = undefined
             this.victory = undefined
             this.timer = 0
             clearInterval(this.timerInterval)
-            await this.solver.waitUntilItsReady()
+            await solver.waitUntilItsReady()
         },
         unflagCell(id: number) {
             const cell = this.board.getCellById(id)!
@@ -88,7 +89,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             }
         },
         finishGame() {
-            this.solver.terminate()
+            solver?.terminate()
             this.gameIsRunning = false
             this.gameOver = true
             this.victory = this.board.isGameWon()
@@ -98,7 +99,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         async aiAction(aiAction: AiAction): Promise<void> {
             switch (aiAction) {
                 case AiAction.HINT:
-                    await this.solver.process()
+                    await solver?.process()
                     await this.putAiStamp()
                     break
                 case AiAction.FORWARD_STEP:
@@ -111,7 +112,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                     if (!this.gameIsRunning) {
                         await this.createNewBoard(this.boardProperties)
                     }
-                    const guess = await this.solver.makeGuess()
+                    const guess = await solver?.makeGuess()!
                     const cell = this.board.getCellById(guess.id)!
                     console.log('marking as ai guess: ' + guess.id)
                     cell!.aiGuessed = true
@@ -123,7 +124,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             console.log('thinking')
             this.aiIsThinking = true
             do {
-                await this.solver.process()
+                await solver?.process()
             } while (await this.updateCellStates())
 
             this.aiIsThinking = false
@@ -136,7 +137,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             console.log('thinking')
             this.aiIsThinking = true
 
-            await this.solver.process()
+            await solver?.process()
             await this.updateCellStates()
 
             this.aiIsThinking = false
@@ -148,7 +149,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         async updateCellStates(): Promise<boolean> {
             this.putAiStamp()
             const revealedAnyCell =
-                this.solver.knownSafeCellsIds
+                solver!.knownSafeCellsIds
                     .filter((cell) => this.board.cells[cell].isNotRevealed())
                     .map((cell) => this.board.getCellById(cell)!)
                     .filter((cell) => !cell.flagged)
@@ -156,13 +157,13 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             return revealedAnyCell
         },
         async putAiStamp(): Promise<void> {
-            return this.solver.knownMineCellsIds
-                .concat(this.solver.knownSafeCellsIds)
+            return solver!.knownMineCellsIds
+                .concat(solver!.knownSafeCellsIds)
                 .map((cellId) => this.board.getCellById(cellId)!)
                 .filter((cell) => cell.isNotRevealed())
                 .filter((cell) => !cell.flagged)
                 .forEach((cell) => {
-                    if (this.solver.knownMineCellsIds.includes(cell?.id)) {
+                    if (solver?.knownMineCellsIds.includes(cell?.id)) {
                         cell!.flagged = true
                         cell!.aiMarkedMine = true
                     } else {

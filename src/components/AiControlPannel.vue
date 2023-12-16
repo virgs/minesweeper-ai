@@ -12,11 +12,11 @@
                     <font-awesome-icon icon="fa-solid fa-wand-sparkles" />
                 </button>
                 <button :disabled="!minesweeperStore.gameIsRunning" @click="aiAction(AiAction.FORWARD_STEP)" type="button"
-                    data-bs-toggle="tooltip" data-bs-title="Play one step" class="btn btn-info">
+                    data-bs-toggle="tooltip" data-bs-title="Play all currently known safe moves" class="btn btn-info">
                     <font-awesome-icon icon="fa-solid fa-forward-step" />
                 </button>
                 <button :disabled="!minesweeperStore.gameIsRunning" @click="aiAction(AiAction.PLAY)" type="button"
-                    data-bs-toggle="tooltip" data-bs-title="Keep playing" class="btn btn-info">
+                    data-bs-toggle="tooltip" data-bs-title="Play while there are safe moves" class="btn btn-info">
                     <font-awesome-icon icon="fa-solid fa-forward" />
 
                 </button>
