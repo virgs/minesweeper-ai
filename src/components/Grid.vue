@@ -2,7 +2,7 @@
     <div id="grid" class="p-0">
         <div v-for="line in minesweeperStore.boardProperties.height" class="btn-group mx-auto">
             <div v-for="column in minesweeperStore.boardProperties.width">
-                <CellVue :cell-id="minesweeperStore.getCellByLocation(column - 1, line - 1)!.id" />
+                <CellVue :cell-id="minesweeperStore.boardProperties.width * (line - 1) + column - 1" />
             </div>
         </div>
     </div>

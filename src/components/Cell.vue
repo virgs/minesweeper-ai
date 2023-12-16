@@ -3,7 +3,7 @@
         @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle">
-                <font-awesome-icon icon="fa-solid fa-bomb" :shake="minesweeperStore.explodedBombId === cell.id" />
+                <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" :class="{ exploded: exploded }" />
             </span>
             <span v-else class="text" :style="numberStyle">
                 {{ cell.minesAround }}
@@ -44,13 +44,14 @@ export default {
         }
     },
     computed: {
-        ...mapActions(useMinesweeperStore, ['getCellById']),
         cell(): Cell {
-            const it = this.minesweeperStore.getCellById(this.cellId)
-            return it
+            return this.minesweeperStore.board.getCellById(this.cellId)!
         },
         isRevealed() {
             return this.cell.isRevealed()
+        },
+        exploded() {
+            return this.minesweeperStore.explodedBombId === this.cell.id
         },
         classStyle() {
             return {
@@ -157,13 +158,13 @@ export default {
 }
 
 
-.cell.mine {
-    background-color: #ff4136;
+.exploded {
+    transform: scale(1.1);
 }
 
 .hint {
     transition: all ease 200ms;
-    background-color: #24a428;
+    background-color: #66d269;
 }
 
 .flag {

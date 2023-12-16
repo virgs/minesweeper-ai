@@ -18,10 +18,6 @@ export default {
             type: String,
             required: false,
         },
-        label: {
-            type: String,
-            required: true,
-        },
         value: {
             type: String,
             required: true,

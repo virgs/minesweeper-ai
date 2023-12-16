@@ -5,18 +5,18 @@
         <div class="divider"></div>
     </div>
     <div class="collapse" id="aiControlCollapse">
-        <div class="card card-body p-0 pt-1" style="background-color: transparent; border: none;">
+        <div class="card card-body mx-auto p-0 pt-1" style="background-color: transparent; border: none;">
             <div class="btn-group text" role="group" aria-label="AI options">
-                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.HINT)" type="button"
+                <button :disabled="!minesweeperStore.gameIsRunning" @click="aiAction(AiAction.HINT)" type="button"
                     class="btn btn-info">
                     <font-awesome-icon icon="fa-solid fa-wand-sparkles" />
                 </button>
-                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.PLAY)" type="button"
-                    class="btn btn-success">
+                <button :disabled="!minesweeperStore.gameIsRunning" @click="aiAction(AiAction.PLAY)" type="button"
+                    class="btn btn-info">
                     <!-- Play safe -->
                     <font-awesome-icon icon="fa-solid fa-play" />
                 </button>
-                <button :disabled="!gameIsRunning" @click="$emit('aiAction', AiAction.GUESS)" type="button"
+                <button :disabled="!minesweeperStore.gameIsRunning" @click="aiAction(AiAction.GUESS)" type="button"
                     class="btn btn-danger">
                     <!-- Guess -->
                     <font-awesome-icon icon="fa-solid fa-dice" />
@@ -28,13 +28,14 @@
 
 <script lang="ts">
 import { AiAction } from '@/constants/AiAction';
-
+import { useMinesweeperStore } from '@/store/store';
 
 export default {
     name: 'AiControlPannel',
     setup() {
+        const minesweeperStore = useMinesweeperStore()
         return {
-            AiAction
+            AiAction, minesweeperStore
         }
     },
     props: {
@@ -43,13 +44,16 @@ export default {
             required: false,
         }
     },
-    emits: {
-        aiAction: (aiAction: AiAction) => true,
-    },
     data() {
         return {
         }
-    }
+    },
+    methods: {
+        async aiAction(aiAction: AiAction) {
+            console.log('pannel', aiAction)
+            await this.minesweeperStore.aiAction(aiAction)
+        },
+    },
 }
 </script>
 
@@ -70,5 +74,9 @@ export default {
 .collapse-button:hover>.collapse-icon {
     transform: scale(1.25);
     filter: brightness(1.1);
+}
+
+.card-body {
+    max-width: 400px;
 }
 </style>
