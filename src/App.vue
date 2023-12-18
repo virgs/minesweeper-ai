@@ -1,6 +1,10 @@
 <template>
-    <main @mousedown="mouseDown = true" @mouseup="mouseDown = false" @mouseleave="mouseDown = false"
-        @contextmenu.prevent="preventRightClickDefaultBehavior">
+    <main
+        @mousedown="mouseDown = true"
+        @mouseup="mouseDown = false"
+        @mouseleave="mouseDown = false"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+    >
         <div class="container p-2">
             <Dashboard :mouse-down="mouseDown"> </Dashboard>
             <Grid> </Grid>
@@ -24,9 +28,8 @@ export default {
         }
     },
     methods: {
-        preventRightClickDefaultBehavior(event: Event) {
-        },
-    }
+        preventRightClickDefaultBehavior(event: Event) {},
+    },
 }
 </script>
 

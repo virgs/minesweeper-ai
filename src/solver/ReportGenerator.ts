@@ -53,7 +53,9 @@ export class ReportGenerator {
                 promises.push(this.playOneGame())
             }
             games.push(...(await Promise.all(promises)))
-            console.log(`Generating report ${this.filename}: ${Math.trunc((10000 * games.length) / this.numberOfGames) / 100}%`)
+            console.log(
+                `Generating report ${this.filename}: ${Math.trunc((10000 * games.length) / this.numberOfGames) / 100}%`
+            )
         }
 
         const report: Report = this.generateReport(games)

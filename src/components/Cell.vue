@@ -1,6 +1,14 @@
 <template>
-    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
+    <button
+        type="button"
+        class="btn btn-primary"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent"
+        @mouseup="mouseUpEvent"
+        @dblclick="doubleClick"
+        :class="classStyle"
+        @touchend="touchEndEvent"
+    >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -22,7 +30,6 @@ import { MouseButtons } from '@/constants/MouseButtons'
 import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
 import { useMinesweeperStore } from '@/store/store'
-import { mapActions } from 'pinia'
 
 export default {
     name: 'Cell',
@@ -108,6 +115,13 @@ export default {
                 }
             }
             this.mouseButtonDown = event.buttons
+        },
+        touchEndEvent(event: TouchEvent) {
+            if (this.cell.isNotRevealed() && !this.cell.flagged) {
+                if (this.cell.isNotRevealed() && !this.cell.flagged) {
+                    this.minesweeperStore.cellClick(this.cell)
+                }
+            }
         },
         doubleClick(event: MouseEvent) {
             if (this.isRevealed) {
