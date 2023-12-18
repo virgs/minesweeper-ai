@@ -56,18 +56,20 @@ app.mount('#app')
 
 const generateReports = async (preffix: string) => {
     await new ReportGenerator(GameConfigurations.Beginner, {
-        numberOfGames: 1000,
+        numberOfGames: 2000,
         workers: 20,
-        filename: preffix + 'Beginner',
+        filename: preffix + '-beginner',
     }).run()
     await new ReportGenerator(GameConfigurations.Intermediate, {
-        numberOfGames: 1000,
+        numberOfGames: 2000,
         workers: 20,
-        filename: preffix + 'Intermediate',
+        filename: preffix + '-intermediate',
     }).run()
     await new ReportGenerator(GameConfigurations.Expert, {
-        numberOfGames: 1000,
+        numberOfGames: 2000,
         workers: 20,
-        filename: preffix + 'Expert',
+        filename: preffix + '-expert',
     }).run()
 }
+
+// generateReports('main-proposition-less-relevant-arithmetic-avg')

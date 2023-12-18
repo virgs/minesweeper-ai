@@ -1,13 +1,6 @@
 <template>
-    <button
-        type="button"
-        class="btn btn-primary"
-        @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent"
-        @mouseup="mouseUpEvent"
-        @dblclick="doubleClick"
-        :class="classStyle"
-    >
+    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -91,7 +84,7 @@ export default {
     },
     methods: {
         preventRightClickDefaultBehavior(event: Event) {
-            event.preventDefault()
+            // event.preventDefault()
         },
         mouseDownEvent(event: MouseEvent) {
             if (this.minesweeperStore.gameOver || this.cell.isRevealed()) {

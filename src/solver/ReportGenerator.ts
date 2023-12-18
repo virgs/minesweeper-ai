@@ -53,7 +53,7 @@ export class ReportGenerator {
                 promises.push(this.playOneGame())
             }
             games.push(...(await Promise.all(promises)))
-            console.log(`Generating report: ${Math.trunc((10000 * games.length) / this.numberOfGames) / 100}%`)
+            console.log(`Generating report ${this.filename}: ${Math.trunc((10000 * games.length) / this.numberOfGames) / 100}%`)
         }
 
         const report: Report = this.generateReport(games)
@@ -123,7 +123,7 @@ export class ReportGenerator {
         a.href = URL.createObjectURL(file)
         //@ts-expect-error
         report.url = window.location.href
-        a.download = `${this.filename}${report.timestamp}.json`
+        a.download = `${this.filename}-${report.timestamp}.json`
         document.body.appendChild(a)
         a.click()
         URL.revokeObjectURL(a.href)

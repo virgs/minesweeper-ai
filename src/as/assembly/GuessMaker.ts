@@ -9,7 +9,9 @@ export class Guess {
 
 class Relevance {
     id!: i32
+    appearences!: i32
     relevanceSum!: f32
+    relevanceProduct!: f32
     mines!: i32
     cells!: i32
 }
@@ -24,15 +26,19 @@ export class GuessMaker {
     public makeGuess(): Guess {
         const board = this.solver.getBoard()
         if (this.solver.getKnownSafeCellsIds().length === 0) {
-            return this.pickMiddleCell()
+            return this.pickCenterCell()
         }
         if (this.solver.getPropositions().length === 0) {
             return this.pickAnyNotRevaledCell()
         }
 
-        return this.pickLessRelevant()
+        const remainingProposition = this.buildRemainingProposition()
+        const propositionsPool = this.solver.getPropositions().concat([remainingProposition])
+
+        return this.pickLessRelevant(propositionsPool)
     }
-    private pickLowestRatio(): Guess {
+
+    private buildRemainingProposition(): Proposition {
         const board = this.solver.getBoard()
         const notFoundMines = board.properties.mines - this.solver.getKnownMineCellsIds().length
         const notRevealedCells = board.getNotRevealedCells()
@@ -46,9 +52,10 @@ export class GuessMaker {
                 independentCellsIds.push(notRevealedCells[i]._id)
             }
         }
-        const independents = new Proposition('*', independentCellsIds, notFoundMines)
-        const propositionsPool = this.solver.getPropositions().concat([independents])
+        return new Proposition('*', independentCellsIds, notFoundMines)
+    }
 
+    private pickLowestRatio(propositionsPool: Proposition[]): Guess {
         let lowestRatio = Infinity
         let lowestRatioIndex = -1
         for (let i = 0; i < propositionsPool.length; ++i) {
@@ -71,6 +78,7 @@ export class GuessMaker {
             cells: lowestRatioProposition.getCells().length,
         }
     }
+
     private pickAnyNotRevaledCell(): Guess {
         const board = this.solver.getBoard()
         const notFoundMines = board.properties.mines - this.solver.getKnownMineCellsIds().length
@@ -83,35 +91,18 @@ export class GuessMaker {
             cells: notRevealedCells.length,
         }
     }
-    private pickMostRelevant(): Guess {
-        const relevanceMap: Map<i32, Relevance> = this.buildRelevanceMap()
 
-        let lowestRelevance = -Infinity
-        let lowestRelevanceIndex = -1
-        for (let i = 0; i < relevanceMap.values().length; ++i) {
-            const item = relevanceMap.values()[i]
-            if (item.relevanceSum > lowestRelevance) {
-                lowestRelevance = item.relevanceSum
-                lowestRelevanceIndex = item.id
-            }
-        }
-
-        const mostRelevant = relevanceMap.get(lowestRelevanceIndex)
-        return {
-            id: mostRelevant.id,
-            mines: mostRelevant.mines,
-            cells: mostRelevant.cells,
-        }
-    }
-    private pickLessRelevant(): Guess {
-        const relevanceMap: Map<i32, Relevance> = this.buildRelevanceMap()
+    private pickLessRelevant(propositions: Proposition[]): Guess {
+        const relevanceMap: Map<i32, Relevance> = this.buildRelevanceMap(propositions)
 
         let lowestRelevance = Infinity
         let lowestRelevanceIndex = -1
         for (let i = 0; i < relevanceMap.values().length; ++i) {
             const item = relevanceMap.values()[i]
-            if (item.relevanceSum < lowestRelevance) {
-                lowestRelevance = item.relevanceSum
+            const average = item.relevanceSum / f32(item.appearences) // arithmetic average
+            // const average = item.relevanceProduct ** (1 / f32(item.appearences)) // geometric average
+            if (average < lowestRelevance) {
+                lowestRelevance = average
                 lowestRelevanceIndex = item.id
             }
         }
@@ -123,8 +114,7 @@ export class GuessMaker {
             cells: lowestRelevant.cells,
         }
     }
-    private buildRelevanceMap(): Map<i32, Relevance> {
-        const propositions = this.solver.getPropositions()
+    private buildRelevanceMap(propositions: Proposition[]): Map<i32, Relevance> {
         const relevanceMap: Map<i32, Relevance> = new Map()
         for (let i = 0; i < propositions.length; ++i) {
             const proposition = propositions[i]
@@ -134,14 +124,18 @@ export class GuessMaker {
                 if (!relevanceMap.has(cell)) {
                     relevanceMap.set(cell, {
                         id: cell,
+                        appearences: 1,
                         relevanceSum: proposition.getMineRatio(),
+                        relevanceProduct: proposition.getMineRatio(),
                         mines: proposition.getMines(),
                         cells: propositionCells.length,
                     })
                 } else {
                     const item = relevanceMap.get(cell)
+                    item.appearences += 1
                     item.cells += propositionCells.length
                     item.relevanceSum += proposition.getMineRatio()
+                    item.relevanceProduct *= proposition.getMineRatio()
                     item.mines += proposition.getMines()
                 }
             }
@@ -149,7 +143,7 @@ export class GuessMaker {
         return relevanceMap
     }
 
-    private pickMiddleCell(): Guess {
+    private pickCenterCell(): Guess {
         const board = this.solver.getBoard()
         const middleCellId = board.getCellByLocation(
             (board.properties.width - 1) / 2,

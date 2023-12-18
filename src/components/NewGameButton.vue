@@ -1,19 +1,10 @@
 <template>
     <div class="btn-group">
-        <button
-            id="newGameButton"
-            type="button"
-            class="btn btn-light p-1 px-3"
-            @click="clicked(currentGameConfiguration)"
-        >
+        <button id="newGameButton" type="button" class="btn btn-light p-1 px-3" @click="clicked(currentGameConfiguration)">
             <div v-html="smiley"></div>
         </button>
-        <button
-            type="button"
-            class="btn btn-light dropdown-toggle dropdown-toggle-split"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-        >
+        <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false">
             <span class="visually-hidden">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu">
@@ -141,6 +132,7 @@ export default {
 
 button {
     color: #444;
+    background-color: rebeccapurple;
 }
 
 .modal {
