@@ -3,6 +3,8 @@ export class Cell {
     private mine: boolean
     private minesCount: number
     private revealed: boolean
+    private _beingPressed: boolean
+
     private _flagged: boolean
     private _aiMarkedMine: boolean
     private _aiMarkedSafe: boolean
@@ -16,13 +18,19 @@ export class Cell {
         this._aiMarkedSafe = false
         this._flagged = false
         this._aiGuessed = false
+        this._beingPressed = false
         this._id = id
     }
 
     public get id(): any {
         return this._id
     }
-
+    public get beingPressed(): boolean {
+        return this._beingPressed
+    }
+    public set beingPressed(value: boolean) {
+        this._beingPressed = value
+    }
     public get flagged(): boolean {
         return this._flagged
     }

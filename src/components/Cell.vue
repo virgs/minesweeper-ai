@@ -1,7 +1,17 @@
 <template>
-    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle"
-        @touchstart="touchStartEvent" @touchend="touchEndEvent">
+    <button
+        type="button"
+        class="btn btn-primary"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mouseenter="mouseEnterEvent"
+        @mouseleave="mouseLeaveEvent"
+        @mousedown="mouseDownEvent"
+        @mouseup="mouseUpEvent"
+        @dblclick="doubleClick"
+        :class="classStyle"
+        @touchstart="touchStartEvent"
+        @touchend="touchEndEvent"
+    >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -43,7 +53,7 @@ export default {
     data() {
         return {
             mouseButtonDown: 0,
-            touchStartInstant: 0
+            touchStartInstant: 0,
         }
     },
     computed: {
@@ -63,6 +73,7 @@ export default {
                 revealed: this.isRevealed,
                 hint: this.cell.aiMarkedSafe,
                 guess: this.cell.aiGuessed,
+                beingPressed: this.cell.beingPressed,
             }
         },
         numberStyle() {
@@ -86,15 +97,23 @@ export default {
         },
     },
     methods: {
-        preventRightClickDefaultBehavior(event: Event) {
-            // event.preventDefault()
+        preventRightClickDefaultBehavior(event: Event) {},
+        mouseEnterEvent(event: MouseEvent) {
+            this.mouseButtonDown = event.buttons
+            this.minesweeperStore.pressedMouseEnterEvent(this.cell, event.buttons)
+        },
+        mouseLeaveEvent(event: MouseEvent) {
+            this.mouseButtonDown = MouseButtons.NONE
+            this.minesweeperStore.pressedMouseLeaveEvent(this.cell, event.buttons)
         },
         mouseDownEvent(event: MouseEvent) {
-            if (this.minesweeperStore.gameOver || this.cell.isRevealed()) {
+            if (this.minesweeperStore.gameOver) {
                 return
             }
+
             this.mouseButtonDown = event.buttons
-            if (this.mouseButtonDown === MouseButtons.RIGHT) {
+            this.minesweeperStore.pressedMouseEnterEvent(this.cell, this.mouseButtonDown)
+            if (this.mouseButtonDown === MouseButtons.RIGHT && !this.cell.isRevealed()) {
                 if (this.cell.flagged) {
                     this.minesweeperStore.unflagCell(this.cellId)
                 } else {
@@ -104,8 +123,10 @@ export default {
         },
         mouseUpEvent(event: MouseEvent) {
             if (!this.minesweeperStore.gameOver) {
-                if (this.mouseButtonDown === MouseButtons.LEFT) {
-                    if (this.cell.isNotRevealed() && !this.cell.flagged) {
+                if (this.mouseButtonDown !== MouseButtons.NONE) {
+                    if (this.cell.isRevealed()) {
+                        this.minesweeperStore.cellChorded(this.cell)
+                    } else if (!this.cell.flagged) {
                         this.minesweeperStore.cellClick(this.cell)
                     }
                 }
@@ -148,7 +169,7 @@ export default {
     font-style: normal;
     line-height: 0;
     background-color: #75caeb;
-    transition: all ease 200ms;
+    transition: all ease 100ms;
 }
 
 .btn:hover {
@@ -156,8 +177,6 @@ export default {
     background-color: #a2dbf1;
 }
 
-.btn.flagged:hover,
-.btn:focus,
 .btn:active {
     margin: 0;
     background-color: #75caeb;
@@ -171,9 +190,9 @@ export default {
     transition: all ease 200ms;
 }
 
-.exploded {
-    font-size: 1.1rem;
-    font-weight: bolder;
+.btn.beingPressed {
+    background-color: #208bb5;
+    border-width: 3px 1px 0 1px;
 }
 
 .btn.hint {
@@ -182,6 +201,11 @@ export default {
 
 .btn.guess {
     border-color: #eba161;
+}
+
+.exploded {
+    font-size: 1.1rem;
+    font-weight: bolder;
 }
 
 .flag {

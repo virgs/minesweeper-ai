@@ -31,6 +31,10 @@ export default {
     display: grid;
 }
 
+.btn-group {
+    height: var(--cell-size);
+}
+
 #grid ::-moz-selection {
     background-color: transparent;
 }

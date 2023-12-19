@@ -1,6 +1,7 @@
 import { AiAction } from '@/constants/AiAction'
 import type { BoardProperties } from '@/constants/BoardProperties'
 import { GameConfigurations } from '@/constants/GameConfiguration'
+import { MouseButtons } from '@/constants/MouseButtons'
 import { Board } from '@/engine/Board'
 import type { Cell } from '@/engine/Cell'
 import { Solver } from '@/solver/Solver'
@@ -54,6 +55,27 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
         checkGameOver() {
             return this.board.isGameLost() || this.board.isGameWon()
         },
+        pressedMouseEnterEvent(cell: Cell, mouseButtonDown: MouseButtons) {
+            if (mouseButtonDown === MouseButtons.NONE || cell.flagged || this.gameOver) {
+                return
+            }
+            const beingPressedArea = [cell]
+            if (mouseButtonDown === MouseButtons.BOTH || cell.isRevealed()) {
+                beingPressedArea.push(...this.board.getAdjacentCells(cell).concat(cell))
+            }
+            this.board.cells
+                .filter((cell) => cell.isNotRevealed() && !cell.flagged)
+                .forEach((cell) => {
+                    if (beingPressedArea.find((clear) => clear.id === cell.id) && cell.isNotRevealed()) {
+                        cell.beingPressed = true
+                    } else {
+                        cell.beingPressed = false
+                    }
+                })
+        },
+        pressedMouseLeaveEvent(cell: Cell, mouseButtonDown: MouseButtons) {
+            this.board.cells.forEach((cell) => (cell.beingPressed = false))
+        },
         cellClick(cell: Cell) {
             if (!this.gameIsRunning) {
                 clearInterval(this.timerInterval)
@@ -72,9 +94,7 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
 
             if (this.checkGameOver()) {
                 if (this.board.isGameLost()) {
-                    console.log(cell.id)
                     this.explodedBombId = cell.id
-                    console.log(this.explodedBombId)
                 }
                 this.finishGame()
             }
