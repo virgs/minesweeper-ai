@@ -56,7 +56,12 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             return this.board.isGameLost() || this.board.isGameWon()
         },
         pressedMouseEnterEvent(cell: Cell, mouseButtonDown: MouseButtons) {
-            if (mouseButtonDown === MouseButtons.NONE || cell.flagged || this.gameOver) {
+            if (
+                mouseButtonDown === MouseButtons.NONE ||
+                mouseButtonDown === MouseButtons.RIGHT ||
+                cell.flagged ||
+                this.gameOver
+            ) {
                 return
             }
             const beingPressedArea = [cell]

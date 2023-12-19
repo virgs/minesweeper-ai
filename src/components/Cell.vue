@@ -1,17 +1,7 @@
 <template>
-    <button
-        type="button"
-        class="btn btn-primary"
-        @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mouseenter="mouseEnterEvent"
-        @mouseleave="mouseLeaveEvent"
-        @mousedown="mouseDownEvent"
-        @mouseup="mouseUpEvent"
-        @dblclick="doubleClick"
-        :class="classStyle"
-        @touchstart="touchStartEvent"
-        @touchend="touchEndEvent"
-    >
+    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mouseenter="mouseEnterEvent" @mouseleave="mouseLeaveEvent" @mousedown="mouseDownEvent" @mouseup="mouseUpEvent"
+        :class="classStyle" @touchstart="touchStartEvent" @touchend="touchEndEvent">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -97,7 +87,7 @@ export default {
         },
     },
     methods: {
-        preventRightClickDefaultBehavior(event: Event) {},
+        preventRightClickDefaultBehavior(event: Event) { },
         mouseEnterEvent(event: MouseEvent) {
             this.mouseButtonDown = event.buttons
             this.minesweeperStore.pressedMouseEnterEvent(this.cell, event.buttons)
@@ -126,10 +116,12 @@ export default {
                 if (this.mouseButtonDown !== MouseButtons.NONE) {
                     this.minesweeperStore.pressedMouseLeaveEvent(this.cell, event.buttons)
 
-                    if (this.cell.isRevealed()) {
-                        this.minesweeperStore.cellChorded(this.cell)
-                    } else if (!this.cell.flagged) {
-                        this.minesweeperStore.cellClick(this.cell)
+                    if (this.mouseButtonDown & MouseButtons.LEFT) {
+                        if (this.cell.isRevealed()) {
+                            this.minesweeperStore.cellChorded(this.cell)
+                        } else if (!this.cell.flagged) {
+                            this.minesweeperStore.cellClick(this.cell)
+                        }
                     }
                 }
             }
@@ -137,25 +129,21 @@ export default {
         },
         touchStartEvent(event: TouchEvent) {
             if (!this.minesweeperStore.gameOver) {
-                if (this.cell.isNotRevealed() && !this.cell.flagged) {
-                    this.touchStartInstant = Date.now()
-                }
+                this.touchStartInstant = Date.now()
             }
         },
         touchEndEvent(event: TouchEvent) {
             if (!this.minesweeperStore.gameOver) {
-                if (this.cell.isNotRevealed() && !this.cell.flagged) {
-                    if (Date.now() - this.touchStartInstant > LONG_TOUCH_THRESHOLD_IN_MS) {
-                        this.doubleClick()
+                const touchDuration = Date.now() - this.touchStartInstant
+                if (!this.cell.flagged) {
+                    if (this.cell.isRevealed()) {
+                        this.minesweeperStore.cellChorded(this.cell)
                     } else {
                         this.minesweeperStore.cellClick(this.cell)
                     }
+                } else if (touchDuration > LONG_TOUCH_THRESHOLD_IN_MS) {
+                    this.minesweeperStore.flagCell(this.cell.id)
                 }
-            }
-        },
-        doubleClick() {
-            if (this.isRevealed) {
-                this.minesweeperStore.cellChorded(this.cell)
             }
         },
     },
@@ -172,6 +160,7 @@ export default {
     line-height: 0;
     background-color: #75caeb;
     transition: all ease 100ms;
+    border-width: 0px 1px 3px 1px;
 }
 
 .btn:hover {
