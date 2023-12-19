@@ -1,14 +1,7 @@
 <template>
-    <button
-        type="button"
-        class="btn btn-primary"
-        @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mousedown="mouseDownEvent"
-        @mouseup="mouseUpEvent"
-        @dblclick="doubleClick"
-        :class="classStyle"
-        @touchend="touchEndEvent"
-    >
+    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mousedown="mouseDownEvent" @mouseup="mouseUpEvent" @dblclick="doubleClick" :class="classStyle"
+        @touchstart="touchStartEvent" @touchend="touchEndEvent">
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -31,6 +24,8 @@ import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
 import { useMinesweeperStore } from '@/store/store'
 
+const LONG_TOUCH_THRESHOLD_IN_MS = 1000
+
 export default {
     name: 'Cell',
     setup() {
@@ -48,6 +43,7 @@ export default {
     data() {
         return {
             mouseButtonDown: 0,
+            touchStartInstant: 0
         }
     },
     computed: {
@@ -107,7 +103,7 @@ export default {
             }
         },
         mouseUpEvent(event: MouseEvent) {
-            if (this.cell.isNotRevealed() && !this.cell.flagged) {
+            if (!this.minesweeperStore.gameOver) {
                 if (this.mouseButtonDown === MouseButtons.LEFT) {
                     if (this.cell.isNotRevealed() && !this.cell.flagged) {
                         this.minesweeperStore.cellClick(this.cell)
@@ -116,14 +112,25 @@ export default {
             }
             this.mouseButtonDown = event.buttons
         },
-        touchEndEvent(event: TouchEvent) {
-            if (this.cell.isNotRevealed() && !this.cell.flagged) {
+        touchStartEvent(event: TouchEvent) {
+            if (!this.minesweeperStore.gameOver) {
                 if (this.cell.isNotRevealed() && !this.cell.flagged) {
-                    this.minesweeperStore.cellClick(this.cell)
+                    this.touchStartInstant = Date.now()
                 }
             }
         },
-        doubleClick(event: MouseEvent) {
+        touchEndEvent(event: TouchEvent) {
+            if (!this.minesweeperStore.gameOver) {
+                if (this.cell.isNotRevealed() && !this.cell.flagged) {
+                    if (Date.now() - this.touchStartInstant > LONG_TOUCH_THRESHOLD_IN_MS) {
+                        this.doubleClick()
+                    } else {
+                        this.minesweeperStore.cellClick(this.cell)
+                    }
+                }
+            }
+        },
+        doubleClick() {
             if (this.isRevealed) {
                 this.minesweeperStore.cellChorded(this.cell)
             }
