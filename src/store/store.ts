@@ -114,7 +114,6 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
             this.gameOver = true
             this.victory = this.board.isGameWon()
             clearInterval(this.timerInterval)
-            console.log('game finished. ' + (this.victory ? 'You won!' : 'You lost!'))
         },
         async aiAction(aiAction: AiAction): Promise<void> {
             switch (aiAction) {
@@ -134,7 +133,6 @@ export const useMinesweeperStore = defineStore(mineSweeperStoreId, {
                     }
                     const guess = await solver?.makeGuess()!
                     const cell = this.board.getCellById(guess.id)!
-                    console.log('marking as ai guess: ' + guess.id)
                     cell!.aiGuessed = true
                     this.cellClick(cell)
                     break

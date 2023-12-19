@@ -81,8 +81,13 @@ export default {
     },
     mounted() {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        //@ts-ignore
-        const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+        const tooltipList = [...tooltipTriggerList].map(
+            (tooltipTriggerEl) =>
+                //@ts-ignore
+                new bootstrap.Tooltip(tooltipTriggerEl, {
+                    trigger: 'hover',
+                })
+        )
     },
     methods: {
         async aiAction(aiAction: AiAction) {

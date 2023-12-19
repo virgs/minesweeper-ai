@@ -124,6 +124,8 @@ export default {
         mouseUpEvent(event: MouseEvent) {
             if (!this.minesweeperStore.gameOver) {
                 if (this.mouseButtonDown !== MouseButtons.NONE) {
+                    this.minesweeperStore.pressedMouseLeaveEvent(this.cell, event.buttons)
+
                     if (this.cell.isRevealed()) {
                         this.minesweeperStore.cellChorded(this.cell)
                     } else if (!this.cell.flagged) {
