@@ -1,7 +1,16 @@
 <template>
-    <button type="button" class="btn btn-primary" @contextmenu.prevent="preventRightClickDefaultBehavior"
-        @mouseenter="mouseEnterEvent" @mouseleave="mouseLeaveEvent" @mousedown="mouseDownEvent" @mouseup="mouseUpEvent"
-        :class="classStyle" @touchstart="touchStartEvent" @touchend="touchEndEvent">
+    <button
+        type="button"
+        class="btn btn-primary"
+        @contextmenu.prevent="preventRightClickDefaultBehavior"
+        @mouseenter="mouseEnterEvent"
+        @mouseleave="mouseLeaveEvent"
+        @mousedown="mouseDownEvent"
+        @mouseup="mouseUpEvent"
+        :class="classStyle"
+        @touchstart="touchStartEvent"
+        @touchend="touchEndEvent"
+    >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
                 <font-awesome-icon icon="fa-solid fa-bomb" :shake="exploded" />
@@ -87,7 +96,7 @@ export default {
         },
     },
     methods: {
-        preventRightClickDefaultBehavior(event: Event) { },
+        preventRightClickDefaultBehavior(event: Event) {},
         mouseEnterEvent(event: MouseEvent) {
             this.mouseButtonDown = event.buttons
             this.minesweeperStore.pressedMouseEnterEvent(this.cell, event.buttons)
