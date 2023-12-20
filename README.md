@@ -144,7 +144,7 @@ As previously said {B, C} is also a subset of the 2nd sentence, and combining th
 
 Observe that {D, E} effectively is the difference set {B, C, D, E} - {A, B, C} = {D, E}
 
-Once one letter can only have one mine, there's no way the sentence {D, E} has more than 2 mines.
+Once one cell can only have one mine, there's no way the sentence {D, E} has more than 2 mines.
 So, we can conclude {D, E} = 2. Therefore, **D** and **E** are mines. We can now update the 1st proposition ({B, C, D, E} = 3) with this information and get this new one: {B, C} = 1. Lastly, we subtract this last information from the 2nd proposition ({A, B, C} = 1) and get {A} = 0. Thus, **A** is a safe cell.
 
 More generally, any time we have two sentences:
@@ -152,7 +152,7 @@ More generally, any time we have two sentences:
     set1 = count1
     set2 = count2
 
-where count1 - count2 is equal to the number of cells the difference set (set1 - set2) has, then we can infer that every remaining cell is a mine.
+where count1 - count2 is equal to the number of cells the difference set (set1 - set2) has, then we can infer that every cell in the difference set is a mine.
 
 ## Results
 
@@ -162,7 +162,7 @@ If you didn't skip the goals section or weren't getting distracted playing a gam
 
 To generate the reports and be able to determine whether these numbers are good, I decided to compare them against the stats on [minesweeper.online/statistics](https://minesweeper.online/statistics). I have no idea of how reliable they are and one can say these numbers take beginners and speed-solvers into consideration. Honestly, I don't care. It's better than nothing.
 
-To compare against those stats numbers, I made the AI play the three default minesweeper levels:
+To compare against those stats numbers, I made the AI play the three standard difficulty levels:
 
 - **Beginner:** 9x9 grid, 10 mines and ≅0.123 mines density.
 - **Intermediate:** 16x16 grid, 40 mines and ≅0.156 mines density.
@@ -172,7 +172,7 @@ To generate the AI win ratio, the AI plays 2000 times every level. It plays as s
 
 ### Guesses
 
-Unfortunately, given the very nature of the game, guesses are often required and make part of the game. So frequent that it's pretty much impossible to play one expert level game without any guessing at all. One can say it's a bad game design decision to make the luck factor so important. And I second that, even though I've played it so many times. But what does this one have to say about games such as Monopoly, rock-paper-scissor, and all casino games?
+Unfortunately, given the very nature of the game, guesses are often required and make part of the game. So frequent that it's pretty much impossible to play one expert level game without any guessing at all. Eventually the player will bepresented with too little information to make a  concrete deduction. One can say it's a bad game design decision to make the luck factor so important. And I second that, even though I've played it so many times. But what does this one have to say about games such as Monopoly, rock-paper-scissor, and all casino games?
 
 I really didn't want to get too deep into guessing strategies. Even though they are about minimizing the luck factor, they're still about luck.
 
@@ -198,13 +198,15 @@ Gathering the information the AI gets every time it has to guess, the AI comes u
 
 Once this is done, it gets a cell with the **lowest mine/cell ratio average**. In this case, the AI would pick either **E** or **F**.
 
-### Comparison table
+To be completely honest, I tried tweaking a few of the guessing strategies, but all of them had none to little effect on the results. Most of the results difference were not significant enough and even smaller than the standard deviation. So I settled with the one I just described.
+
+### Performance Analysis
 
 | Level | [Minesweeper.online](https://minesweeper.online/statistics) | AI |
 |--- | --- | --- |
-| Beginner | 48% | [93.05%](./reports/main-proposition-less-relevant-arithmetic-avg-beginner-1702931793457.json) |
-| Intermediate | 23% | [69.85%](./reports/main-proposition-less-relevant-arithmetic-avg-intermediate-1702931392867.json) |
-| Expert | 2.7% | [29.55%](./reports/main-proposition-less-relevant-arithmetic-avg-expert-1702931496138.json) |
+| Beginner | 48% | [93.05%](./reports/beginner-1702931793457.json) |
+| Intermediate | 23% | [69.85%](./reports/intermediate-1702931392867.json) |
+| Expert | 2.7% | [29.55%](./reports/expert-1702931496138.json) |
 
 You can check these values yourself [here](./reports/) and suggest better approaches by coding them yourself.
 
@@ -236,8 +238,9 @@ npm run build
 npm run format
 ```
 
-## Sources
+## Bibliography
 
 - [Algorithmic Approaches to Playing Minesweeper](https://cs50.harvard.edu/ai/2023/projects/1/minesweeper/)
-- [Who wrote it?](http://honors.cs.umd.edu/reports/minesweeper.pdf)
 - [Minesweeper.online](https://minesweeper.online/statistics)
+- [Becerra, David J. 2015. Algorithmic Approaches to Playing Minesweeper](https://dash.harvard.edu/bitstream/handle/1/14398552/BECERRA-SENIORTHESIS-2015.pdf)
+- [Unknown author](http://honors.cs.umd.edu/reports/minesweeper.pdf)

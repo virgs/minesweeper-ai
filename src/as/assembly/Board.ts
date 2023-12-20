@@ -11,6 +11,39 @@ export class Board {
     properties!: BoardProperties
     cells!: Array<Cell>
 
+    public getNotRevealedCorners(): Cell[] {
+        const notRevealedCorners: Cell[] = []
+        const corners: Cell[] = [
+            this.getCellByLocation(0, 0),
+            this.getCellByLocation(0, this.properties.height - 1),
+            this.getCellByLocation(this.properties.width - 1, 0),
+            this.getCellByLocation(this.properties.width - 1, this.properties.height - 1),
+        ]
+
+        for (let i = 0; i < corners.length; ++i) {
+            if (!corners[i].revealed) {
+                notRevealedCorners.push(corners[i])
+            }
+        }
+        return notRevealedCorners
+    }
+
+    public getNotRevealedEdges(): Cell[] {
+        const notRevealedEdges: Cell[] = []
+
+        for (let i = 0; i < this.cells.length; ++i) {
+            const x = i % this.properties.width
+            const y = Math.floor(i / this.properties.width)
+
+            if (x === 0 || y === 0 || x === this.properties.width - 1 || y === this.properties.height - 1) {
+                if (!this.cells[i].revealed) {
+                    notRevealedEdges.push(this.cells[i])
+                }
+            }
+        }
+        return notRevealedEdges
+    }
+
     public getCellById(id: i32): Cell {
         return this.cells[id]
     }

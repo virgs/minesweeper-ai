@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 .container {
-    margin-top: 1px;
+    margin-top: 2px;
     width: min-content;
     max-width: min-content;
     min-width: 300px;
@@ -45,5 +45,6 @@ export default {
     border-width: 4px;
     border-style: solid;
     border-color: white;
+    touch-action: none;
 }
 </style>
