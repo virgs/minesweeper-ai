@@ -34,7 +34,7 @@ import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
 import { useMinesweeperStore } from '@/store/store'
 
-const LONG_TOUCH_THRESHOLD_IN_MS = 2000
+const LONG_TOUCH_THRESHOLD_IN_MS = 1250
 
 export default {
     name: 'Cell',
@@ -54,6 +54,7 @@ export default {
         return {
             mouseButtonDown: 0,
             touchStartTimer: 0,
+            longTouchJustHappened: false,
         }
     },
     computed: {
@@ -142,13 +143,14 @@ export default {
         },
         startLongPressDetection() {
             this.touchStartTimer = setTimeout(() => {
+                clearTimeout(this.touchStartTimer)
                 this.touchStartTimer = 0
                 this.onLongTouch()
             }, LONG_TOUCH_THRESHOLD_IN_MS)
         },
         touchEndEvent() {
             this.cancelLongPressDetection()
-            if (!this.minesweeperStore.gameOver) {
+            if (!this.minesweeperStore.gameOver && !this.longTouchJustHappened) {
                 if (!this.cell.flagged) {
                     if (this.cell.isRevealed()) {
                         this.minesweeperStore.cellChorded(this.cell)
@@ -157,9 +159,17 @@ export default {
                     }
                 }
             }
+            this.longTouchJustHappened = false
         },
         onLongTouch() {
-            this.minesweeperStore.flagCell(this.cell.id)
+            this.longTouchJustHappened = true
+            if (this.cell.isNotRevealed()) {
+                if (this.cell.flagged) {
+                    this.minesweeperStore.flagCell(this.cell.id)
+                } else {
+                    this.minesweeperStore.unflagCell(this.cell.id)
+                }
+            }
         },
     },
 }
