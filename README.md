@@ -21,7 +21,7 @@ With no further ado, I present you my approach of an **Artificial Intelligence**
 
 ## Goals
 
-1. [**To write an artificial intelligence agent that can play any of the classical minesweeper better than I do**](#artificial-intelligence). Ideally, it would have to be better than I. Modesty aside, this wouldn't be an easy task, since, as I mentioned earlier, I've been practicing it through most of my life. Once there is no way to ensure that (I'm NOT THAT good), but this is something hard to measure if you put the time factor aside (not fair to compare the time to solve a board between a human and a machine, right?). So, I slightly changed the goal to be: **have a better ratio win rate than the numbers found [minesweeper.online](https://minesweeper.online/statistics)**. Check the [results](#results) at the end to check if this goal was achieved.
+1. [**To write an artificial intelligence agent that can play any of the minesweeper better than I do**](#artificial-intelligence). Ideally, it would have to be better than I. Modesty aside, this wouldn't be an easy task, since, as I mentioned earlier, I've been practicing it through most of my life. Once there is no way to ensure that (not thay I'm THAT good), but this is something hard to measure if you put the time factor aside (not fair to compare the time to solve a board between a human and a machine, right?). So, I slightly changed the goal to be: **have a better win rate than the numbers found on [minesweeper.online](https://minesweeper.online/statistics)**. Check the [results](#results) at the end to verify if this goal was achieved.
 
 As I always do, a lot of different side-goals came with this project. Among them:
 
