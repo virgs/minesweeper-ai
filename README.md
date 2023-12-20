@@ -11,22 +11,22 @@ This implementation provides you 4 AI actions:
 3. *Keep playing until no guess is needed*: it essentially keeps *making one move* repeatedly. It makes a move, then based on the updated board configuration, makes new inferences, makes another move, and so on...
 4. *Guess*: makes a [guess](#guesses). Since it's a guess, and it's based on luck, you can lose by pressing it.
 
-=====
+## Report
 
 I believe I can say Minesweeper is the PC game I played the most throughout my life.
-If you were a kid in the '90s, the same way I was, you would get it and agree with me when I say that our gaming options were not too sophisticated and our lack of options compared to nowadays didn't help either.  
+If you were a kid in the '90s, the same way I was, you would get it and agree with me when I say that our gaming options were not too sophisticated and our lack of alternatives compared to nowadays didn't help either.  
 
-With that being said and adding to the equation that I've always been into game development, I had to code several versions of my minesweeper, including the [octagon/square pattern](https://github.com/virgs/octoQuadMineSweeper) (you can watch it [here](https://www.youtube.com/watch?v=PNmADfgnJjg)) and other ones long-lost.  
+With that being said and adding to the equation that I've always been into game development, I had to code several versions of my minesweeper, including the [octagon/square pattern](https://github.com/virgs/octoQuadMineSweeper) (you can watch it [here](https://www.youtube.com/watch?v=PNmADfgnJjg)) and other long-lost ones.  
 
 Given my latest obsession with gaming artificial intelligence ([flappy-bird](https://virgs.github.io/flappy-bird-ai/?mutationRate=0.01&populationPerGeneration=1500&relativeSelectedPopulationPerGeneration=0.01&qBirdsNumber=100), [mancala](https://virgs.github.io/mancala/), [rubiks-cubes](https://virgs.github.io/rubiks-cubes-ai/?cube=0&methods=&moves=)) projects, it was just a matter of time until I came up with an AI for minesweeper.  
 
-I've been thinking about it for a long time. I'd say that at least 15 years. Thought about multiple strategies to solve it. From **fuzzy logic** to **neural networks**. None was good enough and gave me the confidence to make me want to spend some time trying them.  
+I've been thinking about it for a long time. I'd say that at least 15 years. Thought about multiple strategies to solve it. From **fuzzy logic** to **neural networks**. None was good enough and gave me the appeal to make me want to spend some time trying them.  
 
 That was my reality until I found this one from [Harvard's *Introduction to Artificial Intelligence with Python*](https://cs50.harvard.edu/ai/2023/projects/1/minesweeper). More information about this approach [below](#artificial-intelligence). It got me instantly fascinated both by the simplicity and elegance that the solution has shown.  
 
-I got what I needed.  
+I got the sparkle I needed.  
 
-With no further ado, I present you my approach of an **Artificial Intelligence** agent to play the classical version of **Minesweeper**.
+With no further ado, I present to you my approach of an **Artificial Intelligence** agent to play the classical version of **Minesweeper**.
 
 ## Goals
 
@@ -89,7 +89,7 @@ Below we'll see how we can use this method of representing knowledge, to write a
 
 ##### 1. All-Safe and All-Mine Inference
 
-Intuitively, we can infer from the 1st sentence ({B, E, F} = 3) that all **B**, **E**, and **F** must be mines. More generally, we can infer that any time the number of cells is equal to the count, all of that sentence’s cells must be mines.
+Considering the propositions mentioned previoulsy, we can intuitively infer from the 1st sentence ({B, E, F} = 3) that all **B**, **E**, and **F** must be mines. More generally, we can infer that any time the number of cells is equal to the count, all of that sentence’s cells must be mines.
 
 Using the knowledge from the 5th sentence ({K, L, O} = 0), we can intuitively infer that all **K**, **L**, and **O** must be safe. By extension, any time we have a sentence whose count is 0, we know that all of that sentence’s cells must be safe.
 
@@ -105,7 +105,7 @@ Now the 2nd sentence allows us to infer that **D**, **G**, and **H** are not min
 
 ##### 2. Subset Inference
 
-Consider just these two sentences, our AI knows from a hypothetical board configuration.
+Consider just these two sentences from a hypothetical board configuration.
 
 1. {A, B, C} = 1
 2. {A, B, C, D, E} = 2
@@ -126,35 +126,38 @@ where set1 is a subset of set2, then we can construct the new sentence:
 
     set2 - set1 = count2 - count1
 
-If we’re being even more clever, there’s one final type of inference we can do.
+There’s one final quick type of inference we can do.
 
 ##### 3. Inequality Difference Inference
+
+Consider the sentences below:
 
 1. {B, C, D, E} = 3
 2. {A, B, C} = 1
 
-Note that they are not subset/superset of each other, but they do overlap {B, C}. Since this is an overlap, it's a subset of both propositions. If this is a subset from the first proposition, it's fair to say that it's a proposition that has **at most** (an inequality) 1 mine:
+Note that their sets are not subset/superset of each other, but they do overlap {B, C}. Since this is an overlap, it's a subset of both sets. If this is a subset from the first proposition, it's fair to say that it's a proposition that has **at most** (an inequality) 1 mine:
 
-3. {B, C} ≤ 1.  
+3. {B, C} ≤ 1.
 
-As previously said {B, C} is also a subset of the 2nd sentence, and combining this information with the [subset inference](#2-subset-inference) we just learned, we can infer a new piece of knowledge:
+To demonstrate that, we can suppose that **A** is a mine, in that case, {B, C} = 0. Supposing the opposite now, **A** is not a mine, {B, C} = 1. Given that being a mine or not being mine are the only two valid values for **A**, we can say that {B, C} is either equal to 0 or equal to 1. Thus: {B, C} ≤ 1.  
+
+As previously said {B, C} is also a subset of the 2nd set, and combining this information with the [subset inference](#2-subset-inference) we just learned, we can infer a new piece of knowledge:
 
     1. {B, C, D, E} = 3
     3. {B, C} ≤ 1
-    Applying subset inference 1. - 3.
+    Applying subset inference 1. - 3. and inequality subtractions
     4. {D, E} ≥ 2
 
-Observe that {D, E} effectively is the difference set {B, C, D, E} - {A, B, C} = {D, E}
+It may deserve another paragraph to demonstrate that. Observe that {D, E} effectively is the difference-set {B, C, D, E} - {A, B, C} = {D, E}. Since we proved {B, C} is either equal to 0 or equal to 1, and we know {B, C, D, E} = 3. We can replace a piece of the former with the latter. Assuming {B, C} = 1, we would get {D, E} = 2. Supposing now that {B, C} = 0, we would have {D, E} = 3. *Which is a contradiction,* once one cell can only have at most one mine.  
 
-Once one cell can only have one mine, there's no way the sentence {D, E} has more than 2 mines.
-So, we can conclude {D, E} = 2. Therefore, **D** and **E** are mines. We can now update the 1st proposition ({B, C, D, E} = 3) with this information and get this new one: {B, C} = 1. Lastly, we subtract this last information from the 2nd proposition ({A, B, C} = 1) and get {A} = 0. Thus, **A** is a safe cell.
+So, according to the *Reductio ad absurdum*, we can infer {D, E} = 2 and {B, C} = 1. Therefore, **D** and **E** are mines. Lastly, we subtract {B, C} = 1 from the 2nd proposition ({A, B, C} = 1) and get {A} = 0. Thus, **A** is a safe cell.
 
 More generally, any time we have two sentences:
 
     set1 = count1
     set2 = count2
 
-where count1 - count2 is equal to the number of cells the difference set (set1 - set2) has, then we can infer that every cell in the difference set is a mine.
+where count1 - count2 is equal to the number of cells the difference-set set1 - set2 has, then we can infer that every cell in the difference-set is a mine.
 
 ## Results
 

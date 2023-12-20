@@ -34,7 +34,7 @@ import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
 import { useMinesweeperStore } from '@/store/store'
 
-const LONG_TOUCH_THRESHOLD_IN_MS = 1250
+const LONG_TOUCH_THRESHOLD_IN_MS = 750
 
 export default {
     name: 'Cell',
@@ -114,7 +114,7 @@ export default {
 
             this.mouseButtonDown = event.buttons
             this.minesweeperStore.pressedMouseEnterEvent(this.cell, this.mouseButtonDown)
-            if (this.mouseButtonDown === MouseButtons.RIGHT && !this.cell.isRevealed()) {
+            if (this.mouseButtonDown === MouseButtons.RIGHT && !this.cell.isNotRevealed()) {
                 if (this.cell.flagged) {
                     this.minesweeperStore.unflagCell(this.cellId)
                 } else {
@@ -165,9 +165,9 @@ export default {
             this.longTouchJustHappened = true
             if (this.cell.isNotRevealed()) {
                 if (this.cell.flagged) {
-                    this.minesweeperStore.flagCell(this.cell.id)
-                } else {
                     this.minesweeperStore.unflagCell(this.cell.id)
+                } else {
+                    this.minesweeperStore.flagCell(this.cell.id)
                 }
             }
         },
@@ -186,6 +186,8 @@ export default {
     background-color: #75caeb;
     transition: all ease 100ms;
     border-width: 0px 1px 3px 1px;
+    border-style: inset;
+    box-sizing: border-box;
 }
 
 .btn:hover {
