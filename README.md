@@ -1,6 +1,6 @@
 # minesweeper-ai
 
-![Screenshot](./Screenshot.png)
+![Screenshot](./screenshot.png)
 
 This is a long dream project of *mine* (ba dum tss) coming true and you can [play it here](https://virgs.github.io/mancala/)
 
