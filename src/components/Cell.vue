@@ -10,7 +10,7 @@
         :class="classStyle"
         @touchstart="startLongPressDetection"
         @touchmove="cancelLongPressDetection"
-        @touchend="cancelLongPressDetection"
+        @touchend="touchEndEvent"
     >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
@@ -137,16 +137,17 @@ export default {
             }
             this.mouseButtonDown = event.buttons
         },
-        cancelLongPressDetection(event: TouchEvent) {
+        cancelLongPressDetection() {
             clearTimeout(this.touchStartTimer)
         },
-        startLongPressDetection(event: TouchEvent) {
-            setTimeout(() => {
+        startLongPressDetection() {
+            this.touchStartTimer = setTimeout(() => {
                 this.touchStartTimer = 0
                 this.onLongTouch()
             }, LONG_TOUCH_THRESHOLD_IN_MS)
         },
-        touchEndEvent(event: TouchEvent) {
+        touchEndEvent() {
+            this.cancelLongPressDetection()
             if (!this.minesweeperStore.gameOver) {
                 if (!this.cell.flagged) {
                     if (this.cell.isRevealed()) {
