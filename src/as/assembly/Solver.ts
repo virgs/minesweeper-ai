@@ -35,21 +35,8 @@ export class Solver {
 
     public run(): void {
         this.createNewPropositions()
-        while (true) {
-            this.checkMainPropositionAddition()
-            this.propositionsSolver.run()
-
-            const ps = new HypothesisRunner(this.propositionsSolver.getPropositions())
-            if (ps.findContradictions()) {
-                // console.log('ps findings')
-                // console.log('mines ' + ps.getKnownMineCellsIds().toString())
-                // console.log('safes ' + ps.getKnownSafeCellsIds().toString())
-                this.propositionsSolver.addMineCells(ps.getKnownMineCellsIds())
-                this.propositionsSolver.addSafeCells(ps.getKnownSafeCellsIds())
-            } else {
-                break
-            }
-        }
+        this.checkMainPropositionAddition()
+        this.propositionsSolver.run()
     }
 
     private checkMainPropositionAddition(): boolean {
@@ -57,9 +44,9 @@ export class Solver {
         if (
             !this.addedMainProposition &&
             totalCells -
-                (this.propositionsSolver.getKnownSafeCellsIds().length +
-                    this.propositionsSolver.getKnownMineCellsIds().length) <=
-                10
+            (this.propositionsSolver.getKnownSafeCellsIds().length +
+                this.propositionsSolver.getKnownMineCellsIds().length) <=
+            10
         ) {
             const initialPropositionCells: i32[] = new Array(totalCells)
             for (let i = 0; i < this.board.cells.length; ++i) {
