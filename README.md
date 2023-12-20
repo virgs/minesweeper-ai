@@ -56,11 +56,11 @@ How does the AI get to know what's a safe, and what's a mine cell without any ch
 
 Consider this 4x4 board configuration where cells have been labeled with an identifying letter for the sake of discussion:
 
-| 3 (A) | (B) | 2 (C) | (D) |
+| (A) 3 | (B)   | (C)   2 |(D)   |
 |---| ---|---|---|
 | **(E)** | **(F)** | **(G)** | **(H)**|
-| **3 (I)** | **(J)** | **(K)** | **(L)**|
-| **1 (M)** | **(N)** | **(O)** | **0 (P)**|
+| **(I) 3** | **(J)** | **(K)** | **(L)**|
+| **(M) 1** | **(N)** | **(O)** | **(P) 0**|
 
 There are 5 revealed cells: **A**, **C**, **I**, **M** and **P**.
 Given this information, a logical player could conclude that there must be mines in the **B**, **E**, **F** cells and that there is no mine in the **D**, **G**, **H**, **K**, **L**, and **O** cell, for only in that case would the numerical labels on each of the other cells be accurate.
