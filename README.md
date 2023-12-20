@@ -1,11 +1,20 @@
 # Minesweeper-ai
 
-![Screenshot](./screenshot.png)
-
 This is a long dream project of *mine* (ba dum tss) coming true and you can [play it here](https://virgs.github.io/minesweeper-ai)
 
-I believe I can say Minesweeper is the PC game I played the most throughout my life. Especially during adolescence.
-If you were a kid in the '90s, the same way I was, you would agree with me when I say that our gaming options were not too sophisticated and our lack of options compared to nowadays didn't help either.  
+![Screenshot](./screenshot.png)
+
+This implementation provides you 4 AI actions:
+
+1. *Hint*: tells you all inferable information given the current board configuration.
+2. *Make one move*: reveal every **known** safe cell and flag every **known** mine given the current board configuration.
+3. *Keep playing until no guess is needed*: it essentially keeps *making one move* repeatedly. It makes a move, then based on the updated board configuration, makes new inferences, makes another move, and so on...
+4. *Guess*: makes a [guess](#guesses). Since it's a guess, and it's based on luck, you can lose by pressing it.
+
+=====
+
+I believe I can say Minesweeper is the PC game I played the most throughout my life.
+If you were a kid in the '90s, the same way I was, you would get it and agree with me when I say that our gaming options were not too sophisticated and our lack of options compared to nowadays didn't help either.  
 
 With that being said and adding to the equation that I've always been into game development, I had to code several versions of my minesweeper, including the [octagon/square pattern](https://github.com/virgs/octoQuadMineSweeper) (you can watch it [here](https://www.youtube.com/watch?v=PNmADfgnJjg)) and other ones long-lost.  
 
@@ -21,7 +30,7 @@ With no further ado, I present you my approach of an **Artificial Intelligence**
 
 ## Goals
 
-1. [**To write an artificial intelligence agent that can play any of the minesweeper better than I do**](#artificial-intelligence). Ideally, it would have to be better than I. Modesty aside, this wouldn't be an easy task, since, as I mentioned earlier, I've been practicing it through most of my life. Once there is no way to ensure that (not thay I'm THAT good), but this is something hard to measure if you put the time factor aside (not fair to compare the time to solve a board between a human and a machine, right?). So, I slightly changed the goal to be: **have a better win rate than the numbers found on [minesweeper.online](https://minesweeper.online/statistics)**. Check the [results](#results) at the end to verify if this goal was achieved.
+1. [**To write an artificial intelligence agent that can play any of the minesweeper better than I do**](#artificial-intelligence). Ideally, it would have to be better than I. Modesty aside, this wouldn't be an easy task, since, as I mentioned earlier, I've been practicing it through most of my life. Once there is no way to ensure that (not that I'm THAT good), but this is something hard to measure if you put the time factor aside (not fair to compare the time to solve a board between a human and a machine, right?). So, I slightly changed the goal to be: **have a better win rate than the numbers found on [minesweeper.online](https://minesweeper.online/statistics)**. Check the [results](#results) at the end to verify if this goal was achieved.
 
 As I always do, a lot of different side-goals came with this project. Among them:
 
@@ -39,13 +48,6 @@ Using the right button click, you can flag a cell to prevent any accidental clic
 
 A last disclaimer is needed because it's not unusual to see a minesweeper version that doesn't implement this behavior: the first cell ever clicked in a game will always open a clear area. It and its neighbors cannot have any mine. It makes it impossible to lose in the first click (ultimately always a guess) and maximizes the chance to provide you with enough information to stop guessing at the beginning.
 
-This implementation provides you 4 AI actions:
-
-1. *Hint*: tells you all inferable information given the current board configuration.
-2. *Make one move*: reveal every **known** safe cell and flag every **known** mine given the current board configuration.
-3. *Keep playing until no guess is needed*: it essentially keeps *making one move* repeatedly. It makes a move, then based on the updated board configuration, makes new inferences, makes another move, and so on...
-4. *Guess*: makes a [guess](#guesses). Since it's a guess, and it's based on luck, you can lose by pressing it.
-
 ### Artificial Intelligence
 
 How does the AI get to know what's a safe, and what's a mine cell without any cheating? Well, my friend, it is all about two things: knowledge representation and inferences.
@@ -60,7 +62,7 @@ Consider this 4x4 board configuration where cells have been labeled with an iden
 | **3 (I)** | **(J)** | **(K)** | **(L)**|
 | **1 (M)** | **(N)** | **(O)** | **0 (P)**|
 
-There are 4 revealed cells: **A**, **C**, **I**, **M** and **P**.
+There are 5 revealed cells: **A**, **C**, **I**, **M** and **P**.
 Given this information, a logical player could conclude that there must be mines in the **B**, **E**, **F** cells and that there is no mine in the **D**, **G**, **H**, **K**, **L**, and **O** cell, for only in that case would the numerical labels on each of the other cells be accurate.
 
 But how would a machine infer it? One way we could represent an AI’s knowledge about a Minesweeper game is by making each cell a propositional variable that is true if the cell contains a mine, and false otherwise.
