@@ -114,7 +114,7 @@ export default {
 
             this.mouseButtonDown = event.buttons
             this.minesweeperStore.pressedMouseEnterEvent(this.cell, this.mouseButtonDown)
-            if (this.mouseButtonDown === MouseButtons.RIGHT && !this.cell.isNotRevealed()) {
+            if (this.mouseButtonDown === MouseButtons.RIGHT && this.cell.isNotRevealed()) {
                 if (this.cell.flagged) {
                     this.minesweeperStore.unflagCell(this.cellId)
                 } else {
