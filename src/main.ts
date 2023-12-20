@@ -48,11 +48,11 @@ library.add(
 )
 library.add(faRegularStar, faStarHalfStroke)
 
-// const app = createApp(App)
-// const pinia = createPinia()
-// app.use(pinia)
-// app.component('font-awesome-icon', FontAwesomeIcon)
-// app.mount('#app')
+const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
+app.component('font-awesome-icon', FontAwesomeIcon)
+app.mount('#app')
 
 const generateReports = async (preffix: string) => {
     await new ReportGenerator(GameConfigurations.Beginner, {
@@ -72,4 +72,4 @@ const generateReports = async (preffix: string) => {
     }).run()
 }
 
-generateReports('corner-edge')
+// generateReports('corner-edge')
