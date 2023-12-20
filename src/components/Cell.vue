@@ -8,8 +8,9 @@
         @mousedown="mouseDownEvent"
         @mouseup="mouseUpEvent"
         :class="classStyle"
-        @touchstart="touchStartEvent"
-        @touchend="touchEndEvent"
+        @touchstart="startLongPressDetection"
+        @touchmove="cancelLongPressDetection"
+        @touchend="cancelLongPressDetection"
     >
         <div v-if="isRevealed">
             <span v-if="cell.hasMine" :style="bombStyle" :class="{ exploded: exploded }">
@@ -52,7 +53,7 @@ export default {
     data() {
         return {
             mouseButtonDown: 0,
-            touchStartInstant: 0,
+            touchStartTimer: 0,
         }
     },
     computed: {
@@ -136,24 +137,28 @@ export default {
             }
             this.mouseButtonDown = event.buttons
         },
-        touchStartEvent(event: TouchEvent) {
-            if (!this.minesweeperStore.gameOver) {
-                this.touchStartInstant = Date.now()
-            }
+        cancelLongPressDetection(event: TouchEvent) {
+            clearTimeout(this.touchStartTimer)
+        },
+        startLongPressDetection(event: TouchEvent) {
+            setTimeout(() => {
+                this.touchStartTimer = 0
+                this.onLongTouch()
+            }, LONG_TOUCH_THRESHOLD_IN_MS)
         },
         touchEndEvent(event: TouchEvent) {
             if (!this.minesweeperStore.gameOver) {
-                const touchDuration = Date.now() - this.touchStartInstant
                 if (!this.cell.flagged) {
                     if (this.cell.isRevealed()) {
                         this.minesweeperStore.cellChorded(this.cell)
                     } else {
                         this.minesweeperStore.cellClick(this.cell)
                     }
-                } else if (touchDuration > LONG_TOUCH_THRESHOLD_IN_MS) {
-                    this.minesweeperStore.flagCell(this.cell.id)
                 }
             }
+        },
+        onLongTouch() {
+            this.minesweeperStore.flagCell(this.cell.id)
         },
     },
 }

@@ -44,7 +44,10 @@ export default {
             )
         },
         timer(): string {
-            return (this.minesweeperStore.timer / 10).toString().padEnd(3, '.0')
+            const intPart = Math.floor(this.minesweeperStore.timer / 10)
+            const fractPart = this.minesweeperStore.timer % 10
+
+            return `${intPart}.${fractPart}`
         },
     },
 }

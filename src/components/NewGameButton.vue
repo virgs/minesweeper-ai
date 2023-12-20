@@ -137,7 +137,6 @@ export default {
 
 #newGameButton {
     font-size: x-large;
-    background-color: yellow;
 }
 
 button {
