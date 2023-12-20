@@ -44,9 +44,9 @@ export class Solver {
         if (
             !this.addedMainProposition &&
             totalCells -
-            (this.propositionsSolver.getKnownSafeCellsIds().length +
-                this.propositionsSolver.getKnownMineCellsIds().length) <=
-            10
+                (this.propositionsSolver.getKnownSafeCellsIds().length +
+                    this.propositionsSolver.getKnownMineCellsIds().length) <=
+                10
         ) {
             const initialPropositionCells: i32[] = new Array(totalCells)
             for (let i = 0; i < this.board.cells.length; ++i) {

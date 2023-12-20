@@ -33,7 +33,7 @@ import { NumberColor } from '@/constants/NumberColor'
 import type { Cell } from '@/engine/Cell'
 import { useMinesweeperStore } from '@/store/store'
 
-const LONG_TOUCH_THRESHOLD_IN_MS = 1000
+const LONG_TOUCH_THRESHOLD_IN_MS = 2000
 
 export default {
     name: 'Cell',
