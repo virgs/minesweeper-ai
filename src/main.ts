@@ -48,28 +48,31 @@ library.add(
 )
 library.add(faRegularStar, faStarHalfStroke)
 
-const app = createApp(App)
-const pinia = createPinia()
-app.use(pinia)
-app.component('font-awesome-icon', FontAwesomeIcon)
-app.mount('#app')
+const reportGeneration = false
 
-const generateReports = async (preffix: string) => {
-    await new ReportGenerator(GameConfigurations.Beginner, {
-        numberOfGames: 2000,
-        workers: 20,
-        filename: preffix + '-beginner',
-    }).run()
-    await new ReportGenerator(GameConfigurations.Intermediate, {
-        numberOfGames: 2000,
-        workers: 20,
-        filename: preffix + '-intermediate',
-    }).run()
-    await new ReportGenerator(GameConfigurations.Expert, {
-        numberOfGames: 2000,
-        workers: 20,
-        filename: preffix + '-expert',
-    }).run()
+if (reportGeneration) {
+    const generateReports = async (preffix: string) => {
+        await new ReportGenerator(GameConfigurations.Beginner, {
+            numberOfGames: 2000,
+            workers: 20,
+            filename: preffix + '-beginner',
+        }).run()
+        await new ReportGenerator(GameConfigurations.Intermediate, {
+            numberOfGames: 2000,
+            workers: 20,
+            filename: preffix + '-intermediate',
+        }).run()
+        await new ReportGenerator(GameConfigurations.Expert, {
+            numberOfGames: 2000,
+            workers: 20,
+            filename: preffix + '-expert',
+        }).run()
+    }
+    generateReports('corner-edge')
+} else {
+    const app = createApp(App)
+    const pinia = createPinia()
+    app.use(pinia)
+    app.component('font-awesome-icon', FontAwesomeIcon)
+    app.mount('#app')
 }
-
-// generateReports('corner-edge')

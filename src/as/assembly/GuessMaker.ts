@@ -122,9 +122,9 @@ export class GuessMaker {
         let lowestRelevanceIndex = -1
         for (let i = 0; i < relevanceMap.values().length; ++i) {
             const item = relevanceMap.values()[i]
-            const average = item.relevanceSum / f32(item.appearences) // arithmetic average
+            const average = item.appearences /// f32(item.appearences) // arithmetic average
             // const average = item.relevanceProduct ** (1 / f32(item.appearences)) // geometric average
-            if (average < lowestRelevance) {
+            if (average < lowestRelevance || (average === lowestRelevance && Math.random() > 0.25)) {
                 lowestRelevance = average
                 lowestRelevanceIndex = item.id
             }
