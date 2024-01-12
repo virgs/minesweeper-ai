@@ -1,6 +1,6 @@
 <template>
     <div id="grid" class="p-0">
-        <div v-for="line in minesweeperStore.boardProperties.height" class="btn-group mx-auto">
+        <div v-for="line in minesweeperStore.boardProperties.height" class="grid-row mx-auto">
             <div v-for="column in minesweeperStore.boardProperties.width">
                 <CellVue :cell-id="minesweeperStore.boardProperties.width * (line - 1) + column - 1" />
             </div>
@@ -31,8 +31,8 @@ export default {
     display: grid;
 }
 
-.btn-group {
-    height: var(--cell-size);
+.grid-row {
+    display: flex;
 }
 
 #grid ::-moz-selection {
@@ -41,9 +41,5 @@ export default {
 
 #grid ::selection {
     background-color: transparent;
-}
-
-#grid .row {
-    display: flex;
 }
 </style>
