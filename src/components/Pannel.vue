@@ -41,7 +41,7 @@ label {
 
 div input {
     width: 80px;
-    font-family: 'F7-Segment';
+    font-family: '7-segment';
     height: max-content;
     font-size: x-large;
     background-color: var(--background-color);
