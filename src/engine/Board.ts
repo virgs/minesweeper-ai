@@ -1,3 +1,4 @@
+import { shuffle } from '@/constants/Shuffle'
 import type { BoardProperties } from '../constants/BoardProperties'
 import { Cell } from './Cell'
 
@@ -29,13 +30,15 @@ export class Board {
     public initializeMinesAroundCell(emptyCell: Cell) {
         const clearArea = this.getAdjacentCells(emptyCell).concat(emptyCell)
         const totalCells = this.properties.height * this.properties.width
-        const cellsWithMines: Cell[] = Array.from(Array(totalCells).keys())
-            .filter((cell) => !clearArea.find((clear) => clear.id === cell))
-            .sort(() => Math.random() - 0.5)
+        const cellsThatMayContainMines = Array.from(Array(totalCells).keys()).filter(
+            (cell) => !clearArea.find((clear) => clear.id === cell)
+        )
+        const cellsWithMines: Cell[] = shuffle(cellsThatMayContainMines)
             .filter((_, index) => index < this.properties.mines)
             .sort((a, b) => a - b)
             .map((index) => this.cells[index])
         cellsWithMines.forEach((cell, _index) => (cell.hasMine = true))
+        console.log(cellsWithMines.map((c) => c.id))
 
         this.cells.forEach((cell) => (cell.minesAround = this.getMinesSurrounding(cell)))
         this.initialized = true
