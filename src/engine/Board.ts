@@ -38,7 +38,6 @@ export class Board {
             .sort((a, b) => a - b)
             .map((index) => this.cells[index])
         cellsWithMines.forEach((cell, _index) => (cell.hasMine = true))
-        console.log(cellsWithMines.map((c) => c.id))
 
         this.cells.forEach((cell) => (cell.minesAround = this.getMinesSurrounding(cell)))
         this.initialized = true
