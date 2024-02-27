@@ -4,6 +4,20 @@ This is a long dream project of *mine* (ba dum tss) coming true and you can [pla
 
 ![Screenshot](./screenshot.png)
 
+
+Yeap. As you might think, this is yet another game development project.
+If you haven't done it yet, I highly recommend checking the other ones I have on GitHub:
+
+- [Pacman](https://github.com/virgs/pacman)
+- [Sudoku](https://github.com/virgs/sudoku)
+- [Flappy Bird AI](https://github.com/virgs/flappy-bird-ai)
+- [2048 AI](https://github.com/virgs/2048-ai)
+- [Rubik's Cubes AI](https://github.com/virgs/rubiks-cubes-ai)
+- [Mancala](https://github.com/virgs/mancala)
+- [Tetris](https://github.com/virgs/tetris)
+
+----
+
 This implementation provides you 4 AI actions:
 
 1. *Hint*: tells you all inferable information given the current board configuration.
